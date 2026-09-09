@@ -68,38 +68,57 @@
         .bio-box { background: var(--glass-bg); border: 1px solid var(--glass-border); padding: 40px; border-radius: 20px; backdrop-filter: blur(10px); max-width: 700px; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
         #bio-text { line-height: 1.9; font-size: 1.2rem; letter-spacing: 0.5px; color: #e0e0e0; }
 
-        /* ================= الهاتف الافتراضي (Interactive Phone Mockup) ================= */
-        .app-showcase-container { display: flex; flex-wrap: wrap; gap: 40px; justify-content: center; align-items: center; max-width: 1000px; width: 100%; margin-bottom: 40px; }
-        
-        .app-selector { display: flex; flex-direction: column; gap: 15px; flex: 1; min-width: 280px; }
-        .app-btn { 
-            background: var(--glass-bg); border: 1px solid var(--glass-border); color: #fff; 
-            padding: 15px 20px; border-radius: 12px; font-family: 'Orbitron', sans-serif; font-size: 1.1rem;
-            cursor: pointer; transition: 0.3s; text-align: left; position: relative; overflow: hidden;
-        }
-        .app-btn:hover, .app-btn.active { background: rgba(255,42,95,0.15); border-color: var(--neon-red); box-shadow: 0 0 20px rgba(255,42,95,0.3); padding-left: 30px; }
-        .app-btn.active::before { content:'▶'; position: absolute; left: 10px; color: var(--neon-red); }
-
-        .phone-mockup-wrapper { display: flex; flex-direction: column; align-items: center; gap: 20px; }
+        /* ================= الهاتف الذكي التفاعلي (Interactive Smartphone UI) ================= */
+        .phone-mockup-wrapper { display: flex; justify-content: center; width: 100%; margin-bottom: 40px; }
         .phone-frame {
-            width: 280px; height: 580px; background: #000; border: 14px solid #1a1a24; 
-            border-radius: 40px; position: relative; box-shadow: 0 20px 50px rgba(0,0,0,0.8), 0 0 30px rgba(0,243,255,0.2);
+            width: 320px; height: 650px; background: #000; border: 16px solid #1a1a24; 
+            border-radius: 45px; position: relative; box-shadow: 0 20px 50px rgba(0,0,0,0.8), 0 0 30px rgba(0,243,255,0.2);
             display: flex; flex-direction: column; overflow: hidden;
         }
-        .phone-notch { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 130px; height: 25px; background: #1a1a24; border-bottom-left-radius: 15px; border-bottom-right-radius: 15px; z-index: 10; }
+        .phone-notch { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 140px; height: 28px; background: #1a1a24; border-bottom-left-radius: 18px; border-bottom-right-radius: 18px; z-index: 10; }
         
-        .phone-screen { flex: 1; position: relative; background: #111; display: flex; justify-content: center; align-items: center; }
-        .phone-screen img { width: 100%; height: 100%; object-fit: contain; position: absolute; opacity: 0; transition: opacity 0.5s ease-in-out; }
-        .phone-screen img.active { opacity: 1; }
+        .phone-screen { flex: 1; position: relative; background: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop') center/cover; }
         
-        .download-app-btn { background: var(--neon-blue); color: #000; font-weight: 900; box-shadow: 0 0 15px rgba(0,243,255,0.5); width: 280px; }
-        .download-app-btn:hover { background: #fff; transform: scale(1.05); }
+        /* شاشة الرئيسية (الأيقونات) */
+        #phone-home {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px 15px; 
+            padding: 50px 20px 20px; height: 100%; align-content: start;
+            background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(2px);
+        }
+        .app-icon-btn { display: flex; flex-direction: column; align-items: center; gap: 8px; cursor: pointer; transition: transform 0.2s; }
+        .app-icon-btn:hover { transform: scale(1.1); }
+        .app-icon { 
+            width: 60px; height: 60px; border-radius: 14px; 
+            background: linear-gradient(135deg, #2a2a35, #111); 
+            display: flex; justify-content: center; align-items: center; 
+            font-size: 30px; box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .app-name-label { font-size: 0.8rem; font-weight: 600; text-shadow: 0 1px 3px #000; text-align: center; }
+
+        /* شاشة عرض التطبيق من الداخل */
+        #phone-app-view {
+            display: none; flex-direction: column; height: 100%; background: #0a0a0f; z-index: 5; position: absolute; top: 0; left: 0; width: 100%;
+        }
+        .app-header { display: flex; align-items: center; padding: 40px 15px 15px; background: #111; border-bottom: 1px solid #333; }
+        .back-btn { cursor: pointer; color: var(--neon-blue); font-weight: bold; margin-right: 15px; font-size: 1.1rem; display: flex; align-items: center; }
+        .back-btn:hover { color: #fff; }
+        .app-view-title { font-family: 'Orbitron', sans-serif; font-size: 1.1rem; flex: 1; text-align: center; margin-right: 40px; } /* 40px لموازنة زر الرجوع */
+        
+        .app-slider-container { flex: 1; position: relative; display: flex; justify-content: center; align-items: center; overflow: hidden; background: #000; }
+        .app-slider-container img { width: 100%; height: 100%; object-fit: contain; position: absolute; opacity: 0; transition: opacity 0.5s ease-in-out; }
+        .app-slider-container img.active { opacity: 1; }
+        .no-preview { color: #666; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 15px; }
+
+        .app-download-footer { padding: 20px; background: #111; border-top: 1px solid #333; }
+        .download-app-btn { background: var(--neon-blue); color: #000; font-weight: 900; width: 100%; margin: 0; padding: 12px; border-radius: 10px; border: none; font-size: 1.1rem; cursor: pointer; box-shadow: 0 0 15px rgba(0,243,255,0.4); transition: 0.3s; text-transform: uppercase; }
+        .download-app-btn:hover { background: #fff; transform: translateY(-2px); }
 
         .works-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; width: 100%; max-width: 1000px; }
         .work-category { background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 20px; padding: 40px 20px; display: flex; flex-direction: column; align-items: center; }
         .work-category h3 { margin-bottom: 25px; font-size: 1.5rem; font-family: 'Orbitron', sans-serif; color: var(--neon-purple); text-shadow: 0 0 15px rgba(157,78,221,0.4); }
 
-        @media (max-width:768px) { .app-showcase-container { flex-direction: column; } .app-selector { width: 100%; } .app-btn { text-align: center; } .app-btn:hover, .app-btn.active { padding-left: 20px; } .app-btn.active::before { display: none; } }
+        @media (max-width:400px) { .phone-frame { width: 300px; height: 600px; } }
     </style>
 </head>
 <body>
@@ -132,14 +151,33 @@
 
 <section id="apps" class="section">
     <h2 id="apps-title" class="hidden-element">📱 Mobile Apps Showcase</h2>
-    <div class="app-showcase-container hidden-element">
-        <div class="app-selector" id="app-buttons-container"></div>
-        <div class="phone-mockup-wrapper">
-            <div class="phone-frame">
-                <div class="phone-notch"></div>
-                <div class="phone-screen" id="phone-screen-slider"></div>
+    <div class="phone-mockup-wrapper hidden-element">
+        <div class="phone-frame">
+            <div class="phone-notch"></div>
+            <div class="phone-screen">
+                
+                <!-- شاشة الهاتف الرئيسية (الأيقونات) -->
+                <div id="phone-home">
+                    <!-- تُولد الأيقونات هنا عبر جافا سكريبت -->
+                </div>
+
+                <!-- شاشة عرض التطبيق الداخلي -->
+                <div id="phone-app-view">
+                    <div class="app-header">
+                        <div class="back-btn" onclick="closeAppView()">◀ Back</div>
+                        <div class="app-view-title" id="app-view-title">App Name</div>
+                    </div>
+                    
+                    <div class="app-slider-container" id="app-view-slider">
+                        <!-- تُضاف الصور أو رسالة المعاينة هنا -->
+                    </div>
+
+                    <div class="app-download-footer">
+                        <button class="download-app-btn" onclick="downloadActiveApp()">DOWNLOAD APK</button>
+                    </div>
+                </div>
+
             </div>
-            <button class="btn download-app-btn" id="active-download-btn" onclick="downloadActiveApp()">DOWNLOAD APK</button>
         </div>
     </div>
 </section>
@@ -162,6 +200,7 @@
     <h2 id="social-title" class="hidden-element">Social Networks</h2>
     <div style="display: flex; flex-wrap: wrap; justify-content: center; max-width: 800px; gap: 15px;" class="hidden-element">
         <button class="btn btn-social" style="max-width:220px;" onclick="window.open('https://www.instagram.com/chikor_youcef_31')"><span class="s-icon"><svg viewBox="0 0 24 24"><defs><radialGradient id="ig" cx="30%" cy="107%" r="150%"><stop offset="0%" stop-color="#fdf497"/><stop offset="45%" stop-color="#fd5949"/><stop offset="60%" stop-color="#d6249f"/><stop offset="90%" stop-color="#285AEB"/></radialGradient></defs><rect width="24" height="24" rx="6" fill="url(#ig)"/><rect x="6" y="6" width="12" height="12" rx="4" fill="none" stroke="#fff" stroke-width="1.5"/><circle cx="12" cy="12" r="3.2" fill="none" stroke="#fff" stroke-width="1.5"/><circle cx="16.3" cy="7.7" r="1" fill="#fff"/></svg></span><span class="lbl">Instagram</span></button>
+        <button class="btn btn-social" style="max-width:220px;" onclick="window.open('https://www.facebook.com/youcef.chikor.2025')"><span class="s-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#1877F2"/><path d="M15.1 12.7l.4-2.6h-2.5V8.4c0-.72.35-1.4 1.5-1.4h1.15V4.78S14.6 4.5 13.6 4.5c-2.07 0-3.43 1.26-3.43 3.53v2.07H7.9v2.6h2.27V19h2.8v-6.3h2.13z" fill="#fff"/></svg></span><span class="lbl">Facebook</span></button>
         <button class="btn btn-social" style="max-width:220px;" onclick="window.open('https://t.me/213796514353')"><span class="s-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#27A7E7"/><path d="M5 12.2l13-5c.6-.25 1.1.15.9.95l-2.2 10.4c-.15.7-.6.85-1.2.55l-3.3-2.45-1.6 1.55c-.18.18-.33.33-.65.33l.25-3.3 6-5.4c.26-.23-.06-.36-.4-.13l-7.4 4.65-3.2-1c-.7-.22-.7-.7.15-1.05z" fill="#fff"/></svg></span><span class="lbl">Telegram</span></button>
         <button class="btn btn-social" style="max-width:220px;" onclick="window.open('https://wa.me/213796514353')"><span class="s-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#25D366"/><path d="M16.7 14.2c-.3-.15-1.7-.85-2-.95-.27-.1-.46-.15-.66.15-.2.3-.76.95-.93 1.14-.17.2-.34.22-.64.07-.3-.15-1.26-.46-2.4-1.47-.9-.8-1.5-1.78-1.67-2.08-.17-.3-.02-.46.13-.61.13-.13.3-.34.45-.51.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.66-1.58-.9-2.16-.24-.58-.48-.5-.66-.5h-.56c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.22 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.7.62.71.23 1.36.2 1.87.12.57-.09 1.7-.7 1.94-1.37.24-.67.24-1.25.17-1.37-.07-.12-.27-.2-.57-.35z" fill="#fff"/></svg></span><span class="lbl">WhatsApp</span></button>
         <button class="btn btn-social" style="max-width:220px;" onclick="window.open('https://www.tiktok.com/@chikor_freestyel?_r=1&_t=ZS-97PK8TLfnOP')"><span class="s-icon"><svg viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="6" fill="#010101"/><path d="M10.5 9.5a5 5 0 1 0 4 4.9V7.8a6.5 6.5 0 0 0 3.8 1.2V6.5a3.8 3.8 0 0 1-2.7-1.8A3.8 3.8 0 0 1 15 3h-2.8v11.4a2.2 2.2 0 1 1-1.7-2.15V9.5z" fill="#69C9D0"/><path d="M10.9 9.5a5 5 0 1 0 4 4.9V7.8a6.5 6.5 0 0 0 3.8 1.2V6.5a3.8 3.8 0 0 1-2.7-1.8A3.8 3.8 0 0 1 15.4 3h-2.8v11.4a2.2 2.2 0 1 1-1.7-2.15V9.5z" fill="#EE1D52" opacity="0.6"/><path d="M10.7 9.3a5 5 0 1 0 4 4.9V7.6a6.5 6.5 0 0 0 3.8 1.2V6.3a3.8 3.8 0 0 1-2.6-1.8A3.8 3.8 0 0 1 15.2 2.8h-2.8v11.4a2.2 2.2 0 1 1-1.7-2.15V9.3z" fill="#fff"/></svg></span><span class="lbl">TikTok</span></button>
@@ -169,9 +208,10 @@
 </section>
 
 <script>
+// ==================== اللغات والترجمة ====================
 const uiData = {
-    en: { name:"Youcef Mekki", tagline:"Cybersecurity & Full-Stack Eng", bioTitle:"About Me", bioText:"I am Youcef Mekki, a Full-Stack Developer and Cybersecurity enthusiast. Born 31/08/2008. I specialize in building highly secure, scalable web applications and engineering innovative AI-driven experiences.", socialTitle:"Digital Presence", appsTitle: "📱 Mobile Apps Showcase", webTitle: "🌐 Web & AI Core", btnBio:"About Me", btnApps:"My Apps", btnWorks:"Web & AI" },
-    ar: { name:"يوسف مكي", tagline:"مطور شامل وخبير أمن سيبراني", bioTitle:"الملف الشخصي", bioText:"أنا يوسف مكي، مطور تطبيقات ومواقع شغوف بالأمن السيبراني. (مواليد 31/08/2008). أتخصص في بناء أنظمة وتطبيقات ويب عالية الأمان وتطوير تجارب برمجية مبتكرة تعتمد على الذكاء الاصطناعي.", socialTitle:"التواجد الرقمي", appsTitle: "📱 استعراض تطبيقاتي", webTitle: "🌐 مشاريع الويب والذكاء الاصطناعي", btnBio:"من أنا", btnApps:"تطبيقاتي", btnWorks:"مشاريع الويب" },
+    en: { name:"Youcef Mekki", tagline:"Cybersecurity & Full-Stack Eng", bioTitle:"About Me", bioText:"I am Youcef Mekki, a Full-Stack Developer and Cybersecurity enthusiast. Born 31/08/2008. I specialize in building highly secure, scalable web applications and engineering innovative AI-driven experiences.", socialTitle:"Digital Presence", appsTitle: "📱 App Store Showcase", webTitle: "🌐 Web & AI Core", btnBio:"About Me", btnApps:"My Apps", btnWorks:"Web & AI" },
+    ar: { name:"يوسف مكي", tagline:"مطور شامل وخبير أمن سيبراني", bioTitle:"الملف الشخصي", bioText:"أنا يوسف مكي، مطور تطبيقات ومواقع شغوف بالأمن السيبراني. (مواليد 31/08/2008). أتخصص في بناء أنظمة وتطبيقات ويب عالية الأمان وتطوير تجارب برمجية مبتكرة تعتمد على الذكاء الاصطناعي.", socialTitle:"التواجد الرقمي", appsTitle: "📱 متجر تطبيقاتي", webTitle: "🌐 مشاريع الويب والذكاء الاصطناعي", btnBio:"من أنا", btnApps:"تطبيقاتي", btnWorks:"مشاريع الويب" },
     fr: { name:"Youcef Mekki", tagline:"Ingénieur Full-Stack & Cyber", bioTitle:"À Propos", bioText:"Je suis Youcef Mekki, développeur Full-Stack et passionné de cybersécurité. Né le 31/08/2008. Je conçois des applications web ultra-sécurisées et des expériences innovantes basées sur l'IA.", socialTitle:"Présence Numérique", appsTitle: "📱 Applications Mobile", webTitle: "🌐 Projets Web & IA", btnBio:"À Propos", btnApps:"Applications", btnWorks:"Projets Web" }
 };
 
@@ -195,92 +235,121 @@ function nextLang(){ langIdx=(langIdx+1)%langs.length; updateUI(); }
 function prevLang(){ langIdx=(langIdx-1+langs.length)%langs.length; updateUI(); }
 updateUI();
 
-// ==================== تحديث أسماء الصور ====================
-// الكود الآن يطلب الأسماء البسيطة التي قمت بتغييرها في هاتفك
+// ==================== قاعدة بيانات التطبيقات (بما فيها لايتروم) ====================
 const mobileApps = {
     capCut: {
-        name: "CapCut Pro",
+        name: "CapCut Pro", icon: "✂️",
         images: ["capcut1.jpg", "capcut2.jpg", "capcut3.jpg"],
         url: "https://www.mediafire.com/file/oa95vgyft6s5i0u/CapCut_15.5.0.apk.bak/file"
     },
     wifiFixer: {
-        name: "WiFi Fixer Pro",
+        name: "WiFi Fixer", icon: "📶",
         images: ["wifi1.jpg", "wifi2.jpg", "wifi3.jpg", "wifi4.jpg"],
         url: "https://www.mediafire.com/file/kyixbx3xaazl4h4/WiFi_Fixer_Pro_1.0.apk/file"
     },
     yuchVault: {
-        name: "Yuch Vault",
+        name: "Yuch Vault", icon: "🔒",
         images: ["vault1.jpg", "vault2.jpg", "vault3.jpg"],
         url: "https://www.mediafire.com/file/edn5t2jxe3h2l4w/Yuch_Vault_1.0.apk/file"
     },
     hiTv: {
-        name: "HiTV",
+        name: "HiTV", icon: "📺",
         images: ["hitv1.jpg", "hitv2.jpg"],
         url: "https://www.mediafire.com/file/ktarrep9980x8of/HiTV_3.13.2.apk/file"
     },
     movie: {
-        name: "Movie V3.0.2",
+        name: "Movie V3", icon: "🎬",
         images: ["movie1.jpg", "movie2.jpg"],
         url: "https://www.mediafire.com/file/l5m4o2d8e70ytqr/Movie_V3.0.2.apk/file"
+    },
+    lightroom: {
+        name: "Lightroom", icon: "📸",
+        images: [], // لا يوجد صور، سيتم إظهار رسالة تفاعلية بدلاً منها
+        url: "https://www.mediafire.com/file/udr089s5x9gknid/Lightroom_11.1.2.apk/file"
     }
 };
 
-let currentAppKey = "wifiFixer";
+let currentAppKey = "";
 let currentImageIndex = 0;
 let sliderInterval;
 
-function initPhoneMockup() {
-    const btnContainer = document.getElementById('app-buttons-container');
-    btnContainer.innerHTML = '';
+function initPhoneHome() {
+    const home = document.getElementById('phone-home');
+    home.innerHTML = ''; // تفريغ الشاشة الرئيسية
+
+    // توليد أيقونات التطبيقات داخل الهاتف
     Object.keys(mobileApps).forEach(key => {
-        const btn = document.createElement('button');
-        btn.className = `app-btn ${key === currentAppKey ? 'active' : ''}`;
-        btn.innerText = mobileApps[key].name;
-        btn.onclick = () => selectApp(key);
-        btnContainer.appendChild(btn);
+        const app = mobileApps[key];
+        const iconBtn = document.createElement('div');
+        iconBtn.className = 'app-icon-btn';
+        iconBtn.onclick = () => openAppView(key);
+        iconBtn.innerHTML = `
+            <div class="app-icon">${app.icon}</div>
+            <span class="app-name-label">${app.name}</span>
+        `;
+        home.appendChild(iconBtn);
     });
-    renderPhoneScreen();
 }
 
-function selectApp(key) {
+function openAppView(key) {
+    document.getElementById('phone-home').style.display = 'none';
+    document.getElementById('phone-app-view').style.display = 'flex';
+    
     currentAppKey = key;
     currentImageIndex = 0;
-    document.querySelectorAll('.app-btn').forEach(btn => {
-        btn.classList.remove('active');
-        if(btn.innerText === mobileApps[key].name) btn.classList.add('active');
-    });
-    renderPhoneScreen();
-}
-
-function renderPhoneScreen() {
-    const screen = document.getElementById('phone-screen-slider');
-    screen.innerHTML = '';
+    const app = mobileApps[key];
+    
+    document.getElementById('app-view-title').innerText = app.name;
+    
+    const slider = document.getElementById('app-view-slider');
+    slider.innerHTML = '';
     clearInterval(sliderInterval);
 
-    const images = mobileApps[currentAppKey].images;
-    images.forEach((imgSrc, index) => {
-        const img = document.createElement('img');
-        img.src = imgSrc;
-        if(index === 0) img.classList.add('active');
-        img.id = `phone-img-${index}`;
-        screen.appendChild(img);
-    });
+    // إذا كانت هناك صور متوفرة (مثل كاب كات وواي فاي...)
+    if (app.images && app.images.length > 0) {
+        app.images.forEach((imgSrc, index) => {
+            const img = document.createElement('img');
+            img.src = imgSrc;
+            if(index === 0) img.classList.add('active');
+            img.id = `phone-img-${index}`;
+            slider.appendChild(img);
+        });
 
-    if(images.length > 1) {
-        sliderInterval = setInterval(() => {
-            document.getElementById(`phone-img-${currentImageIndex}`).classList.remove('active');
-            currentImageIndex = (currentImageIndex + 1) % images.length;
-            document.getElementById(`phone-img-${currentImageIndex}`).classList.add('active');
-        }, 2500);
+        if(app.images.length > 1) {
+            sliderInterval = setInterval(() => {
+                document.getElementById(`phone-img-${currentImageIndex}`).classList.remove('active');
+                currentImageIndex = (currentImageIndex + 1) % app.images.length;
+                document.getElementById(`phone-img-${currentImageIndex}`).classList.add('active');
+            }, 2500);
+        }
+    } 
+    // إذا لم تكن هناك صور (مثل لايتروم)
+    else {
+        slider.innerHTML = `
+            <div class="no-preview">
+                <div style="font-size: 60px;">${app.icon}</div>
+                <p style="font-family:'Orbitron', sans-serif;">Preview not available</p>
+                <p style="font-size: 0.9rem; color: #888;">You can still download the APK below.</p>
+            </div>
+        `;
     }
+}
+
+function closeAppView() {
+    // الرجوع للشاشة الرئيسية للهاتف
+    document.getElementById('phone-home').style.display = 'grid';
+    document.getElementById('phone-app-view').style.display = 'none';
+    clearInterval(sliderInterval);
 }
 
 function downloadActiveApp() {
     window.open(mobileApps[currentAppKey].url, '_blank');
 }
 
-initPhoneMockup();
+// تشغيل الشاشة الرئيسية عند بدء الصفحة
+initPhoneHome();
 
+// ==================== تأثير الظهور عند التمرير ====================
 const observerOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -292,6 +361,7 @@ const observer = new IntersectionObserver((entries) => {
 }, observerOptions);
 document.querySelectorAll('.hidden-element').forEach(el => observer.observe(el));
 
+// ==================== خلفية الجزيئات السيبرانية ====================
 const canvas = document.getElementById('cyber-canvas');
 const ctx = canvas.getContext('2d');
 let width, height, particles = [];
