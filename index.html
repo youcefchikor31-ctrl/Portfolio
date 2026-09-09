@@ -3,326 +3,429 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Youcef Mekki - Portfolio</title>
+    <title>Youcef Mekki - Cyber Portfolio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
     <style>
-        :root { --neon-blue:#00d4ff; --neon-purple:#8844ff; --neon-red:#ff2d4d; }
-        * { margin:0; padding:0; box-sizing:border-box; font-family:'Rajdhani','Segoe UI',sans-serif; }
-        html { scroll-snap-type:y proximity; }
-        body { background:#000; color:#fff; scroll-behavior:smooth; overflow-x:hidden; }
+        :root { 
+            --neon-blue: #00f3ff; 
+            --neon-purple: #9d4edd; 
+            --neon-red: #ff2a5f; 
+            --dark-bg: #050508;
+            --glass-bg: rgba(15, 15, 25, 0.45);
+            --glass-border: rgba(0, 243, 255, 0.15);
+        }
+        
+        * { margin:0; padding:0; box-sizing:border-box; font-family:'Rajdhani', sans-serif; }
+        
+        /* شريط التمرير المخصص */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--dark-bg); }
+        ::-webkit-scrollbar-thumb { background: var(--neon-blue); border-radius: 10px; }
 
-        #robot-canvas { position:fixed; top:0; left:0; width:100%; height:100%; z-index:0; pointer-events:none; }
+        body { 
+            background: var(--dark-bg); color: #fff; 
+            overflow-x: hidden; scroll-behavior: smooth;
+        }
 
-        .section { height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center; position:relative; padding:20px; z-index:1; scroll-snap-align:start; }
-        .section::before { content:''; position:absolute; inset:0; background:rgba(0,0,0,0.45); z-index:-1; }
+        /* خلفية الكانفاس التفاعلية */
+        #cyber-canvas { 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            z-index: 0; pointer-events: none; 
+        }
 
-        .btn { width:250px; padding:15px; margin:10px; border-radius:15px; border:1px solid rgba(255,255,255,0.2); background:rgba(255,255,255,0.06); cursor:pointer; color:white; font-weight:700; font-size:1rem; letter-spacing:0.5px; backdrop-filter:blur(12px); transition:0.3s; }
-        .btn:hover { background:rgba(0,212,255,0.18); transform:translateY(-5px); border-color:var(--neon-blue); }
-        .btn-download:hover { background:rgba(255,45,77,0.18); border-color:var(--neon-red); box-shadow:0 0 18px rgba(255,45,77,0.35); }
+        /* تنسيق الأقسام */
+        .section { 
+            min-height: 100vh; display: flex; flex-direction: column; 
+            justify-content: center; align-items: center; position: relative; 
+            padding: 80px 20px; z-index: 1; 
+        }
+        
+        /* تدرج لوني خلف الأقسام لزيادة العمق */
+        .section::before { 
+            content:''; position:absolute; inset:0; 
+            background: radial-gradient(circle at center, transparent 0%, #050508 100%); 
+            z-index:-1; opacity: 0.9; 
+        }
 
-        /* ازرار السوشيال بلوغو */
-        .btn-social { display:flex; align-items:center; gap:14px; text-align:left; padding-left:20px; }
-        .btn-social .s-icon { width:28px; height:28px; flex-shrink:0; display:flex; align-items:center; justify-content:center; }
-        .btn-social .s-icon svg { width:100%; height:100%; }
-        .btn-social span.lbl { flex:1; }
+        /* تأثيرات الظهور عند التمرير */
+        .hidden-element { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+        .show-element { opacity: 1; transform: translateY(0); }
 
-        .profile-img { width:140px; height:140px; border-radius:50%; border:3px solid var(--neon-blue); box-shadow:0 0 25px var(--neon-blue),0 0 8px rgba(255,45,77,0.5); margin-bottom:14px; object-fit:cover; background-color:#333; }
+        /* الأزرار الاحترافية */
+        .btn { 
+            width: 100%; max-width: 300px; padding: 16px; margin: 10px; 
+            border-radius: 12px; border: 1px solid var(--glass-border); 
+            background: var(--glass-bg); cursor: pointer; color: white; 
+            font-weight: 700; font-size: 1.1rem; letter-spacing: 1.5px; 
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            transition: all 0.3s ease; position: relative; overflow: hidden;
+            text-transform: uppercase;
+        }
+        .btn::after {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+            opacity: 0; transition: opacity 0.3s; pointer-events: none;
+        }
+        .btn:hover::after { opacity: 1; }
+        .btn:hover { 
+            background: rgba(0, 243, 255, 0.1); transform: translateY(-3px); 
+            border-color: var(--neon-blue); box-shadow: 0 10px 25px rgba(0,243,255,0.25); 
+        }
+        .btn-download:hover { border-color: var(--neon-red); box-shadow: 0 10px 25px rgba(255,42,95,0.25); background: rgba(255, 42, 95, 0.1); }
+        .btn-web:hover { border-color: var(--neon-purple); box-shadow: 0 10px 25px rgba(157,78,221,0.25); background: rgba(157, 78, 221, 0.1); }
 
-        #home { justify-content:flex-start; padding-top:9vh; }
-        #home::before { background:rgba(0,0,0,0.25); }
-        #home h1 { text-shadow:0 0 20px var(--neon-blue),0 0 40px #00d4ff55; margin-bottom:6px; font-family:'Orbitron','Rajdhani',sans-serif; font-size:1.8rem; letter-spacing:1px; }
-        #home .tagline { color:var(--neon-red); font-weight:600; letter-spacing:2px; text-transform:uppercase; font-size:0.8rem; margin-bottom:26px; opacity:0.9; }
+        /* أيقونات السوشيال */
+        .btn-social { display: flex; align-items: center; gap: 15px; padding-left: 20px; text-transform: none; }
+        .btn-social .s-icon { width: 30px; height: 30px; flex-shrink: 0; transition: 0.4s; }
+        .btn-social:hover .s-icon { transform: rotate(10deg) scale(1.2); }
+        .btn-social svg { width: 100%; height: 100%; }
+        
+        /* الصورة الشخصية */
+        .profile-wrapper { position: relative; margin-bottom: 25px; }
+        .profile-img { 
+            width: 170px; height: 170px; border-radius: 50%; 
+            border: 3px solid transparent; 
+            background: linear-gradient(var(--dark-bg), var(--dark-bg)) padding-box, 
+                        linear-gradient(45deg, var(--neon-blue), var(--neon-purple)) border-box;
+            box-shadow: 0 0 35px rgba(0,243,255,0.3); 
+            object-fit: cover; z-index: 2; position: relative;
+            transition: transform 0.5s ease;
+        }
+        .profile-wrapper:hover .profile-img { transform: scale(1.05); }
 
-        .lang-box { position:fixed; top:20px; left:20px; z-index:1000; display:flex; flex-direction:column; gap:5px; }
-        .arrow { cursor:pointer; background:rgba(0,0,0,0.6); border:1px solid #00d4ff44; padding:5px 10px; border-radius:5px; backdrop-filter:blur(8px); transition:0.25s; }
-        .arrow:hover { border-color:var(--neon-red); box-shadow:0 0 10px rgba(255,45,77,0.4); }
+        #home h1 { text-shadow: 0 0 25px var(--neon-blue); margin-bottom: 10px; font-family: 'Orbitron', sans-serif; font-size: clamp(2rem, 5vw, 3.5rem); letter-spacing: 3px; font-weight: 900; }
+        #home .tagline { color: var(--neon-red); font-weight: 700; letter-spacing: 4px; text-transform: uppercase; font-size: clamp(0.9rem, 2vw, 1.1rem); margin-bottom: 40px; text-shadow: 0 0 15px rgba(255,42,95,0.5); }
 
-        h2 { margin-bottom:14px; font-size:1.6rem; font-family:'Orbitron','Rajdhani',sans-serif; text-shadow:0 0 15px #00d4ff88; letter-spacing:1px; }
-        h2::after { content:''; display:block; width:50px; height:3px; margin:12px auto 22px; background:var(--neon-red); box-shadow:0 0 10px var(--neon-red); border-radius:2px; }
+        /* مبدل اللغات */
+        .lang-box { position: fixed; top: 25px; left: 25px; z-index: 1000; display: flex; flex-direction: column; gap: 5px; }
+        .arrow { cursor: pointer; background: var(--glass-bg); border: 1px solid var(--glass-border); padding: 8px 15px; border-radius: 8px; backdrop-filter: blur(10px); transition: 0.3s; font-size: 0.8rem; text-align: center; font-family: 'Orbitron', sans-serif;}
+        .arrow:hover { border-color: var(--neon-blue); background: rgba(0,243,255,0.15); box-shadow: 0 0 15px rgba(0,243,255,0.3); }
 
-        @media (max-width:600px) { .btn { width:85vw; } #home h1 { font-size:1.4rem; } #home { padding-top:7vh; } .profile-img { width:110px; height:110px; } }
+        h2 { margin-bottom: 40px; font-size: clamp(1.8rem, 4vw, 2.5rem); font-family: 'Orbitron', sans-serif; text-shadow: 0 0 20px var(--neon-blue); letter-spacing: 2px; text-transform: uppercase; }
+        h2::after { content: ''; display: block; width: 80px; height: 4px; margin: 15px auto 0; background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple)); border-radius: 2px; }
+
+        /* شبكة الأعمال */
+        .works-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; width: 100%; max-width: 1000px; }
+        .work-category { 
+            background: var(--glass-bg); border: 1px solid var(--glass-border); 
+            border-radius: 20px; padding: 40px 20px; backdrop-filter: blur(12px); 
+            display: flex; flex-direction: column; align-items: center; 
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+        .work-category:hover { border-color: rgba(255,255,255,0.3); }
+        .work-category h3 { margin-bottom: 25px; font-size: 1.5rem; font-family: 'Orbitron', sans-serif; }
+        .category-apps h3 { color: var(--neon-red); text-shadow: 0 0 15px rgba(255,42,95,0.4); }
+        .category-web h3 { color: var(--neon-purple); text-shadow: 0 0 15px rgba(157,78,221,0.4); }
+
+        /* صندوق البايو */
+        .bio-box {
+            background: var(--glass-bg); border: 1px solid var(--glass-border); 
+            padding: 40px; border-radius: 20px; backdrop-filter: blur(10px); 
+            max-width: 700px; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+        #bio-text { line-height: 1.9; font-size: 1.2rem; letter-spacing: 0.5px; color: #e0e0e0; }
+
+        /* النافذة المنبثقة (Modal) */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            z-index: 2000; display: none; justify-content: center; align-items: center;
+            opacity: 0; transition: opacity 0.4s ease;
+        }
+        .modal-overlay.active { display: flex; opacity: 1; }
+        .modal-content {
+            background: #0a0a10; border: 1px solid var(--neon-blue);
+            box-shadow: 0 0 40px rgba(0,243,255,0.2), inset 0 0 20px rgba(0,243,255,0.05); 
+            border-radius: 20px; padding: 50px 30px; width: 90%; max-width: 500px; 
+            text-align: center; position: relative; transform: scale(0.9); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .modal-overlay.active .modal-content { transform: scale(1); }
+        .modal-title { font-family: 'Orbitron', sans-serif; color: var(--neon-blue); font-size: 2rem; margin-bottom: 20px; text-shadow: 0 0 10px rgba(0,243,255,0.5);}
+        .modal-desc { font-size: 1.15rem; line-height: 1.7; color: #ccc; margin-bottom: 35px; }
+        .modal-close {
+            position: absolute; top: 15px; right: 25px; font-size: 1.8rem; color: #fff;
+            cursor: pointer; opacity: 0.6; transition: 0.3s;
+        }
+        .modal-close:hover { opacity: 1; color: var(--neon-red); transform: rotate(90deg); }
+        .modal-action-btn { background: var(--neon-blue); color: #000; border: none; }
+        .modal-action-btn:hover { background: #fff; box-shadow: 0 0 20px var(--neon-blue); transform: translateY(-3px); }
     </style>
 </head>
 <body>
 
-<canvas id="robot-canvas"></canvas>
+<!-- خلفية الجزيئات السيبرانية -->
+<canvas id="cyber-canvas"></canvas>
 
 <div class="lang-box">
     <div class="arrow" onclick="nextLang()">▲</div>
-    <div id="lang-display" style="text-align:center;font-weight:bold;">EN</div>
+    <div id="lang-display" style="text-align:center;font-weight:800; font-family:'Orbitron',sans-serif; letter-spacing: 1px;">EN</div>
     <div class="arrow" onclick="prevLang()">▼</div>
+</div>
+
+<!-- النافذة المنبثقة -->
+<div class="modal-overlay" id="project-modal" onclick="closeModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <span class="modal-close" onclick="closeModal(event)">✖</span>
+        <h3 class="modal-title" id="modal-title">Title</h3>
+        <p class="modal-desc" id="modal-desc">Description</p>
+        <button class="btn modal-action-btn" id="modal-action-btn" onclick="openProjectLink()">Open</button>
+    </div>
 </div>
 
 <!-- الرئيسية -->
 <section id="home" class="section">
-    <img src="myphoto.jpg" alt="Youcef Mekki" class="profile-img">
-    <h1 id="name">Youcef Mekki</h1>
-    <div class="tagline" id="tagline">Full-Stack Developer</div>
-    <button class="btn" onclick="document.getElementById('bio').scrollIntoView({behavior:'smooth'})">About Me</button>
-    <button class="btn" onclick="document.getElementById('social').scrollIntoView({behavior:'smooth'})">Social Links</button>
-    <button class="btn" onclick="document.getElementById('works').scrollIntoView({behavior:'smooth'})">My Works</button>
+    <div class="hidden-element profile-wrapper">
+        <img src="myphoto.jpg" alt="Youcef Mekki" class="profile-img">
+    </div>
+    <h1 id="name" class="hidden-element">Youcef Mekki</h1>
+    <div class="tagline hidden-element" id="tagline">Cyber & Full-Stack Developer</div>
+    <div style="display: flex; flex-direction: column; gap: 10px; width: 100%; align-items: center;" class="hidden-element">
+        <button class="btn" onclick="document.getElementById('bio').scrollIntoView()" id="btn-bio">About Me</button>
+        <button class="btn" onclick="document.getElementById('works').scrollIntoView()" id="btn-works">My Works</button>
+        <button class="btn" onclick="document.getElementById('social').scrollIntoView()" id="btn-social">Social Links</button>
+    </div>
 </section>
 
 <!-- من أنا -->
 <section id="bio" class="section">
-    <h2 id="bio-title">About Me</h2>
-    <p id="bio-text" style="max-width:600px;text-align:center;line-height:1.9;"></p>
-    <button class="btn" onclick="document.getElementById('home').scrollIntoView({behavior:'smooth'})">Back</button>
+    <h2 id="bio-title" class="hidden-element">About Me</h2>
+    <div class="bio-box hidden-element tilt-effect">
+        <p id="bio-text"></p>
+    </div>
+    <button class="btn hidden-element" style="margin-top: 40px; max-width: 200px;" onclick="document.getElementById('home').scrollIntoView()" id="btn-back1">Back</button>
 </section>
 
-<!-- السوشيال بلوغوات -->
-<section id="social" class="section">
-    <h2 id="social-title">Social Networks</h2>
-
-    <!-- Instagram -->
-    <button class="btn btn-social" onclick="window.open('https://www.instagram.com/chikor_youcef_31')">
-        <span class="s-icon"><svg viewBox="0 0 24 24">
-            <defs><radialGradient id="ig" cx="30%" cy="107%" r="150%">
-                <stop offset="0%" stop-color="#fdf497"/>
-                <stop offset="45%" stop-color="#fd5949"/>
-                <stop offset="60%" stop-color="#d6249f"/>
-                <stop offset="90%" stop-color="#285AEB"/>
-            </radialGradient></defs>
-            <rect width="24" height="24" rx="6" fill="url(#ig)"/>
-            <rect x="6" y="6" width="12" height="12" rx="4" fill="none" stroke="#fff" stroke-width="1.5"/>
-            <circle cx="12" cy="12" r="3.2" fill="none" stroke="#fff" stroke-width="1.5"/>
-            <circle cx="16.3" cy="7.7" r="1" fill="#fff"/>
-        </svg></span>
-        <span class="lbl">Instagram</span>
-    </button>
-
-    <!-- Telegram -->
-    <button class="btn btn-social" onclick="window.open('https://t.me/213796514353')">
-        <span class="s-icon"><svg viewBox="0 0 24 24">
-            <circle cx="12" cy="12" r="12" fill="#27A7E7"/>
-            <path d="M5 12.2l13-5c.6-.25 1.1.15.9.95l-2.2 10.4c-.15.7-.6.85-1.2.55l-3.3-2.45-1.6 1.55c-.18.18-.33.33-.65.33l.25-3.3 6-5.4c.26-.23-.06-.36-.4-.13l-7.4 4.65-3.2-1c-.7-.22-.7-.7.15-1.05z" fill="#fff"/>
-        </svg></span>
-        <span class="lbl">Telegram</span>
-    </button>
-
-    <!-- WhatsApp -->
-    <button class="btn btn-social" onclick="window.open('https://wa.me/213796514353')">
-        <span class="s-icon"><svg viewBox="0 0 24 24">
-            <circle cx="12" cy="12" r="12" fill="#25D366"/>
-            <path d="M16.7 14.2c-.3-.15-1.7-.85-2-.95-.27-.1-.46-.15-.66.15-.2.3-.76.95-.93 1.14-.17.2-.34.22-.64.07-.3-.15-1.26-.46-2.4-1.47-.9-.8-1.5-1.78-1.67-2.08-.17-.3-.02-.46.13-.61.13-.13.3-.34.45-.51.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.66-1.58-.9-2.16-.24-.58-.48-.5-.66-.5h-.56c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.22 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.7.62.71.23 1.36.2 1.87.12.57-.09 1.7-.7 1.94-1.37.24-.67.24-1.25.17-1.37-.07-.12-.27-.2-.57-.35z" fill="#fff"/>
-        </svg></span>
-        <span class="lbl">WhatsApp</span>
-    </button>
-
-    <!-- Snapchat -->
-    <button class="btn btn-social" onclick="window.open('https://www.snapchat.com/add/youcef_chikor31?share_id=yy-mF2Xu720&locale=en-AU')">
-        <span class="s-icon"><svg viewBox="0 0 24 24">
-            <rect width="24" height="24" rx="6" fill="#FFFC00"/>
-            <path d="M12 5.5c-2.3 0-3.6 1.7-3.7 3.6-.02.45 0 .9-.05 1.1-.05.2-1.2.85-1.45 1-.2.1-.2.35.05.5.5.3 1.05.4 1.2.65.1.2-.05.6-.3.95-.55.75-1.4 1.05-1.4 1.3 0 .35.85.45 1.4.55.15.4.25.85.95.85.5 0 1-.3 1.65-.3.7 0 1.2.85 2.65.85s1.95-.85 2.65-.85c.65 0 1.15.3 1.65.3.7 0 .8-.45.95-.85.55-.1 1.4-.2 1.4-.55 0-.25-.85-.55-1.4-1.3-.25-.35-.4-.75-.3-.95.15-.25.7-.35 1.2-.65.25-.15.25-.4.05-.5-.25-.15-1.4-.8-1.45-1-.05-.2-.03-.65-.05-1.1-.1-1.9-1.4-3.6-3.7-3.6z" fill="#000"/>
-        </svg></span>
-        <span class="lbl">Snapchat</span>
-    </button>
-
-    <!-- Facebook -->
-    <button class="btn btn-social" onclick="window.open('https://www.facebook.com/youcef.chikor.2025')">
-        <span class="s-icon"><svg viewBox="0 0 24 24">
-            <circle cx="12" cy="12" r="12" fill="#1877F2"/>
-            <path d="M15.1 12.7l.4-2.6h-2.5V8.4c0-.72.35-1.4 1.5-1.4h1.15V4.78S14.6 4.5 13.6 4.5c-2.07 0-3.43 1.26-3.43 3.53v2.07H7.9v2.6h2.27V19h2.8v-6.3h2.13z" fill="#fff"/>
-        </svg></span>
-        <span class="lbl">Facebook</span>
-    </button>
-
-    <!-- TikTok لوغو صحيح -->
-    <button class="btn btn-social" onclick="window.open('https://www.tiktok.com/@chikor_freestyel?_r=1&_t=ZS-97PK8TLfnOP')">
-        <span class="s-icon"><svg viewBox="0 0 24 24" fill="none">
-            <rect width="24" height="24" rx="6" fill="#010101"/>
-            <!-- الظل الأزرق -->
-            <path d="M10.5 9.5a5 5 0 1 0 4 4.9V7.8a6.5 6.5 0 0 0 3.8 1.2V6.5a3.8 3.8 0 0 1-2.7-1.8A3.8 3.8 0 0 1 15 3h-2.8v11.4a2.2 2.2 0 1 1-1.7-2.15V9.5z" fill="#69C9D0"/>
-            <!-- الظل الأحمر -->
-            <path d="M10.9 9.5a5 5 0 1 0 4 4.9V7.8a6.5 6.5 0 0 0 3.8 1.2V6.5a3.8 3.8 0 0 1-2.7-1.8A3.8 3.8 0 0 1 15.4 3h-2.8v11.4a2.2 2.2 0 1 1-1.7-2.15V9.5z" fill="#EE1D52" opacity="0.6"/>
-            <!-- الأبيض فوق -->
-            <path d="M10.7 9.3a5 5 0 1 0 4 4.9V7.6a6.5 6.5 0 0 0 3.8 1.2V6.3a3.8 3.8 0 0 1-2.6-1.8A3.8 3.8 0 0 1 15.2 2.8h-2.8v11.4a2.2 2.2 0 1 1-1.7-2.15V9.3z" fill="#fff"/>
-        </svg></span>
-        <span class="lbl">TikTok</span>
-    </button>
-
-    <button class="btn" onclick="document.getElementById('home').scrollIntoView({behavior:'smooth'})">Back</button>
-</section>
-
-<!-- أعمالي — نص فقط بدون لوغوات -->
+<!-- أعمالي -->
 <section id="works" class="section">
-    <h2 id="works-title">My Works</h2>
-    <button class="btn btn-download" onclick="window.open('https://www.mediafire.com/file/kyixbx3xaazl4h4/WiFi_Fixer_Pro_1.0.apk/file')">wifi fixer pro</button>
-    <button class="btn btn-download" onclick="window.open('https://www.mediafire.com/file/edn5t2jxe3h2l4w/Yuch_Vault_1.0.apk/file')">Yuch Vault</button>
-    <button class="btn btn-download" onclick="window.open('https://www.mediafire.com/file/ktarrep9980x8of/HiTV_3.13.2.apk/file')">HiTV</button>
-    <button class="btn btn-download" onclick="window.open('https://youcefchikor31-ctrl.github.io/-_-/')">Sky of Fire</button>
-    <button class="btn" onclick="document.getElementById('home').scrollIntoView({behavior:'smooth'})">Back</button>
+    <h2 id="works-title" class="hidden-element">My Works</h2>
+    
+    <div class="works-grid">
+        <!-- التطبيقات -->
+        <div class="work-category category-apps hidden-element tilt-effect">
+            <h3 id="apps-title">📱 Mobile Apps</h3>
+            <button class="btn btn-download" onclick="openModal('capCut')">CapCut Pro</button>
+            <button class="btn btn-download" onclick="openModal('wifiFixer')">WiFi Fixer Pro</button>
+            <button class="btn btn-download" onclick="openModal('yuchVault')">Yuch Vault</button>
+            <button class="btn btn-download" onclick="openModal('hiTv')">HiTV</button>
+            <button class="btn btn-download" onclick="openModal('movieV3')">Movie V3.0.2</button>
+            <button class="btn btn-download" onclick="openModal('lightroom')">Lightroom 11.1.2</button>
+        </div>
+
+        <!-- مشاريع الويب والذكاء الاصطناعي -->
+        <div class="work-category category-web hidden-element tilt-effect">
+            <h3 id="web-title">🌐 Web & AI</h3>
+            <button class="btn btn-web" onclick="openModal('poseTrack')">Skeleton Pose Tracking</button>
+            <button class="btn btn-web" onclick="openModal('handTrack')">Hand Tracker Shapes</button>
+            <button class="btn btn-web" onclick="openModal('skyFire')">Sky of Fire</button>
+            <button class="btn btn-web" onclick="openModal('ffLite')">Free Fire Lite</button>
+            <button class="btn btn-web" onclick="openModal('spiderman')">Spiderman Web</button>
+            <button class="btn btn-web" onclick="openModal('fadaa')">Fadaa (Space)</button>
+        </div>
+    </div>
+
+    <button class="btn hidden-element" style="margin-top: 40px; max-width: 200px;" onclick="document.getElementById('home').scrollIntoView()" id="btn-back2">Back</button>
 </section>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<!-- السوشيال -->
+<section id="social" class="section">
+    <h2 id="social-title" class="hidden-element">Social Networks</h2>
+    <div style="display: flex; flex-wrap: wrap; justify-content: center; max-width: 800px; gap: 15px;" class="hidden-element">
+        <button class="btn btn-social tilt-effect" style="max-width:220px;" onclick="window.open('https://www.instagram.com/chikor_youcef_31')">
+            <span class="s-icon"><svg viewBox="0 0 24 24"><defs><radialGradient id="ig" cx="30%" cy="107%" r="150%"><stop offset="0%" stop-color="#fdf497"/><stop offset="45%" stop-color="#fd5949"/><stop offset="60%" stop-color="#d6249f"/><stop offset="90%" stop-color="#285AEB"/></radialGradient></defs><rect width="24" height="24" rx="6" fill="url(#ig)"/><rect x="6" y="6" width="12" height="12" rx="4" fill="none" stroke="#fff" stroke-width="1.5"/><circle cx="12" cy="12" r="3.2" fill="none" stroke="#fff" stroke-width="1.5"/><circle cx="16.3" cy="7.7" r="1" fill="#fff"/></svg></span>
+            <span class="lbl">Instagram</span>
+        </button>
+        <button class="btn btn-social tilt-effect" style="max-width:220px;" onclick="window.open('https://t.me/213796514353')">
+            <span class="s-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#27A7E7"/><path d="M5 12.2l13-5c.6-.25 1.1.15.9.95l-2.2 10.4c-.15.7-.6.85-1.2.55l-3.3-2.45-1.6 1.55c-.18.18-.33.33-.65.33l.25-3.3 6-5.4c.26-.23-.06-.36-.4-.13l-7.4 4.65-3.2-1c-.7-.22-.7-.7.15-1.05z" fill="#fff"/></svg></span>
+            <span class="lbl">Telegram</span>
+        </button>
+        <button class="btn btn-social tilt-effect" style="max-width:220px;" onclick="window.open('https://wa.me/213796514353')">
+            <span class="s-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#25D366"/><path d="M16.7 14.2c-.3-.15-1.7-.85-2-.95-.27-.1-.46-.15-.66.15-.2.3-.76.95-.93 1.14-.17.2-.34.22-.64.07-.3-.15-1.26-.46-2.4-1.47-.9-.8-1.5-1.78-1.67-2.08-.17-.3-.02-.46.13-.61.13-.13.3-.34.45-.51.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.66-1.58-.9-2.16-.24-.58-.48-.5-.66-.5h-.56c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.22 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.7.62.71.23 1.36.2 1.87.12.57-.09 1.7-.7 1.94-1.37.24-.67.24-1.25.17-1.37-.07-.12-.27-.2-.57-.35z" fill="#fff"/></svg></span>
+            <span class="lbl">WhatsApp</span>
+        </button>
+        <button class="btn btn-social tilt-effect" style="max-width:220px;" onclick="window.open('https://www.tiktok.com/@chikor_freestyel?_r=1&_t=ZS-97PK8TLfnOP')">
+            <span class="s-icon"><svg viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="6" fill="#010101"/><path d="M10.5 9.5a5 5 0 1 0 4 4.9V7.8a6.5 6.5 0 0 0 3.8 1.2V6.5a3.8 3.8 0 0 1-2.7-1.8A3.8 3.8 0 0 1 15 3h-2.8v11.4a2.2 2.2 0 1 1-1.7-2.15V9.5z" fill="#69C9D0"/><path d="M10.9 9.5a5 5 0 1 0 4 4.9V7.8a6.5 6.5 0 0 0 3.8 1.2V6.5a3.8 3.8 0 0 1-2.7-1.8A3.8 3.8 0 0 1 15.4 3h-2.8v11.4a2.2 2.2 0 1 1-1.7-2.15V9.5z" fill="#EE1D52" opacity="0.6"/><path d="M10.7 9.3a5 5 0 1 0 4 4.9V7.6a6.5 6.5 0 0 0 3.8 1.2V6.3a3.8 3.8 0 0 1-2.6-1.8A3.8 3.8 0 0 1 15.2 2.8h-2.8v11.4a2.2 2.2 0 1 1-1.7-2.15V9.3z" fill="#fff"/></svg></span>
+            <span class="lbl">TikTok</span>
+        </button>
+    </div>
+    <button class="btn hidden-element" style="margin-top: 40px; max-width: 200px;" onclick="document.getElementById('home').scrollIntoView()" id="btn-back3">Back</button>
+</section>
+
 <script>
-// ==================== اللغات ====================
-const data = {
-    en: { name:"Youcef Mekki", tagline:"Full-Stack Developer", bioTitle:"About Me",   bioText:"Full-stack developer and Cybersecurity enthusiast. Born 31/08/2008. Passionate about building secure systems.", social:"Social Networks", works:"My Works" },
-    ar: { name:"يوسف مكي",    tagline:"مطور تطبيقات ومواقع", bioTitle:"من أنا",      bioText:"مطور تطبيقات ومواقع، شغوف بالأمن السيبراني. مواليد 31/08/2008. أسعى دائماً لابتكار حلول تقنية آمنة.",       social:"حسابات التواصل", works:"أعمالي" },
-    fr: { name:"Youcef Mekki", tagline:"Développeur Full-Stack", bioTitle:"À propos", bioText:"Développeur full-stack et passionné de cybersécurité. Né le 31/08/2008. Engagé dans la création d'applications sécurisées.", social:"Réseaux Sociaux", works:"Mes Projets" }
+// ==================== البايو الاحترافي واللغات ====================
+const uiData = {
+    en: { name:"Youcef Mekki", tagline:"Cybersecurity & Full-Stack Eng", bioTitle:"About Me", bioText:"I am Youcef Mekki, a Full-Stack Developer and Cybersecurity enthusiast. Born 31/08/2008. I specialize in building highly secure, scalable web applications and engineering innovative AI-driven experiences. My goal is to bridge the gap between flawless functionality and unbreakable security.", social:"Digital Presence", works:"My Arsenal", appsTitle: "📱 Mobile Apps", webTitle: "🌐 Web & AI Core", btnBio:"Initialize Bio", btnWorks:"Access Projects", btnSocial:"Connect", btnBack:"Return" },
+    ar: { name:"يوسف مكي", tagline:"مطور شامل وخبير أمن سيبراني", bioTitle:"الملف الشخصي", bioText:"أنا يوسف مكي، مطور تطبيقات ومواقع شغوف بالأمن السيبراني. (مواليد 31/08/2008). أتخصص في بناء أنظمة وتطبيقات ويب عالية الأمان وتطوير تجارب برمجية مبتكرة تعتمد على الذكاء الاصطناعي. هدفي هو دمج الأداء الخالي من العيوب مع الحماية المطلقة.", social:"التواجد الرقمي", works:"ترسانة المشاريع", appsTitle: "📱 تطبيقات الأندرويد", webTitle: "🌐 مشاريع الويب والذكاء الاصطناعي", btnBio:"من أنا", btnWorks:"استعراض المشاريع", btnSocial:"تواصل معي", btnBack:"رجوع" },
+    fr: { name:"Youcef Mekki", tagline:"Ingénieur Full-Stack & Cyber", bioTitle:"À Propos", bioText:"Je suis Youcef Mekki, développeur Full-Stack et passionné de cybersécurité. Né le 31/08/2008. Je conçois des applications web ultra-sécurisées et des expériences innovantes basées sur l'Intelligence Artificielle. Mon objectif : allier performance absolue et sécurité inviolable.", social:"Présence Numérique", works:"Mon Arsenal", appsTitle: "📱 Applications Mobile", webTitle: "🌐 Projets Web & IA", btnBio:"Initialiser Profil", btnWorks:"Accéder aux Projets", btnSocial:"Connecter", btnBack:"Retour" }
 };
-let langs=['en','ar','fr'], langIdx=0;
+
+const projectsDB = {
+    capCut: { url: "https://www.mediafire.com/file/oa95vgyft6s5i0u/CapCut_15.5.0.apk.bak/file", type: "app", en: { title: "CapCut Pro", desc: "Advanced video editing application for mobile.", btn: "Download APK" }, ar: { title: "CapCut Pro", desc: "تطبيق المونتاج الاحترافي وتعديل الفيديوهات الرائع للهواتف.", btn: "تحميل التطبيق" }, fr: { title: "CapCut Pro", desc: "Application de montage vidéo avancée pour mobile.", btn: "Télécharger APK" } },
+    poseTrack: { url: "https://youcefchikor31-ctrl.github.io/pose-tracking/", type: "web", en: { title: "Skeleton AI Tracking", desc: "Point the camera at a person and watch the AI track their body movements as a real-time skeleton.", btn: "Launch AI" }, ar: { title: "تتبع الهيكل العظمي بالذكاء الاصطناعي", desc: "تطبيق ويب يفتح الكاميرا لتتبع حركات جسم الإنسان وتحويلها لهيكل عظمي تفاعلي في الوقت الفعلي.", btn: "تشغيل النظام" }, fr: { title: "Suivi Squelettique IA", desc: "L'IA suit les mouvements du corps et génère un squelette en temps réel.", btn: "Lancer l'IA" } },
+    handTrack: { url: "https://youcefchikor31-ctrl.github.io/youcef-site/", type: "web", en: { title: "Hand Tracker Shapes", desc: "Uses the front camera to track your hand and generate interactive shapes.", btn: "Launch Project" }, ar: { title: "تعقب اليد والأشكال", desc: "مشروع يتعقب حركة يدك عبر الكاميرا الأمامية ليولد كرات وأشكال هندسية تتفاعل معك.", btn: "دخول للمشروع" }, fr: { title: "Suivi des Mains", desc: "Suit vos mains pour créer des formes interactives.", btn: "Lancer le Projet" } },
+    skyFire: { url: "https://youcefchikor31-ctrl.github.io/-_-/", type: "web", en: { title: "Sky of Fire", desc: "An exciting web-based game project.", btn: "Play Game" }, ar: { title: "Sky of Fire", desc: "لعبة ويب تفاعلية مبرمجة لتعمل مباشرة عبر المتصفح.", btn: "تشغيل اللعبة" }, fr: { title: "Sky of Fire", desc: "Un projet de jeu web passionnant.", btn: "Jouer" } },
+    ffLite: { url: "https://youcefchikor31-ctrl.github.io/freefirelite/", type: "web", en: { title: "Free Fire Lite", desc: "A lightweight web adaptation concept of Free Fire.", btn: "Launch Concept" }, ar: { title: "Free Fire Lite", desc: "نسخة ويب تجريبية خفيفة مستوحاة من لعبة فري فاير.", btn: "دخول للتجربة" }, fr: { title: "Free Fire Lite", desc: "Concept web léger inspiré du jeu Free Fire.", btn: "Lancer Concept" } },
+    spiderman: { url: "https://youcefchikor31-ctrl.github.io/spiderman-/", type: "web", en: { title: "Spiderman Web", desc: "Interactive web experience featuring Spiderman.", btn: "Enter Experience" }, ar: { title: "Spiderman Web", desc: "تجربة ويب تفاعلية وتصميم خاص بشخصية سبايدرمان.", btn: "دخول للمشروع" }, fr: { title: "Spiderman Web", desc: "Expérience web interactive autour de Spiderman.", btn: "Entrer" } },
+    fadaa: { url: "https://youcefchikor31-ctrl.github.io/Fadaa/", type: "web", en: { title: "Fadaa (Space)", desc: "Explore the depths of space in this immersive web project.", btn: "Explore Space" }, ar: { title: "مشروع الفضاء (Fadaa)", desc: "رحلة لاستكشاف الفضاء والعناصر الفلكية عبر الويب.", btn: "استكشاف الفضاء" }, fr: { title: "Fadaa (Espace)", desc: "Explorez l'espace dans ce projet web immersif.", btn: "Explorer" } },
+    wifiFixer: { url: "https://www.mediafire.com/file/kyixbx3xaazl4h4/WiFi_Fixer_Pro_1.0.apk/file", type: "app", en: { title: "WiFi Fixer Pro", desc: "Android app designed to optimize WiFi connections.", btn: "Download APK" }, ar: { title: "WiFi Fixer Pro", desc: "تطبيق أندرويد لإصلاح وتحسين جودة اتصال الواي فاي.", btn: "تحميل التطبيق" }, fr: { title: "WiFi Fixer Pro", desc: "Application pour optimiser les connexions WiFi.", btn: "Télécharger APK" } },
+    yuchVault: { url: "https://www.mediafire.com/file/edn5t2jxe3h2l4w/Yuch_Vault_1.0.apk/file", type: "app", en: { title: "Yuch Vault", desc: "Secure mobile vault to encrypt private files.", btn: "Download APK" }, ar: { title: "Yuch Vault", desc: "خزنة آمنة لتشفير وإخفاء صورك وملفاتك الخاصة.", btn: "تحميل التطبيق" }, fr: { title: "Yuch Vault", desc: "Coffre-fort mobile pour crypter vos fichiers.", btn: "Télécharger APK" } },
+    hiTv: { url: "https://www.mediafire.com/file/ktarrep9980x8of/HiTV_3.13.2.apk/file", type: "app", en: { title: "HiTV", desc: "Media streaming app for movies and series.", btn: "Download APK" }, ar: { title: "تطبيق HiTV", desc: "تطبيق لمشاهدة أحدث الأفلام والمسلسلات بجودة عالية.", btn: "تحميل التطبيق" }, fr: { title: "HiTV", desc: "Application de streaming pour films et séries.", btn: "Télécharger APK" } },
+    movieV3: { url: "https://www.mediafire.com/file/l5m4o2d8e70ytqr/Movie_V3.0.2.apk/file", type: "app", en: { title: "Movie V3.0.2", desc: "Latest version of the Movie streaming app.", btn: "Download APK" }, ar: { title: "Movie V3.0.2", desc: "تطبيق الأفلام الخاص بمشاهدة وتحميل المحتوى المرئي.", btn: "تحميل التطبيق" }, fr: { title: "Movie V3.0.2", desc: "Application Movie pour le streaming.", btn: "Télécharger APK" } },
+    lightroom: { url: "https://www.mediafire.com/file/udr089s5x9gknid/Lightroom_11.1.2.apk/file", type: "app", en: { title: "Lightroom", desc: "Professional photo editing application.", btn: "Download APK" }, ar: { title: "Lightroom 11.1.2", desc: "تطبيق تحرير الصور الاحترافي وتعديل الألوان.", btn: "تحميل التطبيق" }, fr: { title: "Lightroom", desc: "Application professionnelle de retouche photo.", btn: "Télécharger APK" } }
+};
+
+let langs=['en','ar','fr'], langIdx=0, currentProjectUrl = "";
+
 function updateUI(){
     const l=langs[langIdx];
     document.getElementById('lang-display').innerText=l.toUpperCase();
-    document.getElementById('name').innerText=data[l].name;
-    document.getElementById('tagline').innerText=data[l].tagline;
-    document.getElementById('bio-title').innerText=data[l].bioTitle;
-    document.getElementById('bio-text').innerText=data[l].bioText;
-    document.getElementById('social-title').innerText=data[l].social;
-    document.getElementById('works-title').innerText=data[l].works;
+    document.getElementById('name').innerText=uiData[l].name;
+    document.getElementById('tagline').innerText=uiData[l].tagline;
+    document.getElementById('bio-title').innerText=uiData[l].bioTitle;
+    document.getElementById('bio-text').innerText=uiData[l].bioText;
+    document.getElementById('social-title').innerText=uiData[l].social;
+    document.getElementById('works-title').innerText=uiData[l].works;
+    document.getElementById('apps-title').innerText=uiData[l].appsTitle;
+    document.getElementById('web-title').innerText=uiData[l].webTitle;
+    document.getElementById('btn-bio').innerText=uiData[l].btnBio;
+    document.getElementById('btn-works').innerText=uiData[l].btnWorks;
+    document.getElementById('btn-social').innerText=uiData[l].btnSocial;
+    document.getElementById('btn-back1').innerText=uiData[l].btnBack;
+    document.getElementById('btn-back2').innerText=uiData[l].btnBack;
+    document.getElementById('btn-back3').innerText=uiData[l].btnBack;
     document.documentElement.dir = l==='ar' ? 'rtl' : 'ltr';
 }
 function nextLang(){ langIdx=(langIdx+1)%langs.length; updateUI(); }
 function prevLang(){ langIdx=(langIdx-1+langs.length)%langs.length; updateUI(); }
 updateUI();
 
-// ==================== Three.js ====================
-const canvas = document.getElementById('robot-canvas');
-const renderer = new THREE.WebGLRenderer({ canvas, alpha:true, antialias:true });
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-renderer.setSize(window.innerWidth, window.innerHeight);
-const scene  = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(55, window.innerWidth/window.innerHeight, 0.1, 100);
-camera.position.set(0, 1.2, 6);
-
-scene.add(new THREE.AmbientLight(0x111133, 2.5));
-const blueLight = new THREE.PointLight(0x00d4ff, 4, 22);
-blueLight.position.set(-3, 3, 3); scene.add(blueLight);
-const purpleLight = new THREE.PointLight(0x8844ff, 2.5, 18);
-purpleLight.position.set(3, 2, -2); scene.add(purpleLight);
-const rimLight = new THREE.DirectionalLight(0x00ffcc, 1.2);
-rimLight.position.set(0, 5, -5); scene.add(rimLight);
-const redLight = new THREE.PointLight(0xff2d4d, 1.8, 14);
-redLight.position.set(0, -1, 3); scene.add(redLight);
-
-const metalMat   = new THREE.MeshStandardMaterial({ color:0x1a1a2e, metalness:0.9, roughness:0.2 });
-const glowMat    = new THREE.MeshStandardMaterial({ color:0x00d4ff, emissive:0x00d4ff, emissiveIntensity:1.8, metalness:0.3, roughness:0.1 });
-const darkMat    = new THREE.MeshStandardMaterial({ color:0x0d0d1a, metalness:0.8, roughness:0.3 });
-const eyeMat     = new THREE.MeshStandardMaterial({ color:0x00ffff, emissive:0x00ffff, emissiveIntensity:3 });
-const accentMat  = new THREE.MeshStandardMaterial({ color:0x8844ff, emissive:0x8844ff, emissiveIntensity:1.2, metalness:0.5, roughness:0.2 });
-const redCoreMat = new THREE.MeshStandardMaterial({ color:0xff2d4d, emissive:0xff2d4d, emissiveIntensity:2.2, metalness:0.4, roughness:0.15 });
-
-function box(w,h,d,mat,x,y,z){ const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat); m.position.set(x,y,z); return m; }
-function cyl(rt,rb,h,seg,mat,x,y,z,rx=0,ry=0,rz=0){ const m=new THREE.Mesh(new THREE.CylinderGeometry(rt,rb,h,seg),mat); m.position.set(x,y,z); m.rotation.set(rx,ry,rz); return m; }
-function sph(r,mat,x,y,z){ const m=new THREE.Mesh(new THREE.SphereGeometry(r,16,16),mat); m.position.set(x,y,z); return m; }
-
-const robotGroup = new THREE.Group();
-scene.add(robotGroup);
-robotGroup.position.set(0, -0.3, 0);
-
-robotGroup.add(box(1.2,1.4,0.7,metalMat,0,0,0));
-robotGroup.add(box(1.22,0.05,0.72,glowMat,0,0.4,0));
-robotGroup.add(box(1.22,0.05,0.72,glowMat,0,-0.4,0));
-robotGroup.add(box(0.05,1.42,0.72,accentMat,0.55,0,0));
-robotGroup.add(box(0.05,1.42,0.72,accentMat,-0.55,0,0));
-robotGroup.add(box(0.6,0.5,0.1,darkMat,0,0.1,0.36));
-robotGroup.add(sph(0.08,glowMat,0.15,0.15,0.44));
-robotGroup.add(sph(0.08,glowMat,-0.15,0.15,0.44));
-robotGroup.add(sph(0.07,redCoreMat,0,-0.05,0.46));
-robotGroup.add(cyl(0.18,0.22,0.25,12,darkMat,0,0.82,0));
-robotGroup.add(cyl(0.2,0.2,0.05,12,glowMat,0,0.95,0));
-robotGroup.add(box(0.9,0.8,0.8,metalMat,0,1.45,0));
-robotGroup.add(box(0.92,0.05,0.82,glowMat,0,1.82,0));
-robotGroup.add(box(0.92,0.05,0.82,glowMat,0,1.08,0));
-robotGroup.add(box(0.1,0.4,0.3,darkMat,0.5,1.45,0));
-robotGroup.add(box(0.1,0.4,0.3,darkMat,-0.5,1.45,0));
-robotGroup.add(cyl(0.06,0.06,0.15,8,glowMat,0.56,1.45,0,0,0,Math.PI/2));
-robotGroup.add(cyl(0.06,0.06,0.15,8,glowMat,-0.56,1.45,0,0,0,Math.PI/2));
-const eyeL=box(0.18,0.1,0.05,eyeMat,0.22,1.5,0.41);
-const eyeR=box(0.18,0.1,0.05,eyeMat,-0.22,1.5,0.41);
-robotGroup.add(eyeL,eyeR);
-robotGroup.add(box(0.35,0.04,0.05,glowMat,0,1.22,0.41));
-robotGroup.add(box(0.04,0.04,0.05,glowMat,0.1,1.22,0.41));
-robotGroup.add(box(0.04,0.04,0.05,glowMat,-0.1,1.22,0.41));
-robotGroup.add(cyl(0.03,0.03,0.4,8,darkMat,0.25,2.05,0));
-robotGroup.add(sph(0.07,glowMat,0.25,2.27,0));
-
-const leftArm=new THREE.Group();  leftArm.position.set(0.75,0.2,0);
-const rightArm=new THREE.Group(); rightArm.position.set(-0.75,0.2,0);
-function buildArm(g){
-    g.add(cyl(0.18,0.18,0.15,12,accentMat,0,0,0,0,0,Math.PI/2));
-    const upper=new THREE.Group(); upper.position.set(0,-0.1,0);
-    upper.add(box(0.28,0.7,0.28,metalMat,0,-0.35,0));
-    upper.add(box(0.3,0.05,0.3,glowMat,0,0,0));
-    upper.add(box(0.3,0.05,0.3,glowMat,0,-0.7,0));
-    g.add(upper);
-    g.add(cyl(0.16,0.16,0.1,12,darkMat,0,-0.75,0));
-    g.add(cyl(0.18,0.18,0.05,12,glowMat,0,-0.78,0));
-    const lower=new THREE.Group(); lower.position.set(0,-0.85,0);
-    lower.add(box(0.24,0.65,0.24,metalMat,0,-0.32,0));
-    lower.add(box(0.26,0.04,0.26,accentMat,0,-0.65,0));
-    g.add(lower);
-    g.add(box(0.22,0.18,0.16,darkMat,0,-1.55,0));
-    for(let i=-1;i<=1;i++) g.add(box(0.05,0.12,0.06,metalMat,i*0.07,-1.7,0.04));
+function openModal(key) {
+    const p = projectsDB[key], l = langs[langIdx];
+    if(!p) return;
+    document.getElementById('modal-title').innerText = p[l].title;
+    document.getElementById('modal-desc').innerText = p[l].desc;
+    document.getElementById('modal-action-btn').innerText = p[l].btn;
+    currentProjectUrl = p.url;
+    document.getElementById('project-modal').classList.add('active');
 }
-buildArm(leftArm); buildArm(rightArm);
-robotGroup.add(leftArm,rightArm);
+function closeModal(e) { if(e) e.stopPropagation(); document.getElementById('project-modal').classList.remove('active'); }
+function openProjectLink() { if(currentProjectUrl) { window.open(currentProjectUrl, '_blank'); closeModal(); } }
 
-function buildLeg(x){
-    const g=new THREE.Group(); g.position.set(x,-0.7,0);
-    g.add(cyl(0.2,0.2,0.15,12,accentMat,0,0,0));
-    g.add(box(0.32,0.8,0.32,metalMat,0,-0.47,0));
-    g.add(box(0.34,0.05,0.34,glowMat,0,-0.08,0));
-    g.add(box(0.34,0.05,0.34,glowMat,0,-0.85,0));
-    g.add(cyl(0.18,0.18,0.12,12,darkMat,0,-0.95,0));
-    g.add(box(0.3,0.7,0.3,metalMat,0,-1.32,0));
-    g.add(box(0.32,0.05,0.32,accentMat,0,-1.65,0));
-    g.add(box(0.35,0.14,0.5,metalMat,0,-1.77,0.08));
-    g.add(box(0.37,0.04,0.52,glowMat,0,-1.82,0.08));
-    return g;
+// ==================== تأثير الظهور عند التمرير (Scroll Animations) ====================
+const observerOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('show-element');
+            // إيقاف المراقبة بعد الظهور لتقليل استهلاك الموارد
+            observer.unobserve(entry.target);
+        }
+    });
+}, observerOptions);
+
+document.querySelectorAll('.hidden-element').forEach(el => observer.observe(el));
+
+// ==================== تأثير الميلان ثلاثي الأبعاد (3D Tilt Effect) للكمبيوتر ====================
+document.querySelectorAll('.tilt-effect').forEach(el => {
+    el.addEventListener('mousemove', e => {
+        if(window.innerWidth < 768) return; // تعطيل في الهواتف
+        const rect = el.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const rotateX = ((y - centerY) / centerY) * -10; // درجة الميلان
+        const rotateY = ((x - centerX) / centerX) * 10;
+        el.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+    });
+    el.addEventListener('mouseleave', () => {
+        el.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+    });
+});
+
+// ==================== خلفية الجزيئات السيبرانية (Canvas Particle Network) ====================
+const canvas = document.getElementById('cyber-canvas');
+const ctx = canvas.getContext('2d');
+let width, height, particles = [];
+let mouse = { x: null, y: null, radius: 150 };
+
+function resize() {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
 }
-robotGroup.add(buildLeg(0.32),buildLeg(-0.32));
+window.addEventListener('resize', resize);
+resize();
 
-const pGeo=new THREE.BufferGeometry();
-const pPos=new Float32Array(400*3);
-for(let i=0;i<pPos.length;i++) pPos[i]=(Math.random()-0.5)*22;
-pGeo.setAttribute('position',new THREE.BufferAttribute(pPos,3));
-const particles=new THREE.Points(pGeo,new THREE.PointsMaterial({color:0x00d4ff,size:0.04,transparent:true,opacity:0.45}));
-scene.add(particles);
+window.addEventListener('mousemove', e => { mouse.x = e.x; mouse.y = e.y; });
+window.addEventListener('mouseout', () => { mouse.x = null; mouse.y = null; });
+window.addEventListener('touchmove', e => { mouse.x = e.touches[0].clientX; mouse.y = e.touches[0].clientY; });
 
-const grid=new THREE.GridHelper(24,24,0x00d4ff,0x0a0a1a);
-grid.position.y=-2.5; grid.material.opacity=0.25; grid.material.transparent=true;
-scene.add(grid);
+class Particle {
+    constructor() {
+        this.x = Math.random() * width;
+        this.y = Math.random() * height;
+        this.size = Math.random() * 2 + 1;
+        this.baseX = this.x; this.baseY = this.y;
+        this.density = (Math.random() * 30) + 1;
+        this.vx = (Math.random() - 0.5) * 1;
+        this.vy = (Math.random() - 0.5) * 1;
+    }
+    update() {
+        this.x += this.vx; this.y += this.vy;
+        if(this.x > width || this.x < 0) this.vx = -this.vx;
+        if(this.y > height || this.y < 0) this.vy = -this.vy;
 
-const ring1=new THREE.Mesh(new THREE.TorusGeometry(2,0.02,8,80),new THREE.MeshStandardMaterial({color:0x00d4ff,emissive:0x00d4ff,emissiveIntensity:0.6}));
-ring1.rotation.x=Math.PI/2; scene.add(ring1);
-const ring2=new THREE.Mesh(new THREE.TorusGeometry(1.5,0.015,8,60),new THREE.MeshStandardMaterial({color:0x8844ff,emissive:0x8844ff,emissiveIntensity:0.6}));
-ring2.rotation.x=1.2; ring2.rotation.z=0.5; scene.add(ring2);
-
-let touchX=0, touchY=0;
-document.addEventListener('touchmove',(e)=>{ e.preventDefault(); const t=e.touches[0]; touchX=(t.clientX/window.innerWidth-0.5)*2; touchY=(t.clientY/window.innerHeight-0.5)*2; },{passive:false});
-document.addEventListener('touchstart',(e)=>{ const t=e.touches[0]; touchX=(t.clientX/window.innerWidth-0.5)*2; touchY=(t.clientY/window.innerHeight-0.5)*2; });
-document.addEventListener('mousemove',(e)=>{ touchX=(e.clientX/window.innerWidth-0.5)*2; touchY=(e.clientY/window.innerHeight-0.5)*2; });
-
-let t=0;
-function animate(){
-    requestAnimationFrame(animate); t+=0.012;
-    robotGroup.position.y=-0.3+Math.sin(t*0.8)*0.12;
-    robotGroup.rotation.y+=(touchX*0.6-robotGroup.rotation.y)*0.06;
-    robotGroup.rotation.x+=(-touchY*0.25-robotGroup.rotation.x)*0.06;
-    leftArm.rotation.x=Math.sin(t)*0.25-0.3;
-    rightArm.rotation.x=-Math.sin(t)*0.25-0.3;
-    leftArm.rotation.z=0.15+Math.sin(t*0.7)*0.05;
-    rightArm.rotation.z=-0.15-Math.sin(t*0.7)*0.05;
-    eyeMat.emissiveIntensity=2+Math.sin(t*3);
-    redCoreMat.emissiveIntensity=1.8+Math.sin(t*2.2)*0.8;
-    blueLight.intensity=3+Math.sin(t*2)*0.8;
-    blueLight.position.x=Math.sin(t*0.5)*4;
-    ring1.rotation.z+=0.005; ring2.rotation.y+=0.008;
-    ring1.position.copy(robotGroup.position);
-    ring2.position.copy(robotGroup.position);
-    particles.rotation.y+=0.0003;
-    camera.position.x+=(touchX*0.4-camera.position.x)*0.02;
-    camera.position.y+=(-touchY*0.25+1.2-camera.position.y)*0.02;
-    camera.lookAt(0,0.8,0);
-    renderer.render(scene,camera);
+        // التفاعل مع الماوس
+        if(mouse.x != null) {
+            let dx = mouse.x - this.x;
+            let dy = mouse.y - this.y;
+            let distance = Math.sqrt(dx*dx + dy*dy);
+            if(distance < mouse.radius) {
+                const force = (mouse.radius - distance) / mouse.radius;
+                this.x -= dx * force * 0.05;
+                this.y -= dy * force * 0.05;
+            }
+        }
+    }
+    draw() {
+        ctx.fillStyle = '#00f3ff';
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.closePath();
+        ctx.fill();
+    }
 }
-animate();
 
-window.addEventListener('resize',()=>{ renderer.setSize(window.innerWidth,window.innerHeight); camera.aspect=window.innerWidth/window.innerHeight; camera.updateProjectionMatrix(); });
+function initParticles() {
+    particles = [];
+    let numParticles = (width * height) / 9000; // تقليل العدد لزيادة الأداء
+    for(let i = 0; i < numParticles; i++) particles.push(new Particle());
+}
+initParticles();
+
+function animateParticles() {
+    ctx.clearRect(0, 0, width, height);
+    for(let i = 0; i < particles.length; i++) {
+        particles[i].update();
+        particles[i].draw();
+        // رسم الخطوط المترابطة (الشبكة العصبية)
+        for(let j = i; j < particles.length; j++) {
+            let dx = particles[i].x - particles[j].x;
+            let dy = particles[i].y - particles[j].y;
+            let dist = Math.sqrt(dx*dx + dy*dy);
+            if(dist < 120) {
+                ctx.beginPath();
+                ctx.strokeStyle = `rgba(0, 243, 255, ${1 - dist/120})`;
+                ctx.lineWidth = 1;
+                ctx.moveTo(particles[i].x, particles[i].y);
+                ctx.lineTo(particles[j].x, particles[j].y);
+                ctx.stroke();
+            }
+        }
+    }
+    requestAnimationFrame(animateParticles);
+}
+animateParticles();
 </script>
 </body>
 </html>
