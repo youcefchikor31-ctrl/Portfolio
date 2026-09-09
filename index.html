@@ -17,265 +17,165 @@
         }
         
         * { margin:0; padding:0; box-sizing:border-box; font-family:'Rajdhani', sans-serif; }
-        
-        /* شريط التمرير المخصص */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: var(--dark-bg); }
         ::-webkit-scrollbar-thumb { background: var(--neon-blue); border-radius: 10px; }
 
-        body { 
-            background: var(--dark-bg); color: #fff; 
-            overflow-x: hidden; scroll-behavior: smooth;
-        }
+        body { background: var(--dark-bg); color: #fff; overflow-x: hidden; scroll-behavior: smooth; }
 
-        /* خلفية الكانفاس التفاعلية */
-        #cyber-canvas { 
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            z-index: 0; pointer-events: none; 
-        }
+        #cyber-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
 
-        /* تنسيق الأقسام */
-        .section { 
-            min-height: 100vh; display: flex; flex-direction: column; 
-            justify-content: center; align-items: center; position: relative; 
-            padding: 80px 20px; z-index: 1; 
-        }
-        
-        /* تدرج لوني خلف الأقسام لزيادة العمق */
-        .section::before { 
-            content:''; position:absolute; inset:0; 
-            background: radial-gradient(circle at center, transparent 0%, #050508 100%); 
-            z-index:-1; opacity: 0.9; 
-        }
+        .section { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; padding: 80px 20px; z-index: 1; }
+        .section::before { content:''; position:absolute; inset:0; background: radial-gradient(circle at center, transparent 0%, #050508 100%); z-index:-1; opacity: 0.9; }
 
-        /* تأثيرات الظهور عند التمرير */
         .hidden-element { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
         .show-element { opacity: 1; transform: translateY(0); }
 
-        /* الأزرار الاحترافية */
         .btn { 
             width: 100%; max-width: 300px; padding: 16px; margin: 10px; 
             border-radius: 12px; border: 1px solid var(--glass-border); 
             background: var(--glass-bg); cursor: pointer; color: white; 
-            font-weight: 700; font-size: 1.1rem; letter-spacing: 1.5px; 
-            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-            transition: all 0.3s ease; position: relative; overflow: hidden;
+            font-weight: 700; font-size: 1.1rem; letter-spacing: 1px; 
+            backdrop-filter: blur(12px); transition: all 0.3s ease; position: relative; overflow: hidden;
             text-transform: uppercase;
         }
-        .btn::after {
-            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
-            opacity: 0; transition: opacity 0.3s; pointer-events: none;
-        }
-        .btn:hover::after { opacity: 1; }
-        .btn:hover { 
-            background: rgba(0, 243, 255, 0.1); transform: translateY(-3px); 
-            border-color: var(--neon-blue); box-shadow: 0 10px 25px rgba(0,243,255,0.25); 
-        }
-        .btn-download:hover { border-color: var(--neon-red); box-shadow: 0 10px 25px rgba(255,42,95,0.25); background: rgba(255, 42, 95, 0.1); }
+        .btn:hover { background: rgba(0, 243, 255, 0.1); transform: translateY(-3px); border-color: var(--neon-blue); box-shadow: 0 10px 25px rgba(0,243,255,0.25); }
         .btn-web:hover { border-color: var(--neon-purple); box-shadow: 0 10px 25px rgba(157,78,221,0.25); background: rgba(157, 78, 221, 0.1); }
 
-        /* أيقونات السوشيال */
         .btn-social { display: flex; align-items: center; gap: 15px; padding-left: 20px; text-transform: none; }
         .btn-social .s-icon { width: 30px; height: 30px; flex-shrink: 0; transition: 0.4s; }
         .btn-social:hover .s-icon { transform: rotate(10deg) scale(1.2); }
         .btn-social svg { width: 100%; height: 100%; }
         
-        /* الصورة الشخصية */
         .profile-wrapper { position: relative; margin-bottom: 25px; }
         .profile-img { 
-            width: 170px; height: 170px; border-radius: 50%; 
-            border: 3px solid transparent; 
-            background: linear-gradient(var(--dark-bg), var(--dark-bg)) padding-box, 
-                        linear-gradient(45deg, var(--neon-blue), var(--neon-purple)) border-box;
-            box-shadow: 0 0 35px rgba(0,243,255,0.3); 
-            object-fit: cover; z-index: 2; position: relative;
-            transition: transform 0.5s ease;
+            width: 170px; height: 170px; border-radius: 50%; border: 3px solid transparent; 
+            background: linear-gradient(var(--dark-bg), var(--dark-bg)) padding-box, linear-gradient(45deg, var(--neon-blue), var(--neon-purple)) border-box;
+            box-shadow: 0 0 35px rgba(0,243,255,0.3); object-fit: cover; z-index: 2; position: relative; transition: transform 0.5s ease;
         }
         .profile-wrapper:hover .profile-img { transform: scale(1.05); }
 
-        #home h1 { text-shadow: 0 0 25px var(--neon-blue); margin-bottom: 10px; font-family: 'Orbitron', sans-serif; font-size: clamp(2rem, 5vw, 3.5rem); letter-spacing: 3px; font-weight: 900; }
-        #home .tagline { color: var(--neon-red); font-weight: 700; letter-spacing: 4px; text-transform: uppercase; font-size: clamp(0.9rem, 2vw, 1.1rem); margin-bottom: 40px; text-shadow: 0 0 15px rgba(255,42,95,0.5); }
+        h1 { text-shadow: 0 0 25px var(--neon-blue); margin-bottom: 10px; font-family: 'Orbitron', sans-serif; font-size: clamp(2rem, 5vw, 3.5rem); letter-spacing: 3px; font-weight: 900; }
+        .tagline { color: var(--neon-red); font-weight: 700; letter-spacing: 4px; text-transform: uppercase; font-size: clamp(0.9rem, 2vw, 1.1rem); margin-bottom: 40px; text-shadow: 0 0 15px rgba(255,42,95,0.5); }
 
-        /* مبدل اللغات */
         .lang-box { position: fixed; top: 25px; left: 25px; z-index: 1000; display: flex; flex-direction: column; gap: 5px; }
         .arrow { cursor: pointer; background: var(--glass-bg); border: 1px solid var(--glass-border); padding: 8px 15px; border-radius: 8px; backdrop-filter: blur(10px); transition: 0.3s; font-size: 0.8rem; text-align: center; font-family: 'Orbitron', sans-serif;}
-        .arrow:hover { border-color: var(--neon-blue); background: rgba(0,243,255,0.15); box-shadow: 0 0 15px rgba(0,243,255,0.3); }
+        .arrow:hover { border-color: var(--neon-blue); background: rgba(0,243,255,0.15); }
 
         h2 { margin-bottom: 40px; font-size: clamp(1.8rem, 4vw, 2.5rem); font-family: 'Orbitron', sans-serif; text-shadow: 0 0 20px var(--neon-blue); letter-spacing: 2px; text-transform: uppercase; }
         h2::after { content: ''; display: block; width: 80px; height: 4px; margin: 15px auto 0; background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple)); border-radius: 2px; }
 
-        /* شبكة الأعمال */
-        .works-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; width: 100%; max-width: 1000px; }
-        .work-category { 
-            background: var(--glass-bg); border: 1px solid var(--glass-border); 
-            border-radius: 20px; padding: 40px 20px; backdrop-filter: blur(12px); 
-            display: flex; flex-direction: column; align-items: center; 
-            transition: transform 0.3s ease, border-color 0.3s ease;
-        }
-        .work-category:hover { border-color: rgba(255,255,255,0.3); }
-        .work-category h3 { margin-bottom: 25px; font-size: 1.5rem; font-family: 'Orbitron', sans-serif; }
-        .category-apps h3 { color: var(--neon-red); text-shadow: 0 0 15px rgba(255,42,95,0.4); }
-        .category-web h3 { color: var(--neon-purple); text-shadow: 0 0 15px rgba(157,78,221,0.4); }
-
-        /* صندوق البايو */
-        .bio-box {
-            background: var(--glass-bg); border: 1px solid var(--glass-border); 
-            padding: 40px; border-radius: 20px; backdrop-filter: blur(10px); 
-            max-width: 700px; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-        }
+        .bio-box { background: var(--glass-bg); border: 1px solid var(--glass-border); padding: 40px; border-radius: 20px; backdrop-filter: blur(10px); max-width: 700px; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
         #bio-text { line-height: 1.9; font-size: 1.2rem; letter-spacing: 0.5px; color: #e0e0e0; }
 
-        /* النافذة المنبثقة (Modal) */
-        .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-            z-index: 2000; display: none; justify-content: center; align-items: center;
-            opacity: 0; transition: opacity 0.4s ease;
+        /* ================= الهاتف الافتراضي (Interactive Phone Mockup) ================= */
+        .app-showcase-container { display: flex; flex-wrap: wrap; gap: 40px; justify-content: center; align-items: center; max-width: 1000px; width: 100%; margin-bottom: 40px; }
+        
+        .app-selector { display: flex; flex-direction: column; gap: 15px; flex: 1; min-width: 280px; }
+        .app-btn { 
+            background: var(--glass-bg); border: 1px solid var(--glass-border); color: #fff; 
+            padding: 15px 20px; border-radius: 12px; font-family: 'Orbitron', sans-serif; font-size: 1.1rem;
+            cursor: pointer; transition: 0.3s; text-align: left; position: relative; overflow: hidden;
         }
-        .modal-overlay.active { display: flex; opacity: 1; }
-        .modal-content {
-            background: #0a0a10; border: 1px solid var(--neon-blue);
-            box-shadow: 0 0 40px rgba(0,243,255,0.2), inset 0 0 20px rgba(0,243,255,0.05); 
-            border-radius: 20px; padding: 50px 30px; width: 90%; max-width: 500px; 
-            text-align: center; position: relative; transform: scale(0.9); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        .app-btn:hover, .app-btn.active { background: rgba(255,42,95,0.15); border-color: var(--neon-red); box-shadow: 0 0 20px rgba(255,42,95,0.3); padding-left: 30px; }
+        .app-btn.active::before { content:'▶'; position: absolute; left: 10px; color: var(--neon-red); }
+
+        .phone-mockup-wrapper { display: flex; flex-direction: column; align-items: center; gap: 20px; }
+        .phone-frame {
+            width: 280px; height: 580px; background: #000; border: 14px solid #1a1a24; 
+            border-radius: 40px; position: relative; box-shadow: 0 20px 50px rgba(0,0,0,0.8), 0 0 30px rgba(0,243,255,0.2);
+            display: flex; flex-direction: column; overflow: hidden;
         }
-        .modal-overlay.active .modal-content { transform: scale(1); }
-        .modal-title { font-family: 'Orbitron', sans-serif; color: var(--neon-blue); font-size: 2rem; margin-bottom: 20px; text-shadow: 0 0 10px rgba(0,243,255,0.5);}
-        .modal-desc { font-size: 1.15rem; line-height: 1.7; color: #ccc; margin-bottom: 35px; }
-        .modal-close {
-            position: absolute; top: 15px; right: 25px; font-size: 1.8rem; color: #fff;
-            cursor: pointer; opacity: 0.6; transition: 0.3s;
-        }
-        .modal-close:hover { opacity: 1; color: var(--neon-red); transform: rotate(90deg); }
-        .modal-action-btn { background: var(--neon-blue); color: #000; border: none; }
-        .modal-action-btn:hover { background: #fff; box-shadow: 0 0 20px var(--neon-blue); transform: translateY(-3px); }
+        .phone-notch { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 130px; height: 25px; background: #1a1a24; border-bottom-left-radius: 15px; border-bottom-right-radius: 15px; z-index: 10; }
+        
+        .phone-screen { flex: 1; position: relative; background: #111; display: flex; justify-content: center; align-items: center; }
+        .phone-screen img { width: 100%; height: 100%; object-fit: contain; position: absolute; opacity: 0; transition: opacity 0.5s ease-in-out; }
+        .phone-screen img.active { opacity: 1; }
+        
+        .download-app-btn { background: var(--neon-blue); color: #000; font-weight: 900; box-shadow: 0 0 15px rgba(0,243,255,0.5); width: 280px; }
+        .download-app-btn:hover { background: #fff; transform: scale(1.05); }
+
+        .works-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; width: 100%; max-width: 1000px; }
+        .work-category { background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 20px; padding: 40px 20px; display: flex; flex-direction: column; align-items: center; }
+        .work-category h3 { margin-bottom: 25px; font-size: 1.5rem; font-family: 'Orbitron', sans-serif; color: var(--neon-purple); text-shadow: 0 0 15px rgba(157,78,221,0.4); }
+
+        @media (max-width:768px) { .app-showcase-container { flex-direction: column; } .app-selector { width: 100%; } .app-btn { text-align: center; } .app-btn:hover, .app-btn.active { padding-left: 20px; } .app-btn.active::before { display: none; } }
     </style>
 </head>
 <body>
 
-<!-- خلفية الجزيئات السيبرانية -->
 <canvas id="cyber-canvas"></canvas>
 
 <div class="lang-box">
     <div class="arrow" onclick="nextLang()">▲</div>
-    <div id="lang-display" style="text-align:center;font-weight:800; font-family:'Orbitron',sans-serif; letter-spacing: 1px;">EN</div>
+    <div id="lang-display" style="text-align:center;font-weight:800; font-family:'Orbitron',sans-serif;">EN</div>
     <div class="arrow" onclick="prevLang()">▼</div>
 </div>
 
-<!-- النافذة المنبثقة -->
-<div class="modal-overlay" id="project-modal" onclick="closeModal(event)">
-    <div class="modal-content" onclick="event.stopPropagation()">
-        <span class="modal-close" onclick="closeModal(event)">✖</span>
-        <h3 class="modal-title" id="modal-title">Title</h3>
-        <p class="modal-desc" id="modal-desc">Description</p>
-        <button class="btn modal-action-btn" id="modal-action-btn" onclick="openProjectLink()">Open</button>
-    </div>
-</div>
-
-<!-- الرئيسية -->
 <section id="home" class="section">
-    <div class="hidden-element profile-wrapper">
-        <img src="myphoto.jpg" alt="Youcef Mekki" class="profile-img">
-    </div>
+    <div class="hidden-element profile-wrapper"><img src="myphoto.jpg" alt="Youcef Mekki" class="profile-img"></div>
     <h1 id="name" class="hidden-element">Youcef Mekki</h1>
     <div class="tagline hidden-element" id="tagline">Cyber & Full-Stack Developer</div>
     <div style="display: flex; flex-direction: column; gap: 10px; width: 100%; align-items: center;" class="hidden-element">
         <button class="btn" onclick="document.getElementById('bio').scrollIntoView()" id="btn-bio">About Me</button>
-        <button class="btn" onclick="document.getElementById('works').scrollIntoView()" id="btn-works">My Works</button>
-        <button class="btn" onclick="document.getElementById('social').scrollIntoView()" id="btn-social">Social Links</button>
+        <button class="btn" onclick="document.getElementById('apps').scrollIntoView()" id="btn-apps">My Apps</button>
+        <button class="btn" onclick="document.getElementById('works').scrollIntoView()" id="btn-works">Web & AI</button>
     </div>
 </section>
 
-<!-- من أنا -->
 <section id="bio" class="section">
     <h2 id="bio-title" class="hidden-element">About Me</h2>
-    <div class="bio-box hidden-element tilt-effect">
+    <div class="bio-box hidden-element">
         <p id="bio-text"></p>
     </div>
-    <button class="btn hidden-element" style="margin-top: 40px; max-width: 200px;" onclick="document.getElementById('home').scrollIntoView()" id="btn-back1">Back</button>
 </section>
 
-<!-- أعمالي -->
-<section id="works" class="section">
-    <h2 id="works-title" class="hidden-element">My Works</h2>
-    
-    <div class="works-grid">
-        <!-- التطبيقات -->
-        <div class="work-category category-apps hidden-element tilt-effect">
-            <h3 id="apps-title">📱 Mobile Apps</h3>
-            <button class="btn btn-download" onclick="openModal('capCut')">CapCut Pro</button>
-            <button class="btn btn-download" onclick="openModal('wifiFixer')">WiFi Fixer Pro</button>
-            <button class="btn btn-download" onclick="openModal('yuchVault')">Yuch Vault</button>
-            <button class="btn btn-download" onclick="openModal('hiTv')">HiTV</button>
-            <button class="btn btn-download" onclick="openModal('movieV3')">Movie V3.0.2</button>
-            <button class="btn btn-download" onclick="openModal('lightroom')">Lightroom 11.1.2</button>
-        </div>
-
-        <!-- مشاريع الويب والذكاء الاصطناعي -->
-        <div class="work-category category-web hidden-element tilt-effect">
-            <h3 id="web-title">🌐 Web & AI</h3>
-            <button class="btn btn-web" onclick="openModal('poseTrack')">Skeleton Pose Tracking</button>
-            <button class="btn btn-web" onclick="openModal('handTrack')">Hand Tracker Shapes</button>
-            <button class="btn btn-web" onclick="openModal('skyFire')">Sky of Fire</button>
-            <button class="btn btn-web" onclick="openModal('ffLite')">Free Fire Lite</button>
-            <button class="btn btn-web" onclick="openModal('spiderman')">Spiderman Web</button>
-            <button class="btn btn-web" onclick="openModal('fadaa')">Fadaa (Space)</button>
+<section id="apps" class="section">
+    <h2 id="apps-title" class="hidden-element">📱 Mobile Apps Showcase</h2>
+    <div class="app-showcase-container hidden-element">
+        <div class="app-selector" id="app-buttons-container"></div>
+        <div class="phone-mockup-wrapper">
+            <div class="phone-frame">
+                <div class="phone-notch"></div>
+                <div class="phone-screen" id="phone-screen-slider"></div>
+            </div>
+            <button class="btn download-app-btn" id="active-download-btn" onclick="downloadActiveApp()">DOWNLOAD APK</button>
         </div>
     </div>
-
-    <button class="btn hidden-element" style="margin-top: 40px; max-width: 200px;" onclick="document.getElementById('home').scrollIntoView()" id="btn-back2">Back</button>
 </section>
 
-<!-- السوشيال -->
+<section id="works" class="section">
+    <h2 id="web-title" class="hidden-element">🌐 Web & AI Core</h2>
+    <div class="works-grid hidden-element">
+        <div class="work-category">
+            <button class="btn btn-web" onclick="window.open('https://youcefchikor31-ctrl.github.io/pose-tracking/')">Skeleton Pose Tracking</button>
+            <button class="btn btn-web" onclick="window.open('https://youcefchikor31-ctrl.github.io/youcef-site/')">Hand Tracker Shapes</button>
+            <button class="btn btn-web" onclick="window.open('https://youcefchikor31-ctrl.github.io/-_-/')">Sky of Fire</button>
+            <button class="btn btn-web" onclick="window.open('https://youcefchikor31-ctrl.github.io/freefirelite/')">Free Fire Lite</button>
+            <button class="btn btn-web" onclick="window.open('https://youcefchikor31-ctrl.github.io/spiderman-/')">Spiderman Web</button>
+            <button class="btn btn-web" onclick="window.open('https://youcefchikor31-ctrl.github.io/Fadaa/')">Fadaa (Space)</button>
+        </div>
+    </div>
+</section>
+
 <section id="social" class="section">
     <h2 id="social-title" class="hidden-element">Social Networks</h2>
     <div style="display: flex; flex-wrap: wrap; justify-content: center; max-width: 800px; gap: 15px;" class="hidden-element">
-        <button class="btn btn-social tilt-effect" style="max-width:220px;" onclick="window.open('https://www.instagram.com/chikor_youcef_31')">
-            <span class="s-icon"><svg viewBox="0 0 24 24"><defs><radialGradient id="ig" cx="30%" cy="107%" r="150%"><stop offset="0%" stop-color="#fdf497"/><stop offset="45%" stop-color="#fd5949"/><stop offset="60%" stop-color="#d6249f"/><stop offset="90%" stop-color="#285AEB"/></radialGradient></defs><rect width="24" height="24" rx="6" fill="url(#ig)"/><rect x="6" y="6" width="12" height="12" rx="4" fill="none" stroke="#fff" stroke-width="1.5"/><circle cx="12" cy="12" r="3.2" fill="none" stroke="#fff" stroke-width="1.5"/><circle cx="16.3" cy="7.7" r="1" fill="#fff"/></svg></span>
-            <span class="lbl">Instagram</span>
-        </button>
-        <button class="btn btn-social tilt-effect" style="max-width:220px;" onclick="window.open('https://t.me/213796514353')">
-            <span class="s-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#27A7E7"/><path d="M5 12.2l13-5c.6-.25 1.1.15.9.95l-2.2 10.4c-.15.7-.6.85-1.2.55l-3.3-2.45-1.6 1.55c-.18.18-.33.33-.65.33l.25-3.3 6-5.4c.26-.23-.06-.36-.4-.13l-7.4 4.65-3.2-1c-.7-.22-.7-.7.15-1.05z" fill="#fff"/></svg></span>
-            <span class="lbl">Telegram</span>
-        </button>
-        <button class="btn btn-social tilt-effect" style="max-width:220px;" onclick="window.open('https://wa.me/213796514353')">
-            <span class="s-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#25D366"/><path d="M16.7 14.2c-.3-.15-1.7-.85-2-.95-.27-.1-.46-.15-.66.15-.2.3-.76.95-.93 1.14-.17.2-.34.22-.64.07-.3-.15-1.26-.46-2.4-1.47-.9-.8-1.5-1.78-1.67-2.08-.17-.3-.02-.46.13-.61.13-.13.3-.34.45-.51.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.66-1.58-.9-2.16-.24-.58-.48-.5-.66-.5h-.56c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.22 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.7.62.71.23 1.36.2 1.87.12.57-.09 1.7-.7 1.94-1.37.24-.67.24-1.25.17-1.37-.07-.12-.27-.2-.57-.35z" fill="#fff"/></svg></span>
-            <span class="lbl">WhatsApp</span>
-        </button>
-        <button class="btn btn-social tilt-effect" style="max-width:220px;" onclick="window.open('https://www.tiktok.com/@chikor_freestyel?_r=1&_t=ZS-97PK8TLfnOP')">
-            <span class="s-icon"><svg viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="6" fill="#010101"/><path d="M10.5 9.5a5 5 0 1 0 4 4.9V7.8a6.5 6.5 0 0 0 3.8 1.2V6.5a3.8 3.8 0 0 1-2.7-1.8A3.8 3.8 0 0 1 15 3h-2.8v11.4a2.2 2.2 0 1 1-1.7-2.15V9.5z" fill="#69C9D0"/><path d="M10.9 9.5a5 5 0 1 0 4 4.9V7.8a6.5 6.5 0 0 0 3.8 1.2V6.5a3.8 3.8 0 0 1-2.7-1.8A3.8 3.8 0 0 1 15.4 3h-2.8v11.4a2.2 2.2 0 1 1-1.7-2.15V9.5z" fill="#EE1D52" opacity="0.6"/><path d="M10.7 9.3a5 5 0 1 0 4 4.9V7.6a6.5 6.5 0 0 0 3.8 1.2V6.3a3.8 3.8 0 0 1-2.6-1.8A3.8 3.8 0 0 1 15.2 2.8h-2.8v11.4a2.2 2.2 0 1 1-1.7-2.15V9.3z" fill="#fff"/></svg></span>
-            <span class="lbl">TikTok</span>
-        </button>
+        <button class="btn btn-social" style="max-width:220px;" onclick="window.open('https://www.instagram.com/chikor_youcef_31')"><span class="s-icon"><svg viewBox="0 0 24 24"><defs><radialGradient id="ig" cx="30%" cy="107%" r="150%"><stop offset="0%" stop-color="#fdf497"/><stop offset="45%" stop-color="#fd5949"/><stop offset="60%" stop-color="#d6249f"/><stop offset="90%" stop-color="#285AEB"/></radialGradient></defs><rect width="24" height="24" rx="6" fill="url(#ig)"/><rect x="6" y="6" width="12" height="12" rx="4" fill="none" stroke="#fff" stroke-width="1.5"/><circle cx="12" cy="12" r="3.2" fill="none" stroke="#fff" stroke-width="1.5"/><circle cx="16.3" cy="7.7" r="1" fill="#fff"/></svg></span><span class="lbl">Instagram</span></button>
+        <button class="btn btn-social" style="max-width:220px;" onclick="window.open('https://t.me/213796514353')"><span class="s-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#27A7E7"/><path d="M5 12.2l13-5c.6-.25 1.1.15.9.95l-2.2 10.4c-.15.7-.6.85-1.2.55l-3.3-2.45-1.6 1.55c-.18.18-.33.33-.65.33l.25-3.3 6-5.4c.26-.23-.06-.36-.4-.13l-7.4 4.65-3.2-1c-.7-.22-.7-.7.15-1.05z" fill="#fff"/></svg></span><span class="lbl">Telegram</span></button>
+        <button class="btn btn-social" style="max-width:220px;" onclick="window.open('https://wa.me/213796514353')"><span class="s-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#25D366"/><path d="M16.7 14.2c-.3-.15-1.7-.85-2-.95-.27-.1-.46-.15-.66.15-.2.3-.76.95-.93 1.14-.17.2-.34.22-.64.07-.3-.15-1.26-.46-2.4-1.47-.9-.8-1.5-1.78-1.67-2.08-.17-.3-.02-.46.13-.61.13-.13.3-.34.45-.51.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.66-1.58-.9-2.16-.24-.58-.48-.5-.66-.5h-.56c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.22 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.7.62.71.23 1.36.2 1.87.12.57-.09 1.7-.7 1.94-1.37.24-.67.24-1.25.17-1.37-.07-.12-.27-.2-.57-.35z" fill="#fff"/></svg></span><span class="lbl">WhatsApp</span></button>
+        <button class="btn btn-social" style="max-width:220px;" onclick="window.open('https://www.tiktok.com/@chikor_freestyel?_r=1&_t=ZS-97PK8TLfnOP')"><span class="s-icon"><svg viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="6" fill="#010101"/><path d="M10.5 9.5a5 5 0 1 0 4 4.9V7.8a6.5 6.5 0 0 0 3.8 1.2V6.5a3.8 3.8 0 0 1-2.7-1.8A3.8 3.8 0 0 1 15 3h-2.8v11.4a2.2 2.2 0 1 1-1.7-2.15V9.5z" fill="#69C9D0"/><path d="M10.9 9.5a5 5 0 1 0 4 4.9V7.8a6.5 6.5 0 0 0 3.8 1.2V6.5a3.8 3.8 0 0 1-2.7-1.8A3.8 3.8 0 0 1 15.4 3h-2.8v11.4a2.2 2.2 0 1 1-1.7-2.15V9.5z" fill="#EE1D52" opacity="0.6"/><path d="M10.7 9.3a5 5 0 1 0 4 4.9V7.6a6.5 6.5 0 0 0 3.8 1.2V6.3a3.8 3.8 0 0 1-2.6-1.8A3.8 3.8 0 0 1 15.2 2.8h-2.8v11.4a2.2 2.2 0 1 1-1.7-2.15V9.3z" fill="#fff"/></svg></span><span class="lbl">TikTok</span></button>
     </div>
-    <button class="btn hidden-element" style="margin-top: 40px; max-width: 200px;" onclick="document.getElementById('home').scrollIntoView()" id="btn-back3">Back</button>
 </section>
 
 <script>
-// ==================== البايو الاحترافي واللغات ====================
 const uiData = {
-    en: { name:"Youcef Mekki", tagline:"Cybersecurity & Full-Stack Eng", bioTitle:"About Me", bioText:"I am Youcef Mekki, a Full-Stack Developer and Cybersecurity enthusiast. Born 31/08/2008. I specialize in building highly secure, scalable web applications and engineering innovative AI-driven experiences. My goal is to bridge the gap between flawless functionality and unbreakable security.", social:"Digital Presence", works:"My Arsenal", appsTitle: "📱 Mobile Apps", webTitle: "🌐 Web & AI Core", btnBio:"Initialize Bio", btnWorks:"Access Projects", btnSocial:"Connect", btnBack:"Return" },
-    ar: { name:"يوسف مكي", tagline:"مطور شامل وخبير أمن سيبراني", bioTitle:"الملف الشخصي", bioText:"أنا يوسف مكي، مطور تطبيقات ومواقع شغوف بالأمن السيبراني. (مواليد 31/08/2008). أتخصص في بناء أنظمة وتطبيقات ويب عالية الأمان وتطوير تجارب برمجية مبتكرة تعتمد على الذكاء الاصطناعي. هدفي هو دمج الأداء الخالي من العيوب مع الحماية المطلقة.", social:"التواجد الرقمي", works:"ترسانة المشاريع", appsTitle: "📱 تطبيقات الأندرويد", webTitle: "🌐 مشاريع الويب والذكاء الاصطناعي", btnBio:"من أنا", btnWorks:"استعراض المشاريع", btnSocial:"تواصل معي", btnBack:"رجوع" },
-    fr: { name:"Youcef Mekki", tagline:"Ingénieur Full-Stack & Cyber", bioTitle:"À Propos", bioText:"Je suis Youcef Mekki, développeur Full-Stack et passionné de cybersécurité. Né le 31/08/2008. Je conçois des applications web ultra-sécurisées et des expériences innovantes basées sur l'Intelligence Artificielle. Mon objectif : allier performance absolue et sécurité inviolable.", social:"Présence Numérique", works:"Mon Arsenal", appsTitle: "📱 Applications Mobile", webTitle: "🌐 Projets Web & IA", btnBio:"Initialiser Profil", btnWorks:"Accéder aux Projets", btnSocial:"Connecter", btnBack:"Retour" }
+    en: { name:"Youcef Mekki", tagline:"Cybersecurity & Full-Stack Eng", bioTitle:"About Me", bioText:"I am Youcef Mekki, a Full-Stack Developer and Cybersecurity enthusiast. Born 31/08/2008. I specialize in building highly secure, scalable web applications and engineering innovative AI-driven experiences.", socialTitle:"Digital Presence", appsTitle: "📱 Mobile Apps Showcase", webTitle: "🌐 Web & AI Core", btnBio:"About Me", btnApps:"My Apps", btnWorks:"Web & AI" },
+    ar: { name:"يوسف مكي", tagline:"مطور شامل وخبير أمن سيبراني", bioTitle:"الملف الشخصي", bioText:"أنا يوسف مكي، مطور تطبيقات ومواقع شغوف بالأمن السيبراني. (مواليد 31/08/2008). أتخصص في بناء أنظمة وتطبيقات ويب عالية الأمان وتطوير تجارب برمجية مبتكرة تعتمد على الذكاء الاصطناعي.", socialTitle:"التواجد الرقمي", appsTitle: "📱 استعراض تطبيقاتي", webTitle: "🌐 مشاريع الويب والذكاء الاصطناعي", btnBio:"من أنا", btnApps:"تطبيقاتي", btnWorks:"مشاريع الويب" },
+    fr: { name:"Youcef Mekki", tagline:"Ingénieur Full-Stack & Cyber", bioTitle:"À Propos", bioText:"Je suis Youcef Mekki, développeur Full-Stack et passionné de cybersécurité. Né le 31/08/2008. Je conçois des applications web ultra-sécurisées et des expériences innovantes basées sur l'IA.", socialTitle:"Présence Numérique", appsTitle: "📱 Applications Mobile", webTitle: "🌐 Projets Web & IA", btnBio:"À Propos", btnApps:"Applications", btnWorks:"Projets Web" }
 };
 
-const projectsDB = {
-    capCut: { url: "https://www.mediafire.com/file/oa95vgyft6s5i0u/CapCut_15.5.0.apk.bak/file", type: "app", en: { title: "CapCut Pro", desc: "Advanced video editing application for mobile.", btn: "Download APK" }, ar: { title: "CapCut Pro", desc: "تطبيق المونتاج الاحترافي وتعديل الفيديوهات الرائع للهواتف.", btn: "تحميل التطبيق" }, fr: { title: "CapCut Pro", desc: "Application de montage vidéo avancée pour mobile.", btn: "Télécharger APK" } },
-    poseTrack: { url: "https://youcefchikor31-ctrl.github.io/pose-tracking/", type: "web", en: { title: "Skeleton AI Tracking", desc: "Point the camera at a person and watch the AI track their body movements as a real-time skeleton.", btn: "Launch AI" }, ar: { title: "تتبع الهيكل العظمي بالذكاء الاصطناعي", desc: "تطبيق ويب يفتح الكاميرا لتتبع حركات جسم الإنسان وتحويلها لهيكل عظمي تفاعلي في الوقت الفعلي.", btn: "تشغيل النظام" }, fr: { title: "Suivi Squelettique IA", desc: "L'IA suit les mouvements du corps et génère un squelette en temps réel.", btn: "Lancer l'IA" } },
-    handTrack: { url: "https://youcefchikor31-ctrl.github.io/youcef-site/", type: "web", en: { title: "Hand Tracker Shapes", desc: "Uses the front camera to track your hand and generate interactive shapes.", btn: "Launch Project" }, ar: { title: "تعقب اليد والأشكال", desc: "مشروع يتعقب حركة يدك عبر الكاميرا الأمامية ليولد كرات وأشكال هندسية تتفاعل معك.", btn: "دخول للمشروع" }, fr: { title: "Suivi des Mains", desc: "Suit vos mains pour créer des formes interactives.", btn: "Lancer le Projet" } },
-    skyFire: { url: "https://youcefchikor31-ctrl.github.io/-_-/", type: "web", en: { title: "Sky of Fire", desc: "An exciting web-based game project.", btn: "Play Game" }, ar: { title: "Sky of Fire", desc: "لعبة ويب تفاعلية مبرمجة لتعمل مباشرة عبر المتصفح.", btn: "تشغيل اللعبة" }, fr: { title: "Sky of Fire", desc: "Un projet de jeu web passionnant.", btn: "Jouer" } },
-    ffLite: { url: "https://youcefchikor31-ctrl.github.io/freefirelite/", type: "web", en: { title: "Free Fire Lite", desc: "A lightweight web adaptation concept of Free Fire.", btn: "Launch Concept" }, ar: { title: "Free Fire Lite", desc: "نسخة ويب تجريبية خفيفة مستوحاة من لعبة فري فاير.", btn: "دخول للتجربة" }, fr: { title: "Free Fire Lite", desc: "Concept web léger inspiré du jeu Free Fire.", btn: "Lancer Concept" } },
-    spiderman: { url: "https://youcefchikor31-ctrl.github.io/spiderman-/", type: "web", en: { title: "Spiderman Web", desc: "Interactive web experience featuring Spiderman.", btn: "Enter Experience" }, ar: { title: "Spiderman Web", desc: "تجربة ويب تفاعلية وتصميم خاص بشخصية سبايدرمان.", btn: "دخول للمشروع" }, fr: { title: "Spiderman Web", desc: "Expérience web interactive autour de Spiderman.", btn: "Entrer" } },
-    fadaa: { url: "https://youcefchikor31-ctrl.github.io/Fadaa/", type: "web", en: { title: "Fadaa (Space)", desc: "Explore the depths of space in this immersive web project.", btn: "Explore Space" }, ar: { title: "مشروع الفضاء (Fadaa)", desc: "رحلة لاستكشاف الفضاء والعناصر الفلكية عبر الويب.", btn: "استكشاف الفضاء" }, fr: { title: "Fadaa (Espace)", desc: "Explorez l'espace dans ce projet web immersif.", btn: "Explorer" } },
-    wifiFixer: { url: "https://www.mediafire.com/file/kyixbx3xaazl4h4/WiFi_Fixer_Pro_1.0.apk/file", type: "app", en: { title: "WiFi Fixer Pro", desc: "Android app designed to optimize WiFi connections.", btn: "Download APK" }, ar: { title: "WiFi Fixer Pro", desc: "تطبيق أندرويد لإصلاح وتحسين جودة اتصال الواي فاي.", btn: "تحميل التطبيق" }, fr: { title: "WiFi Fixer Pro", desc: "Application pour optimiser les connexions WiFi.", btn: "Télécharger APK" } },
-    yuchVault: { url: "https://www.mediafire.com/file/edn5t2jxe3h2l4w/Yuch_Vault_1.0.apk/file", type: "app", en: { title: "Yuch Vault", desc: "Secure mobile vault to encrypt private files.", btn: "Download APK" }, ar: { title: "Yuch Vault", desc: "خزنة آمنة لتشفير وإخفاء صورك وملفاتك الخاصة.", btn: "تحميل التطبيق" }, fr: { title: "Yuch Vault", desc: "Coffre-fort mobile pour crypter vos fichiers.", btn: "Télécharger APK" } },
-    hiTv: { url: "https://www.mediafire.com/file/ktarrep9980x8of/HiTV_3.13.2.apk/file", type: "app", en: { title: "HiTV", desc: "Media streaming app for movies and series.", btn: "Download APK" }, ar: { title: "تطبيق HiTV", desc: "تطبيق لمشاهدة أحدث الأفلام والمسلسلات بجودة عالية.", btn: "تحميل التطبيق" }, fr: { title: "HiTV", desc: "Application de streaming pour films et séries.", btn: "Télécharger APK" } },
-    movieV3: { url: "https://www.mediafire.com/file/l5m4o2d8e70ytqr/Movie_V3.0.2.apk/file", type: "app", en: { title: "Movie V3.0.2", desc: "Latest version of the Movie streaming app.", btn: "Download APK" }, ar: { title: "Movie V3.0.2", desc: "تطبيق الأفلام الخاص بمشاهدة وتحميل المحتوى المرئي.", btn: "تحميل التطبيق" }, fr: { title: "Movie V3.0.2", desc: "Application Movie pour le streaming.", btn: "Télécharger APK" } },
-    lightroom: { url: "https://www.mediafire.com/file/udr089s5x9gknid/Lightroom_11.1.2.apk/file", type: "app", en: { title: "Lightroom", desc: "Professional photo editing application.", btn: "Download APK" }, ar: { title: "Lightroom 11.1.2", desc: "تطبيق تحرير الصور الاحترافي وتعديل الألوان.", btn: "تحميل التطبيق" }, fr: { title: "Lightroom", desc: "Application professionnelle de retouche photo.", btn: "Télécharger APK" } }
-};
-
-let langs=['en','ar','fr'], langIdx=0, currentProjectUrl = "";
-
+let langs=['en','ar','fr'], langIdx=0;
 function updateUI(){
     const l=langs[langIdx];
     document.getElementById('lang-display').innerText=l.toUpperCase();
@@ -283,122 +183,150 @@ function updateUI(){
     document.getElementById('tagline').innerText=uiData[l].tagline;
     document.getElementById('bio-title').innerText=uiData[l].bioTitle;
     document.getElementById('bio-text').innerText=uiData[l].bioText;
-    document.getElementById('social-title').innerText=uiData[l].social;
-    document.getElementById('works-title').innerText=uiData[l].works;
+    document.getElementById('social-title').innerText=uiData[l].socialTitle;
     document.getElementById('apps-title').innerText=uiData[l].appsTitle;
     document.getElementById('web-title').innerText=uiData[l].webTitle;
     document.getElementById('btn-bio').innerText=uiData[l].btnBio;
+    document.getElementById('btn-apps').innerText=uiData[l].btnApps;
     document.getElementById('btn-works').innerText=uiData[l].btnWorks;
-    document.getElementById('btn-social').innerText=uiData[l].btnSocial;
-    document.getElementById('btn-back1').innerText=uiData[l].btnBack;
-    document.getElementById('btn-back2').innerText=uiData[l].btnBack;
-    document.getElementById('btn-back3').innerText=uiData[l].btnBack;
     document.documentElement.dir = l==='ar' ? 'rtl' : 'ltr';
 }
 function nextLang(){ langIdx=(langIdx+1)%langs.length; updateUI(); }
 function prevLang(){ langIdx=(langIdx-1+langs.length)%langs.length; updateUI(); }
 updateUI();
 
-function openModal(key) {
-    const p = projectsDB[key], l = langs[langIdx];
-    if(!p) return;
-    document.getElementById('modal-title').innerText = p[l].title;
-    document.getElementById('modal-desc').innerText = p[l].desc;
-    document.getElementById('modal-action-btn').innerText = p[l].btn;
-    currentProjectUrl = p.url;
-    document.getElementById('project-modal').classList.add('active');
-}
-function closeModal(e) { if(e) e.stopPropagation(); document.getElementById('project-modal').classList.remove('active'); }
-function openProjectLink() { if(currentProjectUrl) { window.open(currentProjectUrl, '_blank'); closeModal(); } }
+// ==================== تحديث أسماء الصور ====================
+// الكود الآن يطلب الأسماء البسيطة التي قمت بتغييرها في هاتفك
+const mobileApps = {
+    capCut: {
+        name: "CapCut Pro",
+        images: ["capcut1.jpg", "capcut2.jpg", "capcut3.jpg"],
+        url: "https://www.mediafire.com/file/oa95vgyft6s5i0u/CapCut_15.5.0.apk.bak/file"
+    },
+    wifiFixer: {
+        name: "WiFi Fixer Pro",
+        images: ["wifi1.jpg", "wifi2.jpg", "wifi3.jpg", "wifi4.jpg"],
+        url: "https://www.mediafire.com/file/kyixbx3xaazl4h4/WiFi_Fixer_Pro_1.0.apk/file"
+    },
+    yuchVault: {
+        name: "Yuch Vault",
+        images: ["vault1.jpg", "vault2.jpg", "vault3.jpg"],
+        url: "https://www.mediafire.com/file/edn5t2jxe3h2l4w/Yuch_Vault_1.0.apk/file"
+    },
+    hiTv: {
+        name: "HiTV",
+        images: ["hitv1.jpg", "hitv2.jpg"],
+        url: "https://www.mediafire.com/file/ktarrep9980x8of/HiTV_3.13.2.apk/file"
+    },
+    movie: {
+        name: "Movie V3.0.2",
+        images: ["movie1.jpg", "movie2.jpg"],
+        url: "https://www.mediafire.com/file/l5m4o2d8e70ytqr/Movie_V3.0.2.apk/file"
+    }
+};
 
-// ==================== تأثير الظهور عند التمرير (Scroll Animations) ====================
+let currentAppKey = "wifiFixer";
+let currentImageIndex = 0;
+let sliderInterval;
+
+function initPhoneMockup() {
+    const btnContainer = document.getElementById('app-buttons-container');
+    btnContainer.innerHTML = '';
+    Object.keys(mobileApps).forEach(key => {
+        const btn = document.createElement('button');
+        btn.className = `app-btn ${key === currentAppKey ? 'active' : ''}`;
+        btn.innerText = mobileApps[key].name;
+        btn.onclick = () => selectApp(key);
+        btnContainer.appendChild(btn);
+    });
+    renderPhoneScreen();
+}
+
+function selectApp(key) {
+    currentAppKey = key;
+    currentImageIndex = 0;
+    document.querySelectorAll('.app-btn').forEach(btn => {
+        btn.classList.remove('active');
+        if(btn.innerText === mobileApps[key].name) btn.classList.add('active');
+    });
+    renderPhoneScreen();
+}
+
+function renderPhoneScreen() {
+    const screen = document.getElementById('phone-screen-slider');
+    screen.innerHTML = '';
+    clearInterval(sliderInterval);
+
+    const images = mobileApps[currentAppKey].images;
+    images.forEach((imgSrc, index) => {
+        const img = document.createElement('img');
+        img.src = imgSrc;
+        if(index === 0) img.classList.add('active');
+        img.id = `phone-img-${index}`;
+        screen.appendChild(img);
+    });
+
+    if(images.length > 1) {
+        sliderInterval = setInterval(() => {
+            document.getElementById(`phone-img-${currentImageIndex}`).classList.remove('active');
+            currentImageIndex = (currentImageIndex + 1) % images.length;
+            document.getElementById(`phone-img-${currentImageIndex}`).classList.add('active');
+        }, 2500);
+    }
+}
+
+function downloadActiveApp() {
+    window.open(mobileApps[currentAppKey].url, '_blank');
+}
+
+initPhoneMockup();
+
 const observerOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
             entry.target.classList.add('show-element');
-            // إيقاف المراقبة بعد الظهور لتقليل استهلاك الموارد
             observer.unobserve(entry.target);
         }
     });
 }, observerOptions);
-
 document.querySelectorAll('.hidden-element').forEach(el => observer.observe(el));
 
-// ==================== تأثير الميلان ثلاثي الأبعاد (3D Tilt Effect) للكمبيوتر ====================
-document.querySelectorAll('.tilt-effect').forEach(el => {
-    el.addEventListener('mousemove', e => {
-        if(window.innerWidth < 768) return; // تعطيل في الهواتف
-        const rect = el.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        const rotateX = ((y - centerY) / centerY) * -10; // درجة الميلان
-        const rotateY = ((x - centerX) / centerX) * 10;
-        el.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
-    });
-    el.addEventListener('mouseleave', () => {
-        el.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
-    });
-});
-
-// ==================== خلفية الجزيئات السيبرانية (Canvas Particle Network) ====================
 const canvas = document.getElementById('cyber-canvas');
 const ctx = canvas.getContext('2d');
 let width, height, particles = [];
 let mouse = { x: null, y: null, radius: 150 };
 
-function resize() {
-    width = canvas.width = window.innerWidth;
-    height = canvas.height = window.innerHeight;
-}
-window.addEventListener('resize', resize);
-resize();
-
+function resize() { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; }
+window.addEventListener('resize', resize); resize();
 window.addEventListener('mousemove', e => { mouse.x = e.x; mouse.y = e.y; });
 window.addEventListener('mouseout', () => { mouse.x = null; mouse.y = null; });
-window.addEventListener('touchmove', e => { mouse.x = e.touches[0].clientX; mouse.y = e.touches[0].clientY; });
 
 class Particle {
     constructor() {
-        this.x = Math.random() * width;
-        this.y = Math.random() * height;
+        this.x = Math.random() * width; this.y = Math.random() * height;
         this.size = Math.random() * 2 + 1;
-        this.baseX = this.x; this.baseY = this.y;
-        this.density = (Math.random() * 30) + 1;
-        this.vx = (Math.random() - 0.5) * 1;
-        this.vy = (Math.random() - 0.5) * 1;
+        this.vx = (Math.random() - 0.5) * 1; this.vy = (Math.random() - 0.5) * 1;
     }
     update() {
         this.x += this.vx; this.y += this.vy;
         if(this.x > width || this.x < 0) this.vx = -this.vx;
         if(this.y > height || this.y < 0) this.vy = -this.vy;
-
-        // التفاعل مع الماوس
         if(mouse.x != null) {
-            let dx = mouse.x - this.x;
-            let dy = mouse.y - this.y;
+            let dx = mouse.x - this.x, dy = mouse.y - this.y;
             let distance = Math.sqrt(dx*dx + dy*dy);
             if(distance < mouse.radius) {
                 const force = (mouse.radius - distance) / mouse.radius;
-                this.x -= dx * force * 0.05;
-                this.y -= dy * force * 0.05;
+                this.x -= dx * force * 0.05; this.y -= dy * force * 0.05;
             }
         }
     }
-    draw() {
-        ctx.fillStyle = '#00f3ff';
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.closePath();
-        ctx.fill();
-    }
+    draw() { ctx.fillStyle = '#00f3ff'; ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill(); }
 }
 
 function initParticles() {
     particles = [];
-    let numParticles = (width * height) / 9000; // تقليل العدد لزيادة الأداء
+    let numParticles = (width * height) / 9000;
     for(let i = 0; i < numParticles; i++) particles.push(new Particle());
 }
 initParticles();
@@ -406,20 +334,13 @@ initParticles();
 function animateParticles() {
     ctx.clearRect(0, 0, width, height);
     for(let i = 0; i < particles.length; i++) {
-        particles[i].update();
-        particles[i].draw();
-        // رسم الخطوط المترابطة (الشبكة العصبية)
+        particles[i].update(); particles[i].draw();
         for(let j = i; j < particles.length; j++) {
-            let dx = particles[i].x - particles[j].x;
-            let dy = particles[i].y - particles[j].y;
+            let dx = particles[i].x - particles[j].x, dy = particles[i].y - particles[j].y;
             let dist = Math.sqrt(dx*dx + dy*dy);
             if(dist < 120) {
-                ctx.beginPath();
-                ctx.strokeStyle = `rgba(0, 243, 255, ${1 - dist/120})`;
-                ctx.lineWidth = 1;
-                ctx.moveTo(particles[i].x, particles[i].y);
-                ctx.lineTo(particles[j].x, particles[j].y);
-                ctx.stroke();
+                ctx.beginPath(); ctx.strokeStyle = `rgba(0, 243, 255, ${1 - dist/120})`;
+                ctx.lineWidth = 1; ctx.moveTo(particles[i].x, particles[i].y); ctx.lineTo(particles[j].x, particles[j].y); ctx.stroke();
             }
         }
     }
