@@ -3,30 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Youcef Mekki (Chikor) - Cyber Portfolio & MOD Lab</title>
+    <title>Youcef Mekki (Chikor) - Portfolio & MOD Lab</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800;900&family=Rajdhani:wght@500;600;700&family=Cairo:wght@600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800;900&family=Rajdhani:wght@500;600;700&family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     <style>
         :root { 
             --neon-blue: #00f3ff; 
-            --neon-purple: #9d4edd; 
-            --neon-red: #ff2a5f; 
-            --neon-yellow: #fffc00;
-            --neon-green: #00ff88;
-            --dark-bg: #05050a;
-            --card-bg: rgba(13, 14, 25, 0.7);
-            --glass-border: rgba(0, 243, 255, 0.2);
+            --neon-purple: #b5179e; 
+            --neon-red: #f72585; 
+            --neon-yellow: #fee440;
+            --neon-green: #00f5d4;
+            --dark-bg: #0b0914;
+            --card-bg: rgba(20, 15, 35, 0.45);
+            --glass-border: rgba(255, 255, 255, 0.15);
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
         }
         
         * { margin:0; padding:0; box-sizing:border-box; font-family:'Rajdhani', sans-serif; }
         [dir="rtl"] * { font-family: 'Cairo', sans-serif; }
 
-        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: var(--dark-bg); }
-        ::-webkit-scrollbar-thumb { background: var(--neon-blue); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: linear-gradient(var(--neon-purple), var(--neon-blue)); border-radius: 10px; }
+
+        /* Dynamic Animated Background */
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
 
         body { 
-            background: var(--dark-bg); 
+            background: linear-gradient(-45deg, #0b0914, #2a113a, #0b132b, #10002b);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
             color: #fff; 
             overflow-x: hidden; 
             scroll-behavior: smooth; 
@@ -37,328 +47,346 @@
 
         /* Top HUD Bar */
         .hud-bar {
-            position: fixed; top: 15px; left: 15px; right: 15px; z-index: 1000;
+            position: fixed; top: 20px; left: 20px; right: 20px; z-index: 1000;
             display: flex; justify-content: space-between; align-items: center;
             pointer-events: none;
         }
-        .hud-left, .hud-right { display: flex; gap: 10px; pointer-events: auto; }
+        .hud-left, .hud-right { display: flex; gap: 15px; pointer-events: auto; }
 
         .hud-chip {
-            background: rgba(10, 10, 20, 0.85);
+            background: rgba(255, 255, 255, 0.05);
             border: 1px solid var(--glass-border);
-            padding: 8px 14px;
-            border-radius: 10px;
-            backdrop-filter: blur(12px);
-            font-size: 0.8rem;
+            padding: 8px 18px;
+            border-radius: 20px;
+            backdrop-filter: blur(16px) saturate(180%);
+            -webkit-backdrop-filter: blur(16px) saturate(180%);
+            font-size: 0.9rem;
             font-family: 'Orbitron', sans-serif;
             font-weight: 700;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
             cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: var(--glass-shadow);
             color: #fff;
         }
-        .hud-chip:hover { border-color: var(--neon-blue); box-shadow: 0 0 15px rgba(0,243,255,0.4); transform: translateY(-2px); }
+        .hud-chip:hover { 
+            border-color: var(--neon-blue); 
+            background: rgba(0, 243, 255, 0.15);
+            transform: translateY(-3px) scale(1.05); 
+        }
 
         .section { 
             min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; 
-            position: relative; padding: 100px 20px 80px; z-index: 1; 
-        }
-        .section::before { 
-            content:''; position:absolute; inset:0; 
-            background: radial-gradient(circle at center, rgba(157,78,221,0.05) 0%, #05050a 80%); 
-            z-index:-1; pointer-events: none; 
+            position: relative; padding: 120px 20px 80px; z-index: 1; 
         }
 
-        .hidden-element { opacity: 0; transform: translateY(35px); transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); }
-        .show-element { opacity: 1; transform: translateY(0); }
+        /* Beautiful Reveal Animations */
+        .hidden-element { opacity: 0; transform: translateY(40px) scale(0.95); transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1.1); }
+        .show-element { opacity: 1; transform: translateY(0) scale(1); }
 
-        /* Buttons & Cards */
+        /* Buttons & Cards - Bouncy & Fun */
         .btn { 
-            padding: 14px 26px; border-radius: 14px; border: 1px solid var(--glass-border); 
+            padding: 14px 28px; border-radius: 100px; border: 1px solid var(--glass-border); 
             background: var(--card-bg); cursor: pointer; color: white; 
-            font-weight: 800; font-size: 1rem; letter-spacing: 1px; 
-            backdrop-filter: blur(14px); transition: all 0.3s ease; position: relative; overflow: hidden;
-            text-transform: uppercase; display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+            font-weight: 800; font-size: 1.05rem; letter-spacing: 1px; 
+            backdrop-filter: blur(16px); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            position: relative; overflow: hidden;
+            display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+            box-shadow: var(--glass-shadow);
         }
         .btn:hover { 
-            background: rgba(0, 243, 255, 0.12); transform: translateY(-3px); 
-            border-color: var(--neon-blue); box-shadow: 0 10px 25px rgba(0,243,255,0.3); 
+            background: linear-gradient(45deg, rgba(0, 243, 255, 0.2), rgba(181, 23, 158, 0.2)); 
+            transform: translateY(-5px) scale(1.05); 
+            border-color: var(--neon-blue); 
+            box-shadow: 0 10px 25px rgba(0,243,255,0.4); 
         }
 
-        /* Profile & Avatar (Directly referencing myphoto.jpg) */
+        /* Profile & Avatar */
         .profile-wrapper { position: relative; margin-bottom: 25px; }
         .profile-img { 
-            width: 175px; height: 175px; border-radius: 50%; border: 3px solid transparent; 
-            background: linear-gradient(var(--dark-bg), var(--dark-bg)) padding-box, linear-gradient(45deg, var(--neon-blue), var(--neon-purple), var(--neon-red)) border-box;
-            box-shadow: 0 0 35px rgba(0,243,255,0.35); object-fit: cover; z-index: 2; position: relative; transition: transform 0.5s ease;
+            width: 180px; height: 180px; border-radius: 50%; padding: 4px;
+            background: linear-gradient(45deg, var(--neon-blue), var(--neon-purple), var(--neon-red), var(--neon-yellow));
+            background-size: 300% 300%;
+            animation: gradientBG 4s ease infinite;
+            box-shadow: 0 0 40px rgba(0,243,255,0.4); object-fit: cover; z-index: 2; position: relative; 
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             display: block;
         }
-        .profile-wrapper:hover .profile-img { transform: scale(1.06) rotate(3deg); }
+        .profile-wrapper:hover .profile-img { transform: scale(1.1) rotate(5deg); box-shadow: 0 0 60px rgba(181, 23, 158, 0.6); }
 
         .live-badge {
-            position: absolute; bottom: 5px; right: 15px; z-index: 3;
-            background: var(--neon-green); color: #000; font-size: 0.7rem; font-weight: 900;
-            padding: 3px 10px; border-radius: 20px; box-shadow: 0 0 12px var(--neon-green);
+            position: absolute; bottom: 8px; right: 10px; z-index: 3;
+            background: var(--neon-green); color: #000; font-size: 0.75rem; font-weight: 900;
+            padding: 4px 12px; border-radius: 20px; box-shadow: 0 0 15px var(--neon-green);
             font-family: 'Orbitron', sans-serif; animation: pulse 2s infinite;
         }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
+        @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.8; transform: scale(1.05); } }
 
         h1 { 
-            text-shadow: 0 0 25px var(--neon-blue); margin-bottom: 8px; 
-            font-family: 'Orbitron', sans-serif; font-size: clamp(2.2rem, 6vw, 3.8rem); 
-            letter-spacing: 3px; font-weight: 900; text-align: center;
+            text-shadow: 0 0 30px rgba(0,243,255,0.6); margin-bottom: 5px; 
+            font-family: 'Orbitron', sans-serif; font-size: clamp(2.5rem, 7vw, 4.5rem); 
+            letter-spacing: 2px; font-weight: 900; text-align: center;
+            background: linear-gradient(to right, #fff, var(--neon-blue));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
         .tagline { 
-            color: var(--neon-red); font-weight: 700; letter-spacing: 3px; text-transform: uppercase; 
-            font-size: clamp(0.85rem, 2vw, 1.1rem); margin-bottom: 30px; text-shadow: 0 0 15px rgba(255,42,95,0.5); 
-            text-align: center;
+            color: var(--neon-yellow); font-weight: 700; letter-spacing: 2px; 
+            font-size: clamp(1rem, 2.5vw, 1.3rem); margin-bottom: 35px; 
+            text-shadow: 0 0 15px rgba(254, 228, 64, 0.4); text-align: center;
+            min-height: 30px; /* For typing effect */
         }
 
         h2 { 
-            margin-bottom: 25px; font-size: clamp(1.8rem, 4vw, 2.5rem); font-family: 'Orbitron', sans-serif; 
-            text-shadow: 0 0 20px var(--neon-blue); letter-spacing: 2px; text-transform: uppercase; text-align: center; 
+            margin-bottom: 25px; font-size: clamp(2rem, 5vw, 3rem); font-family: 'Orbitron', sans-serif; 
+            text-shadow: 0 0 20px rgba(181, 23, 158, 0.6); letter-spacing: 1px; text-align: center; 
+            background: linear-gradient(to right, #fff, var(--neon-purple));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
         .sec-desc {
-            max-width: 600px; text-align: center; color: #a0aec0; margin-bottom: 40px; font-size: 1.05rem; line-height: 1.6;
+            max-width: 650px; text-align: center; color: #cbd5e1; margin-bottom: 45px; font-size: 1.15rem; line-height: 1.8;
+            font-weight: 500;
         }
 
         /* Stats Counter Bar */
         .stats-strip {
-            display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin-bottom: 40px;
+            display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-bottom: 45px;
         }
         .stat-card {
-            background: rgba(15, 15, 25, 0.6); border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 12px; padding: 12px 20px; text-align: center; min-width: 120px;
+            background: rgba(255, 255, 255, 0.03); border: 1px solid var(--glass-border);
+            border-radius: 20px; padding: 15px 25px; text-align: center; min-width: 140px;
+            backdrop-filter: blur(10px); transition: transform 0.3s;
+            box-shadow: var(--glass-shadow);
         }
-        .stat-card .val { font-family: 'Orbitron', sans-serif; font-size: 1.6rem; font-weight: 900; color: var(--neon-blue); }
-        .stat-card .lbl { font-size: 0.8rem; color: #8892b0; text-transform: uppercase; }
+        .stat-card:hover { transform: translateY(-5px); background: rgba(255,255,255,0.08); }
+        .stat-card .val { font-family: 'Orbitron', sans-serif; font-size: 2rem; font-weight: 900; color: var(--neon-blue); text-shadow: 0 0 10px rgba(0,243,255,0.5); }
+        .stat-card .lbl { font-size: 0.9rem; color: #e2e8f0; font-weight: 700; margin-top: 5px; }
 
         /* ==================== INTERACTIVE SMARTPHONE (MOD LAB) ==================== */
-        .phone-mockup-wrapper { display: flex; justify-content: center; width: 100%; }
+        .phone-mockup-wrapper { display: flex; justify-content: center; width: 100%; perspective: 1000px; }
         .phone-frame {
-            width: 340px; height: 680px; background: #07070c; border: 14px solid #14141e; 
-            border-radius: 46px; position: relative; box-shadow: 0 25px 60px rgba(0,0,0,0.9), 0 0 35px rgba(0,243,255,0.25);
+            width: 350px; height: 700px; background: #050505; border: 12px solid #1a1a24; 
+            border-radius: 50px; position: relative; 
+            box-shadow: 0 30px 60px rgba(0,0,0,0.8), 0 0 40px rgba(181, 23, 158, 0.3), inset 0 0 15px rgba(0,243,255,0.2);
             display: flex; flex-direction: column; overflow: hidden;
+            transition: transform 0.5s ease;
         }
+        .phone-frame:hover { transform: translateY(-10px) rotateX(2deg) rotateY(2deg); }
+        
         .phone-notch { 
-            position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 130px; height: 26px; 
-            background: #14141e; border-bottom-left-radius: 16px; border-bottom-right-radius: 16px; z-index: 20; 
+            position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 120px; height: 28px; 
+            background: #1a1a24; border-bottom-left-radius: 18px; border-bottom-right-radius: 18px; z-index: 20; 
         }
         
         .phone-status-bar {
-            height: 38px; display: flex; justify-content: space-between; align-items: flex-end;
-            padding: 0 18px 4px; font-size: 0.7rem; font-weight: 800; font-family:'Orbitron',sans-serif;
-            color: #ddd; z-index: 15; background: rgba(0,0,0,0.6);
+            height: 40px; display: flex; justify-content: space-between; align-items: flex-end;
+            padding: 0 20px 6px; font-size: 0.75rem; font-weight: 800; font-family:'Orbitron',sans-serif;
+            color: #fff; z-index: 15; background: linear-gradient(rgba(0,0,0,0.8), transparent);
         }
 
         .phone-screen { 
             flex: 1; position: relative; 
-            background: linear-gradient(180deg, #0b0c16 0%, #050508 100%);
+            background: linear-gradient(135deg, #10002b 0%, #03040c 100%);
             display: flex; flex-direction: column; overflow: hidden;
         }
 
-        /* Screen 1: Apps Home Grid */
-        #phone-home {
-            flex: 1; padding: 15px 15px 20px; display: flex; flex-direction: column;
-            overflow-y: auto;
-        }
-        .mod-lab-header {
-            text-align: center; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px dashed rgba(255,255,255,0.1);
-        }
-        .mod-lab-header h4 { font-family: 'Orbitron', sans-serif; font-size: 0.95rem; color: var(--neon-green); }
-        .mod-lab-header p { font-size: 0.72rem; color: #888; }
+        #phone-home { flex: 1; padding: 20px 15px; display: flex; flex-direction: column; overflow-y: auto; }
+        
+        .mod-lab-header { text-align: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 2px dashed rgba(255,255,255,0.1); }
+        .mod-lab-header h4 { font-family: 'Orbitron', sans-serif; font-size: 1.1rem; color: var(--neon-green); text-shadow: 0 0 10px rgba(0,245,212,0.5); }
+        .mod-lab-header p { font-size: 0.8rem; color: #cbd5e1; margin-top: 5px; }
 
-        .apps-grid {
-            display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;
-        }
+        .apps-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
         .app-card-btn {
-            background: rgba(20, 22, 35, 0.85); border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 16px; padding: 12px 10px; display: flex; flex-direction: column;
-            align-items: center; text-align: center; cursor: pointer; transition: all 0.25s;
-            position: relative; overflow: hidden;
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px; padding: 15px 10px; display: flex; flex-direction: column;
+            align-items: center; text-align: center; cursor: pointer; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative; overflow: hidden; backdrop-filter: blur(5px);
         }
         .app-card-btn:hover {
-            transform: translateY(-4px); border-color: var(--neon-blue); box-shadow: 0 8px 20px rgba(0,243,255,0.25);
-            background: rgba(0, 243, 255, 0.08);
+            transform: translateY(-6px) scale(1.05); border-color: var(--neon-blue); 
+            box-shadow: 0 10px 20px rgba(0,243,255,0.3); background: rgba(0, 243, 255, 0.1);
         }
         .app-badge-mod {
-            position: absolute; top: 6px; right: 6px; font-size: 8px; font-weight: 900;
-            padding: 2px 6px; border-radius: 6px; background: var(--neon-red); color: #fff;
-            text-transform: uppercase; font-family: 'Orbitron', sans-serif;
+            position: absolute; top: 8px; right: 8px; font-size: 9px; font-weight: 900;
+            padding: 3px 8px; border-radius: 8px; background: linear-gradient(45deg, var(--neon-red), #ff758c); color: #fff;
+            font-family: 'Orbitron', sans-serif; box-shadow: 0 2px 5px rgba(247,37,133,0.5);
         }
         .app-card-icon {
-            width: 48px; height: 48px; border-radius: 12px; margin-bottom: 8px;
-            background: linear-gradient(135deg, #1f2338, #111422);
-            display: flex; justify-content: center; align-items: center; font-size: 26px;
-            box-shadow: 0 5px 12px rgba(0,0,0,0.5);
-            border: 1px solid rgba(0,243,255,0.2);
+            width: 55px; height: 55px; border-radius: 16px; margin-bottom: 10px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.02));
+            display: flex; justify-content: center; align-items: center; font-size: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.2);
         }
-        .app-card-title { font-size: 0.85rem; font-weight: 800; color: #fff; margin-bottom: 2px; }
-        .app-card-sub { font-size: 0.65rem; color: var(--neon-green); font-weight: 700; }
+        .app-card-title { font-size: 0.9rem; font-weight: 800; color: #fff; margin-bottom: 4px; }
+        .app-card-sub { font-size: 0.7rem; color: var(--neon-green); font-weight: 700; }
 
-        /* Screen 2: Deep App View with MOD Details */
+        /* Screen 2: Deep App View */
         #phone-app-view {
             display: none; flex-direction: column; height: 100%; background: #080911; 
             z-index: 10; position: absolute; top: 0; left: 0; width: 100%;
         }
         .app-view-header {
-            display: flex; align-items: center; padding: 10px 15px; 
-            background: #10121d; border-bottom: 1px solid rgba(255,255,255,0.1);
+            display: flex; align-items: center; padding: 15px; 
+            background: rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
         }
         .back-btn { 
-            cursor: pointer; color: var(--neon-blue); font-weight: 800; font-size: 0.85rem; 
-            display: flex; align-items: center; gap: 4px; font-family:'Orbitron',sans-serif;
+            cursor: pointer; color: var(--neon-blue); font-weight: 800; font-size: 0.9rem; 
+            display: flex; align-items: center; gap: 5px; font-family:'Orbitron',sans-serif;
+            background: rgba(0,243,255,0.1); padding: 5px 12px; border-radius: 12px; transition: 0.3s;
         }
-        .back-btn:hover { color: #fff; }
+        .back-btn:hover { background: var(--neon-blue); color: #000; }
         .app-view-title { 
-            font-family: 'Orbitron', sans-serif; font-size: 0.95rem; font-weight: 800; 
-            flex: 1; text-align: center; margin-right: 35px; color: #fff; 
+            font-family: 'Orbitron', sans-serif; font-size: 1rem; font-weight: 800; 
+            flex: 1; text-align: center; margin-right: 50px; color: #fff; 
         }
 
-        .app-details-scroll {
-            flex: 1; overflow-y: auto; padding: 15px; display: flex; flex-direction: column; gap: 14px;
-        }
+        .app-details-scroll { flex: 1; overflow-y: auto; padding: 20px 15px; display: flex; flex-direction: column; gap: 20px; }
         
-        /* Interactive Screenshot Slider */
         .slider-box {
-            width: 100%; height: 160px; background: #030306; border-radius: 14px;
+            width: 100%; height: 180px; background: rgba(0,0,0,0.5); border-radius: 20px;
             position: relative; overflow: hidden; display: flex; justify-content: center; align-items: center;
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.1); box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
         }
-        .slider-box img {
-            width: 100%; height: 100%; object-fit: contain; position: absolute; opacity: 0; transition: opacity 0.4s;
-        }
+        .slider-box img { width: 100%; height: 100%; object-fit: contain; position: absolute; opacity: 0; transition: opacity 0.5s ease-in-out; }
         .slider-box img.active { opacity: 1; }
-        .slider-placeholder {
-            text-align: center; color: #8892b0; display: flex; flex-direction: column; align-items: center; gap: 6px;
-        }
+        .slider-placeholder { text-align: center; color: #8892b0; display: flex; flex-direction: column; align-items: center; gap: 10px; }
 
-        /* MOD Specs & Highlights */
         .mod-pill-box {
-            background: rgba(255,42,95,0.1); border: 1px solid rgba(255,42,95,0.3);
-            border-radius: 12px; padding: 10px 12px;
+            background: linear-gradient(135deg, rgba(247, 37, 133, 0.1), rgba(114, 9, 183, 0.1)); 
+            border: 1px solid rgba(247, 37, 133, 0.3); border-radius: 20px; padding: 15px;
         }
         .mod-pill-box h5 {
-            color: var(--neon-red); font-size: 0.8rem; font-family:'Orbitron',sans-serif; margin-bottom: 6px;
-            display: flex; align-items: center; gap: 6px;
+            color: var(--neon-red); font-size: 0.9rem; font-family:'Orbitron',sans-serif; margin-bottom: 10px;
+            display: flex; align-items: center; gap: 8px; text-shadow: 0 0 10px rgba(247,37,133,0.4);
         }
-        .mod-desc-text { font-size: 0.8rem; color: #cbd5e1; line-height: 1.5; margin-bottom: 8px; }
+        .mod-desc-text { font-size: 0.85rem; color: #e2e8f0; line-height: 1.6; margin-bottom: 12px; font-weight: 600;}
         
-        .perks-list { display: flex; flex-direction: column; gap: 5px; }
-        .perk-item {
-            font-size: 0.75rem; color: #a7f3d0; display: flex; align-items: center; gap: 6px; font-weight: 700;
-        }
-        .perk-item span { color: var(--neon-green); }
+        .perks-list { display: flex; flex-direction: column; gap: 8px; background: rgba(0,0,0,0.3); padding: 12px; border-radius: 12px; }
+        .perk-item { font-size: 0.8rem; color: #fff; display: flex; align-items: center; gap: 8px; font-weight: 700; }
+        .perk-item span { color: var(--neon-green); font-size: 1rem; }
 
-        .app-download-footer {
-            padding: 12px 15px; background: #10121d; border-top: 1px solid rgba(255,255,255,0.1);
-        }
+        .app-download-footer { padding: 15px; background: rgba(0,0,0,0.6); backdrop-filter: blur(10px); border-top: 1px solid rgba(255,255,255,0.1); }
         .download-app-btn {
-            background: linear-gradient(90deg, var(--neon-blue), #00a8ff);
-            color: #000; font-weight: 900; width: 100%; padding: 12px; border-radius: 12px;
-            border: none; font-size: 0.95rem; cursor: pointer; text-transform: uppercase;
-            box-shadow: 0 0 18px rgba(0,243,255,0.4); transition: 0.25s; font-family:'Orbitron',sans-serif;
-            display: flex; justify-content: center; align-items: center; gap: 8px;
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
+            color: #fff; font-weight: 900; width: 100%; padding: 15px; border-radius: 16px;
+            border: none; font-size: 1rem; cursor: pointer; text-transform: uppercase;
+            box-shadow: 0 5px 20px rgba(0,243,255,0.4); transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            font-family:'Orbitron',sans-serif; display: flex; justify-content: center; align-items: center; gap: 10px;
         }
-        .download-app-btn:hover { background: #fff; transform: translateY(-2px); box-shadow: 0 0 25px rgba(255,255,255,0.7); }
+        .download-app-btn:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 10px 30px rgba(181, 23, 158, 0.6); }
 
         /* ==================== FLAGSHIP PROJECT CARD (QR STUDIO) ==================== */
         .flagship-box {
-            width: 100%; max-width: 900px;
-            background: linear-gradient(135deg, rgba(16, 18, 35, 0.95) 0%, rgba(25, 12, 38, 0.95) 100%);
-            border: 2px solid var(--neon-purple); border-radius: 24px; padding: 30px;
-            box-shadow: 0 15px 40px rgba(157, 78, 221, 0.3), 0 0 30px rgba(0, 243, 255, 0.15);
-            margin-bottom: 40px; position: relative; overflow: hidden;
-            display: flex; flex-direction: column; gap: 15px;
+            width: 100%; max-width: 950px;
+            background: rgba(20, 15, 35, 0.6);
+            border: 2px solid transparent; border-radius: 30px; padding: 40px;
+            background-clip: padding-box;
+            position: relative; overflow: hidden;
+            display: flex; flex-direction: column; gap: 20px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5), inset 0 0 20px rgba(255,255,255,0.05);
+            backdrop-filter: blur(20px);
         }
+        /* Animated gradient border for flagship */
         .flagship-box::before {
-            content: "FLAGSHIP WEB APP";
-            position: absolute; top: 12px; right: 20px;
-            font-size: 0.7rem; font-weight: 900; color: var(--neon-blue);
+            content: ''; position: absolute; top: -2px; left: -2px; right: -2px; bottom: -2px;
+            background: linear-gradient(45deg, var(--neon-blue), var(--neon-purple), var(--neon-red), var(--neon-yellow));
+            z-index: -1; border-radius: 32px; background-size: 400%; animation: gradientBG 5s ease infinite;
+        }
+        .flagship-box::after {
+            content: "FLAGSHIP PROJECT";
+            position: absolute; top: 15px; right: 25px;
+            font-size: 0.8rem; font-weight: 900; color: var(--neon-yellow);
             letter-spacing: 2px; font-family: 'Orbitron', sans-serif;
+            background: rgba(0,0,0,0.5); padding: 5px 15px; border-radius: 20px;
         }
-        .flagship-title-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
-        .flagship-title { font-family: 'Orbitron', sans-serif; font-size: 1.8rem; font-weight: 900; color: #fff; text-shadow: 0 0 15px var(--neon-blue); }
-        .live-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--neon-green); box-shadow: 0 0 10px var(--neon-green); }
-        .flagship-desc { color: #cbd5e1; font-size: 1.05rem; line-height: 1.7; max-width: 750px; }
+        .flagship-title-row { display: flex; align-items: center; gap: 15px; flex-wrap: wrap; }
+        .flagship-title { font-family: 'Orbitron', sans-serif; font-size: 2.2rem; font-weight: 900; color: #fff; text-shadow: 0 0 20px var(--neon-blue); }
+        .live-dot { width: 12px; height: 12px; border-radius: 50%; background: var(--neon-green); box-shadow: 0 0 15px var(--neon-green); animation: pulse 1.5s infinite; }
+        .flagship-desc { color: #e2e8f0; font-size: 1.15rem; line-height: 1.8; max-width: 800px; font-weight: 500; }
         
-        .tags-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
+        .tags-row { display: flex; flex-wrap: wrap; gap: 10px; margin: 10px 0; }
         .tag-pill {
-            background: rgba(0, 243, 255, 0.1); border: 1px solid rgba(0, 243, 255, 0.3);
-            color: var(--neon-blue); font-size: 0.78rem; font-weight: 700; padding: 4px 12px;
-            border-radius: 20px; font-family: 'Orbitron', sans-serif;
+            background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff; font-size: 0.85rem; font-weight: 700; padding: 6px 16px;
+            border-radius: 100px; font-family: 'Orbitron', sans-serif; transition: 0.3s;
         }
+        .tag-pill:hover { background: var(--neon-blue); color: #000; border-color: var(--neon-blue); transform: translateY(-2px); }
 
         .flagship-btn {
-            background: linear-gradient(90deg, var(--neon-purple), var(--neon-blue));
-            color: #fff; font-weight: 900; padding: 14px 30px; border-radius: 14px;
+            background: linear-gradient(45deg, var(--neon-purple), var(--neon-red));
+            color: #fff; font-weight: 900; padding: 16px 35px; border-radius: 100px;
             border: none; cursor: pointer; text-transform: uppercase; font-family: 'Orbitron', sans-serif;
-            align-self: flex-start; box-shadow: 0 0 20px rgba(157, 78, 221, 0.5); transition: 0.3s;
-            text-decoration: none; display: inline-flex; align-items: center; gap: 10px;
+            align-self: flex-start; box-shadow: 0 10px 25px rgba(247, 37, 133, 0.4); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-decoration: none; display: inline-flex; align-items: center; gap: 10px; font-size: 1.1rem;
         }
-        .flagship-btn:hover { transform: scale(1.04); box-shadow: 0 0 30px rgba(0, 243, 255, 0.7); }
+        .flagship-btn:hover { transform: translateY(-5px) scale(1.05); box-shadow: 0 15px 35px rgba(247, 37, 133, 0.6); }
 
         /* Web & AI Grid */
         .works-grid { 
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
-            gap: 20px; width: 100%; max-width: 900px; 
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+            gap: 25px; width: 100%; max-width: 1000px; 
         }
         .work-card {
-            background: var(--card-bg); border: 1px solid var(--glass-border);
-            border-radius: 18px; padding: 22px; display: flex; flex-direction: column;
-            justify-content: space-between; gap: 15px; transition: all 0.3s;
+            background: rgba(255, 255, 255, 0.03); border: 1px solid var(--glass-border);
+            border-radius: 24px; padding: 25px; display: flex; flex-direction: column;
+            justify-content: space-between; gap: 15px; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(10px); box-shadow: var(--glass-shadow);
         }
         .work-card:hover { 
-            transform: translateY(-5px); border-color: var(--neon-purple); 
-            box-shadow: 0 10px 30px rgba(157,78,221,0.25); 
+            transform: translateY(-8px) scale(1.02); border-color: var(--neon-purple); 
+            background: rgba(255,255,255,0.06);
+            box-shadow: 0 15px 35px rgba(181, 23, 158, 0.3); 
         }
-        .work-card h4 { font-family: 'Orbitron', sans-serif; font-size: 1.15rem; color: #fff; }
-        .work-card p { font-size: 0.9rem; color: #94a3b8; line-height: 1.5; }
+        .work-card h4 { font-family: 'Orbitron', sans-serif; font-size: 1.25rem; color: #fff; text-shadow: 0 0 5px rgba(255,255,255,0.3);}
+        .work-card p { font-size: 1rem; color: #cbd5e1; line-height: 1.6; font-weight: 500;}
         .work-card .btn-sub {
-            padding: 10px 18px; font-size: 0.85rem; border-radius: 10px; align-self: flex-start;
-            border: 1px solid rgba(157,78,221,0.4); background: rgba(157,78,221,0.15);
-            color: #fff; cursor: pointer; font-weight: 700; text-transform: uppercase;
-            transition: 0.25s; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;
+            padding: 10px 20px; font-size: 0.9rem; border-radius: 12px; align-self: flex-start;
+            border: 1px solid rgba(0, 243, 255, 0.4); background: rgba(0, 243, 255, 0.1);
+            color: #fff; cursor: pointer; font-weight: 800; text-transform: uppercase;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
         }
-        .work-card .btn-sub:hover { background: var(--neon-purple); box-shadow: 0 0 15px var(--neon-purple); }
+        .work-card .btn-sub:hover { background: var(--neon-blue); color: #000; box-shadow: 0 5px 15px rgba(0, 243, 255, 0.5); transform: translateX(5px); }
 
         /* Social Networks Grid */
-        .social-grid {
-            display: flex; flex-wrap: wrap; justify-content: center; max-width: 950px; gap: 15px;
-        }
+        .social-grid { display: flex; flex-wrap: wrap; justify-content: center; max-width: 950px; gap: 20px; }
         .btn-social {
-            display: flex; align-items: center; gap: 12px; padding: 14px 22px;
-            border-radius: 14px; border: 1px solid var(--glass-border); background: var(--card-bg);
-            cursor: pointer; color: #fff; font-weight: 700; font-size: 1rem;
-            backdrop-filter: blur(12px); transition: all 0.3s; min-width: 200px;
+            display: flex; align-items: center; gap: 15px; padding: 15px 25px;
+            border-radius: 100px; border: 1px solid var(--glass-border); background: rgba(255,255,255,0.05);
+            cursor: pointer; color: #fff; font-weight: 800; font-size: 1.1rem;
+            backdrop-filter: blur(12px); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); min-width: 210px;
+            box-shadow: var(--glass-shadow);
         }
-        .btn-social:hover { transform: translateY(-3px); }
-        .btn-social .s-icon { width: 28px; height: 28px; flex-shrink: 0; transition: 0.3s; }
-        .btn-social:hover .s-icon { transform: rotate(10deg) scale(1.2); }
+        .btn-social:hover { transform: translateY(-5px) scale(1.05); }
+        .btn-social .s-icon { width: 32px; height: 32px; flex-shrink: 0; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .btn-social:hover .s-icon { transform: rotate(15deg) scale(1.2); }
 
-        /* Brand Colors Hover */
-        .btn-ig:hover { border-color: #d6249f; box-shadow: 0 5px 20px rgba(214, 36, 159, 0.4); }
-        .btn-fb:hover { border-color: #1877f2; box-shadow: 0 5px 20px rgba(24, 119, 242, 0.4); }
-        .btn-tg:hover { border-color: #27a7e7; box-shadow: 0 5px 20px rgba(39, 167, 231, 0.4); }
-        .btn-wa:hover { border-color: #25d366; box-shadow: 0 5px 20px rgba(37, 211, 102, 0.4); }
-        .btn-tt:hover { border-color: #ee1d52; box-shadow: 0 5px 20px rgba(238, 29, 82, 0.4); }
-        .btn-sc:hover { border-color: var(--neon-yellow); box-shadow: 0 5px 20px rgba(255, 252, 0, 0.5); }
+        .btn-ig:hover { border-color: #d6249f; background: rgba(214, 36, 159, 0.1); box-shadow: 0 10px 25px rgba(214, 36, 159, 0.4); }
+        .btn-fb:hover { border-color: #1877f2; background: rgba(24, 119, 242, 0.1); box-shadow: 0 10px 25px rgba(24, 119, 242, 0.4); }
+        .btn-tg:hover { border-color: #27a7e7; background: rgba(39, 167, 231, 0.1); box-shadow: 0 10px 25px rgba(39, 167, 231, 0.4); }
+        .btn-wa:hover { border-color: #25d366; background: rgba(37, 211, 102, 0.1); box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4); }
+        .btn-tt:hover { border-color: #ee1d52; background: rgba(238, 29, 82, 0.1); box-shadow: 0 10px 25px rgba(238, 29, 82, 0.4); }
+        .btn-sc:hover { border-color: var(--neon-yellow); background: rgba(255, 252, 0, 0.1); box-shadow: 0 10px 25px rgba(255, 252, 0, 0.4); color: var(--neon-yellow); }
 
-        /* Bio Terminal Box */
+        /* Bio Terminal Box - Modest & Clean */
         .bio-box { 
-            background: var(--card-bg); border: 1px solid var(--glass-border); 
-            padding: 35px 30px; border-radius: 20px; backdrop-filter: blur(14px); 
-            max-width: 760px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.6); 
+            background: rgba(255, 255, 255, 0.05); border: 1px solid var(--glass-border); 
+            padding: 40px; border-radius: 30px; backdrop-filter: blur(20px); 
+            max-width: 800px; text-align: center; box-shadow: var(--glass-shadow); 
+            position: relative; overflow: hidden;
         }
-        #bio-text { line-height: 1.9; font-size: 1.15rem; color: #e2e8f0; }
+        .bio-box::before {
+            content: "💡"; font-size: 3rem; position: absolute; top: -15px; left: 20px; opacity: 0.1; transform: rotate(-20deg);
+        }
+        #bio-text { line-height: 2; font-size: 1.25rem; color: #f8fafc; font-weight: 600; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
 
         @media (max-width: 480px) {
-            .phone-frame { width: 310px; height: 620px; }
-            .apps-grid { grid-template-columns: repeat(2, 1fr); }
+            .phone-frame { width: 320px; height: 640px; border-width: 10px;}
+            .apps-grid { grid-template-columns: repeat(2, 1fr); gap: 10px;}
             .btn-social { width: 100%; }
+            .flagship-box { padding: 25px; }
         }
     </style>
 </head>
@@ -371,12 +399,12 @@
     <div class="hud-left">
         <div class="hud-chip" onclick="toggleAudio()" id="sound-btn">
             <span id="sound-icon">🔊</span>
-            <span id="sound-text">SOUND: ON</span>
+            <span id="sound-text">ON</span>
         </div>
     </div>
     <div class="hud-right">
         <div class="hud-chip" onclick="cycleLang()" id="lang-btn">
-            <span>🌐</span>
+            <span>🌍</span>
             <span id="lang-display">EN</span>
         </div>
     </div>
@@ -385,31 +413,31 @@
 <!-- ==================== HOME SECTION ==================== -->
 <section id="home" class="section">
     <div class="hidden-element profile-wrapper">
-        <!-- استخدام myphoto.jpg مباشرة وبشكل صريح -->
         <img src="myphoto.jpg" alt="Youcef Mekki" class="profile-img">
         <div class="live-badge">ONLINE</div>
     </div>
     <h1 id="name" class="hidden-element">Youcef Mekki</h1>
-    <div class="tagline hidden-element" id="tagline">Full-Stack Engineer & Cyber Security Dev</div>
+    <!-- Tagline with typing effect container -->
+    <div class="tagline hidden-element" id="tagline"></div>
 
     <!-- Quick Stats -->
     <div class="stats-strip hidden-element">
         <div class="stat-card">
             <div class="val">6+</div>
-            <div class="lbl" id="stat-apps">VIP MOD APKS</div>
+            <div class="lbl" id="stat-apps">APPS MOD</div>
         </div>
         <div class="stat-card">
             <div class="val">7+</div>
-            <div class="lbl" id="stat-web">WEB EXPERIMENTS</div>
+            <div class="lbl" id="stat-web">WEB PROJECTS</div>
         </div>
         <div class="stat-card">
             <div class="val">100%</div>
-            <div class="lbl" id="stat-clean">SAFE & TESTED</div>
+            <div class="lbl" id="stat-clean">PASSION</div>
         </div>
     </div>
 
-    <div style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: center;" class="hidden-element">
-        <button class="btn" onclick="scrollToSec('bio')" id="btn-bio">🚀 About Me</button>
+    <div style="display: flex; flex-wrap: wrap; gap: 15px; justify-content: center;" class="hidden-element">
+        <button class="btn" onclick="scrollToSec('bio')" id="btn-bio">💡 About Me</button>
         <button class="btn" onclick="scrollToSec('apps')" id="btn-apps">📱 MOD Lab</button>
         <button class="btn" onclick="scrollToSec('works')" id="btn-works">🌐 Web & AI</button>
         <button class="btn" onclick="scrollToSec('social')" id="btn-social">💬 Contact</button>
@@ -419,7 +447,7 @@
 <!-- ==================== BIO SECTION ==================== -->
 <section id="bio" class="section">
     <h2 id="bio-title" class="hidden-element">About Me</h2>
-    <p class="sec-desc hidden-element" id="bio-subtitle">My journey in coding, modding, and cybersecurity.</p>
+    <p class="sec-desc hidden-element" id="bio-subtitle">Just a learner on a journey.</p>
     <div class="bio-box hidden-element">
         <p id="bio-text"></p>
     </div>
@@ -428,29 +456,25 @@
 <!-- ==================== APPS (MOD LAB) SECTION ==================== -->
 <section id="apps" class="section">
     <h2 id="apps-title" class="hidden-element">📱 Mobile Apps MOD Lab</h2>
-    <p class="sec-desc hidden-element" id="apps-subtitle">All apps are 100% real, patched, and modified to unlock all VIP and Pro features without ads.</p>
+    <p class="sec-desc hidden-element" id="apps-subtitle">All apps are 100% real, patched, and modified to unlock features for free.</p>
     
     <div class="phone-mockup-wrapper hidden-element">
         <div class="phone-frame">
             <div class="phone-notch"></div>
             
-            <!-- Smartphone Top Bar -->
             <div class="phone-status-bar">
                 <span id="phone-clock">12:00</span>
                 <span>5G 📶 98% 🔋</span>
             </div>
 
             <div class="phone-screen">
-                
                 <!-- View 1: Smartphone Home Screen -->
                 <div id="phone-home">
                     <div class="mod-lab-header">
                         <h4 id="lab-head-title">⚡ CHIKOR MOD STORE</h4>
                         <p id="lab-head-sub">Click on any app to see unlocked features & download</p>
                     </div>
-                    <div class="apps-grid" id="phone-apps-grid">
-                        <!-- Populated by JavaScript -->
-                    </div>
+                    <div class="apps-grid" id="phone-apps-grid"></div>
                 </div>
 
                 <!-- View 2: App Deep Details & MOD Breakdown -->
@@ -461,17 +485,13 @@
                     </div>
                     
                     <div class="app-details-scroll">
-                        <!-- Screenshot preview / slider -->
                         <div class="slider-box" id="app-view-slider"></div>
 
-                        <!-- MOD info card -->
                         <div class="mod-pill-box">
-                            <h5><span style="color:var(--neon-red);">⚡</span> <span id="mod-badge-title">VIP MOD UNLOCKED</span></h5>
+                            <h5><span style="color:var(--neon-yellow);">⚡</span> <span id="mod-badge-title">FEATURES UNLOCKED</span></h5>
                             <p class="mod-desc-text" id="app-view-desc"></p>
                             
-                            <div class="perks-list" id="app-view-perks">
-                                <!-- Populated dynamically -->
-                            </div>
+                            <div class="perks-list" id="app-view-perks"></div>
                         </div>
                     </div>
 
@@ -481,7 +501,6 @@
                         </button>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
@@ -490,7 +509,7 @@
 <!-- ==================== WEB & AI PROJECTS ==================== -->
 <section id="works" class="section">
     <h2 id="web-title" class="hidden-element">🌐 Web & AI Projects</h2>
-    <p class="sec-desc hidden-element" id="web-subtitle">High-performance interactive web tools and intelligent experiments.</p>
+    <p class="sec-desc hidden-element" id="web-subtitle">Interactive web tools and fun programming experiments.</p>
 
     <!-- FLAGSHIP: Chikor QR Studio -->
     <div class="flagship-box hidden-element">
@@ -505,7 +524,7 @@
             <span class="tag-pill">Canvas Engine</span>
             <span class="tag-pill">Leaflet GPS</span>
             <span class="tag-pill">200+ Logos</span>
-            <span class="tag-pill">vCard VIP Mockup</span>
+            <span class="tag-pill">vCard Mockup</span>
             <span class="tag-pill">UTF-8 Raw</span>
         </div>
         <a href="https://youcefchikor31-ctrl.github.io/COD_QR/" target="_blank" class="flagship-btn" onclick="playSound('click')">
@@ -560,68 +579,42 @@
     </div>
 </section>
 
-<!-- ==================== SOCIAL NETWORKS (WITH SNAPCHAT) ==================== -->
+<!-- ==================== SOCIAL NETWORKS ==================== -->
 <section id="social" class="section">
     <h2 id="social-title" class="hidden-element">Digital Presence</h2>
-    <p class="sec-desc hidden-element" id="social-subtitle">Connect with me across all social and developer channels.</p>
+    <p class="sec-desc hidden-element" id="social-subtitle">Connect with me across all social channels.</p>
     
     <div class="social-grid hidden-element">
-        <!-- Snapchat -->
         <button class="btn-social btn-sc" onclick="openLink('https://www.snapchat.com/add/you_cef80831?share_id=1R-1LwGlPos&locale=en-AU')">
-            <span class="s-icon">
-                <svg viewBox="0 0 24 24" fill="#FFFC00">
-                    <path d="M12.012 2c-3.774 0-6.147 2.656-6.147 5.485 0 1.25.438 2.502.94 3.44.156.29.176.438.033.674-.213.354-.74.965-1.42 1.346-.438.245-.733.486-.71 1.002.02.434.337.66.726.792 1.218.414 2.19.167 2.766-.45.313-.336.5-.42.748-.344.49.15 1.58.557 3.064.557 1.484 0 2.574-.407 3.064-.557.248-.076.435.008.748.344.576.617 1.548.864 2.766.45.389-.132.706-.358.726-.792.023-.516-.272-.757-.71-1.002-.68-.38-1.207-.992-1.42-1.346-.143-.236-.123-.384.033-.674.502-.938.94-2.19.94-3.44C18.159 4.656 15.786 2 12.012 2z"/>
-                </svg>
-            </span>
+            <span class="s-icon"><svg viewBox="0 0 24 24" fill="#FFFC00"><path d="M12.012 2c-3.774 0-6.147 2.656-6.147 5.485 0 1.25.438 2.502.94 3.44.156.29.176.438.033.674-.213.354-.74.965-1.42 1.346-.438.245-.733.486-.71 1.002.02.434.337.66.726.792 1.218.414 2.19.167 2.766-.45.313-.336.5-.42.748-.344.49.15 1.58.557 3.064.557 1.484 0 2.574-.407 3.064-.557.248-.076.435.008.748.344.576.617 1.548.864 2.766.45.389-.132.706-.358.726-.792.023-.516-.272-.757-.71-1.002-.68-.38-1.207-.992-1.42-1.346-.143-.236-.123-.384.033-.674.502-.938.94-2.19.94-3.44C18.159 4.656 15.786 2 12.012 2z"/></svg></span>
             <span>Snapchat</span>
         </button>
 
-        <!-- Instagram -->
         <button class="btn-social btn-ig" onclick="openLink('https://www.instagram.com/chikor_youcef_31')">
             <span class="s-icon">
                 <svg viewBox="0 0 24 24">
-                    <defs>
-                        <radialGradient id="ig" cx="30%" cy="107%" r="150%">
-                            <stop offset="0%" stop-color="#fdf497"/>
-                            <stop offset="45%" stop-color="#fd5949"/>
-                            <stop offset="60%" stop-color="#d6249f"/>
-                            <stop offset="90%" stop-color="#285AEB"/>
-                        </radialGradient>
-                    </defs>
-                    <rect width="24" height="24" rx="6" fill="url(#ig)"/>
-                    <rect x="6" y="6" width="12" height="12" rx="4" fill="none" stroke="#fff" stroke-width="1.5"/>
-                    <circle cx="12" cy="12" r="3.2" fill="none" stroke="#fff" stroke-width="1.5"/>
-                    <circle cx="16.3" cy="7.7" r="1" fill="#fff"/>
+                    <defs><radialGradient id="ig" cx="30%" cy="107%" r="150%"><stop offset="0%" stop-color="#fdf497"/><stop offset="45%" stop-color="#fd5949"/><stop offset="60%" stop-color="#d6249f"/><stop offset="90%" stop-color="#285AEB"/></radialGradient></defs>
+                    <rect width="24" height="24" rx="6" fill="url(#ig)"/><rect x="6" y="6" width="12" height="12" rx="4" fill="none" stroke="#fff" stroke-width="1.5"/><circle cx="12" cy="12" r="3.2" fill="none" stroke="#fff" stroke-width="1.5"/><circle cx="16.3" cy="7.7" r="1" fill="#fff"/>
                 </svg>
             </span>
             <span>Instagram</span>
         </button>
 
-        <!-- Facebook -->
         <button class="btn-social btn-fb" onclick="openLink('https://www.facebook.com/youcef.chikor.2025')">
-            <span class="s-icon">
-                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#1877F2"/><path d="M15.1 12.7l.4-2.6h-2.5V8.4c0-.72.35-1.4 1.5-1.4h1.15V4.78S14.6 4.5 13.6 4.5c-2.07 0-3.43 1.26-3.43 3.53v2.07H7.9v2.6h2.27V19h2.8v-6.3h2.13z" fill="#fff"/></svg>
-            </span>
+            <span class="s-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#1877F2"/><path d="M15.1 12.7l.4-2.6h-2.5V8.4c0-.72.35-1.4 1.5-1.4h1.15V4.78S14.6 4.5 13.6 4.5c-2.07 0-3.43 1.26-3.43 3.53v2.07H7.9v2.6h2.27V19h2.8v-6.3h2.13z" fill="#fff"/></svg></span>
             <span>Facebook</span>
         </button>
 
-        <!-- Telegram -->
         <button class="btn-social btn-tg" onclick="openLink('https://t.me/213796514353')">
-            <span class="s-icon">
-                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#27A7E7"/><path d="M5 12.2l13-5c.6-.25 1.1.15.9.95l-2.2 10.4c-.15.7-.6.85-1.2.55l-3.3-2.45-1.6 1.55c-.18.18-.33.33-.65.33l.25-3.3 6-5.4c.26-.23-.06-.36-.4-.13l-7.4 4.65-3.2-1c-.7-.22-.7-.7.15-1.05z" fill="#fff"/></svg>
-            </span>
+            <span class="s-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#27A7E7"/><path d="M5 12.2l13-5c.6-.25 1.1.15.9.95l-2.2 10.4c-.15.7-.6.85-1.2.55l-3.3-2.45-1.6 1.55c-.18.18-.33.33-.65.33l.25-3.3 6-5.4c.26-.23-.06-.36-.4-.13l-7.4 4.65-3.2-1c-.7-.22-.7-.7.15-1.05z" fill="#fff"/></svg></span>
             <span>Telegram</span>
         </button>
 
-        <!-- WhatsApp -->
         <button class="btn-social btn-wa" onclick="openLink('https://wa.me/213796514353')">
-            <span class="s-icon">
-                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#25D366"/><path d="M16.7 14.2c-.3-.15-1.7-.85-2-.95-.27-.1-.46-.15-.66.15-.2.3-.76.95-.93 1.14-.17.2-.34.22-.64.07-.3-.15-1.26-.46-2.4-1.47-.9-.8-1.5-1.78-1.67-2.08-.17-.3-.02-.46.13-.61.13-.13.3-.34.45-.51.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.66-1.58-.9-2.16-.24-.58-.48-.5-.66-.5h-.56c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.22 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.7.62.71.23 1.36.2 1.87.12.57-.09 1.7-.7 1.94-1.37.24-.67.24-1.25.17-1.37-.07-.12-.27-.2-.57-.35z" fill="#fff"/></svg>
-            </span>
+            <span class="s-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#25D366"/><path d="M16.7 14.2c-.3-.15-1.7-.85-2-.95-.27-.1-.46-.15-.66.15-.2.3-.76.95-.93 1.14-.17.2-.34.22-.64.07-.3-.15-1.26-.46-2.4-1.47-.9-.8-1.5-1.78-1.67-2.08-.17-.3-.02-.46.13-.61.13-.13.3-.34.45-.51.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.66-1.58-.9-2.16-.24-.58-.48-.5-.66-.5h-.56c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.22 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.7.62.71.23 1.36.2 1.87.12.57-.09 1.7-.7 1.94-1.37.24-.67.24-1.25.17-1.37-.07-.12-.27-.2-.57-.35z" fill="#fff"/></svg></span>
             <span>WhatsApp</span>
         </button>
 
-        <!-- TikTok -->
         <button class="btn-social btn-tt" onclick="openLink('https://www.tiktok.com/@chikor_freestyel?_r=1&_t=ZS-97PK8TLfnOP')">
             <span class="s-icon">
                 <svg viewBox="0 0 24 24" fill="none">
@@ -659,24 +652,24 @@ function playSound(type = 'click') {
         const now = audioCtx.currentTime;
         if (type === 'click') {
             osc.type = 'sine';
-            osc.frequency.setValueAtTime(600, now);
+            osc.frequency.setValueAtTime(500, now);
             osc.frequency.exponentialRampToValueAtTime(150, now + 0.08);
-            gain.gain.setValueAtTime(0.12, now);
+            gain.gain.setValueAtTime(0.1, now);
             gain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
             osc.start(now);
             osc.stop(now + 0.08);
         } else if (type === 'open') {
             osc.type = 'triangle';
             osc.frequency.setValueAtTime(300, now);
-            osc.frequency.exponentialRampToValueAtTime(900, now + 0.15);
-            gain.gain.setValueAtTime(0.15, now);
+            osc.frequency.exponentialRampToValueAtTime(800, now + 0.15);
+            gain.gain.setValueAtTime(0.1, now);
             gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
             osc.start(now);
             osc.stop(now + 0.15);
         } else if (type === 'back') {
             osc.type = 'sine';
-            osc.frequency.setValueAtTime(700, now);
-            osc.frequency.exponentialRampToValueAtTime(250, now + 0.1);
+            osc.frequency.setValueAtTime(600, now);
+            osc.frequency.exponentialRampToValueAtTime(200, now + 0.1);
             gain.gain.setValueAtTime(0.1, now);
             gain.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
             osc.start(now);
@@ -691,73 +684,90 @@ function toggleAudio() {
     const text = document.getElementById('sound-text');
     if (soundEnabled) {
         icon.innerText = '🔊';
-        text.innerText = 'SOUND: ON';
+        text.innerText = 'ON';
         playSound('open');
     } else {
         icon.innerText = '🔇';
-        text.innerText = 'SOUND: OFF';
+        text.innerText = 'OFF';
     }
 }
 
-// ==================== TRILINGUAL ENGINE ====================
+// ==================== TYPING EFFECT ENGINE ====================
+let typingTimer = null;
+function typeWriter(text, elementId, speed = 50) {
+    const el = document.getElementById(elementId);
+    el.innerHTML = '';
+    let i = 0;
+    if(typingTimer) clearInterval(typingTimer);
+    typingTimer = setInterval(() => {
+        if (i < text.length) {
+            el.innerHTML += text.charAt(i);
+            i++;
+        } else {
+            clearInterval(typingTimer);
+        }
+    }, speed);
+}
+
+// ==================== TRILINGUAL ENGINE (MODEST BIO) ====================
 const uiData = {
     en: {
         name: "Youcef Mekki",
-        tagline: "Full-Stack Engineer & Cyber Security Dev",
+        tagline: "Student, Developer, and Tech Enthusiast",
         bioTitle: "About Me",
-        bioSubtitle: "My journey in coding, modding, and cybersecurity.",
-        bioText: "I am Youcef Mekki (Chikor), a Full-Stack Developer and Cybersecurity enthusiast born on 31/08/2008 in Algeria. I specialize in building highly secure, resilient web systems, reverse-engineering mobile architectures, and developing custom MOD utilities with zero bloat.",
+        bioSubtitle: "Just a learner on a journey.",
+        bioText: "I am Youcef Mekki (Chikor), an ambitious Algerian youth striving to acquire knowledge in programming and cybersecurity. I focus on learning, improving my skills step by step, and building fun and useful projects.",
         socialTitle: "Digital Presence",
-        socialSubtitle: "Connect with me across all social and developer channels.",
+        socialSubtitle: "Connect with me across all channels.",
         appsTitle: "📱 Mobile Apps MOD Lab",
-        appsSubtitle: "All apps are 100% real, patched, and modified to unlock all VIP and Pro features without ads.",
+        appsSubtitle: "A collection of apps modified for testing and learning purposes.",
         webTitle: "🌐 Web & AI Projects",
-        webSubtitle: "High-performance interactive web tools and intelligent experiments.",
-        btnBio: "🚀 About Me", btnApps: "📱 MOD Lab", btnWorks: "🌐 Web & AI", btnSocial: "💬 Contact",
-        statApps: "VIP MOD APKS", statWeb: "WEB EXPERIMENTS", statClean: "SAFE & TESTED",
-        qrDesc: "The next-generation QR Generator with live interactive GPS geolocation, 200+ curated logos, live VIP business card mockup synchronization, raw UTF-8 Arabic text encoding, and 1200px ultra-HD vector exports.",
+        webSubtitle: "Interactive web tools and fun programming experiments.",
+        btnBio: "💡 About Me", btnApps: "📱 MOD Lab", btnWorks: "🌐 Web & AI", btnSocial: "💬 Contact",
+        statApps: "APPS MOD", statWeb: "WEB PROJECTS", statClean: "PASSION",
+        qrDesc: "A fun QR Generator project with GPS geolocation, multiple logos, vCard integration, and high-quality exports.",
         labHeadTitle: "⚡ CHIKOR MOD STORE",
-        labHeadSub: "Click on any app to see unlocked features & download"
+        labHeadSub: "Click on any app to see details & download"
     },
     ar: {
         name: "يوسف مكي (Chikor)",
-        tagline: "مطور تطبيقات ومواقع وخبير أمن سيبراني ومودات",
-        bioTitle: "الملف الشخصي",
-        bioSubtitle: "رحلتي في البرمجة وتعديل التطبيقات والأمن السيبراني.",
-        bioText: "أنا يوسف مكي (Chikor)، مطور تطبيقات ومواقع شامل ومحب لعالم الأمن السيبراني (مواليد 31/08/2008 بالجزائر). أتخصص في هندسة وتطوير الأنظمة البرمجية فائقة الأمان، وفحص وتعديل التطبيقات (Reverse Engineering / MODs) لفتح الميزات المغلقة وإلغاء الإعلانات بالكامل.",
+        tagline: "طالب علم، شغوف بالتقنية ومطور",
+        bioTitle: "من أنا",
+        bioSubtitle: "رحلتي في التعلم والاكتشاف.",
+        bioText: "أنا يوسف مكي (Chikor)، شاب جزائري طموح يجتهد في اكتساب العلم فقط، وتطوير مهاراته في مجالات البرمجة والأمن السيبراني. أسعى دائماً للتعلم المستمر، تحسين قدراتي خطوة بخطوة، وصناعة مشاريع مفيدة وممتعة.",
         socialTitle: "التواجد الرقمي",
-        socialSubtitle: "تواصل معي مباشرة عبر حساباتي الرسمية وقنوات التطوير.",
-        appsTitle: "📱 مختبر تطبيقات الـ MOD الحقيقية",
-        appsSubtitle: "جميع هذه التطبيقات حقيقية وشغالة 100%، تم فك تشفيرها وتعديلها (Modded) لفتح كافة مزايا الـ VIP والبرو وحذف الإعلانات المزعجة.",
+        socialSubtitle: "تواصل معي عبر حساباتي للتعارف ومشاركة الأفكار.",
+        appsTitle: "📱 مختبر التطبيقات المعدلة",
+        appsSubtitle: "مجموعة تطبيقات قمت بتعديلها في إطار التعلم والتجربة.",
         webTitle: "🌐 مشاريع الويب والذكاء الاصطناعي",
-        webSubtitle: "أدوات ويب تفاعلية عالية الأداء وتجارب برمجية مبتكرة.",
-        btnBio: "🚀 من أنا", btnApps: "📱 متجر المودات", btnWorks: "🌐 مشاريع الويب", btnSocial: "💬 التواصل",
-        statApps: "تطبيقات معدلة VIP", statWeb: "مشاريع ويب ذكية", statClean: "فحص نظيف 100%",
-        qrDesc: "الجيل الأحدث من مولدات الباركود مع تحديد الموقع المباشر بالـ GPS، ومكتبة تضم 200+ شعار عالمي، ومزامنة حية مع بطاقة الأعمال الفاخرة، ودعم اللغة العربية الصافية (UTF-8)، وتحميل فائق الدقة (1200px HD).",
-        labHeadTitle: "⚡ متجر شيكور للمودات",
-        labHeadSub: "اضغط على أي تطبيق لمشاهدة الميزات المفتوحة والتحميل"
+        webSubtitle: "تجارب برمجية وأدوات ويب تفاعلية ممتعة.",
+        btnBio: "💡 من أنا", btnApps: "📱 التطبيقات", btnWorks: "🌐 مشاريع الويب", btnSocial: "💬 التواصل",
+        statApps: "تطبيقات معدلة", statWeb: "مشاريع ويب", statClean: "شغف وطموح",
+        qrDesc: "مشروع ممتع لتوليد الباركود مع تحديد الموقع، مكتبة شعارات، دمج بطاقات الأعمال، وتحميل عالي الدقة.",
+        labHeadTitle: "⚡ متجر شيكور للتطبيقات",
+        labHeadSub: "اضغط على أي تطبيق لمشاهدة التفاصيل والتحميل"
     },
     fr: {
         name: "Youcef Mekki",
-        tagline: "Ingénieur Full-Stack & Développeur Cyber",
+        tagline: "Étudiant, Développeur & Passionné de Tech",
         bioTitle: "À Propos",
-        bioSubtitle: "Mon parcours en code, modding et cybersécurité.",
-        bioText: "Je suis Youcef Mekki (Chikor), développeur Full-Stack et passionné de cybersécurité (né le 31/08/2008 en Algérie). Je me spécialise dans la création d'architectures web ultra-sécurisées et le rétro-ingénierie d'applications mobiles (MODs) pour débloquer toutes les options VIP sans publicité.",
+        bioSubtitle: "Un apprenant en quête de savoir.",
+        bioText: "Je suis Youcef Mekki (Chikor), un jeune Algérien ambitieux qui s'efforce d'acquérir des connaissances en programmation et en cybersécurité. Je me concentre sur l'apprentissage, l'amélioration de mes compétences pas à pas et la création de projets utiles.",
         socialTitle: "Présence Numérique",
-        socialSubtitle: "Rejoignez-moi sur tous mes canaux officiels et réseaux sociaux.",
-        appsTitle: "📱 Laboratoire Apps MOD",
-        appsSubtitle: "Toutes les applications sont 100% réelles, patchées et modifiées pour débloquer les fonctions VIP et Pro sans aucune pub.",
+        socialSubtitle: "Connectez-vous avec moi sur tous les réseaux.",
+        appsTitle: "📱 Laboratoire Apps",
+        appsSubtitle: "Une collection d'applications modifiées dans un but d'apprentissage.",
         webTitle: "🌐 Projets Web & IA",
-        webSubtitle: "Outils web interactifs haute performance et simulations intelligentes.",
-        btnBio: "🚀 Profil", btnApps: "📱 Apps MOD", btnWorks: "🌐 Projets Web", btnSocial: "💬 Contact",
-        statApps: "APKS VIP MOD", statWeb: "PROJETS WEB", statClean: "SÉCURISÉ 100%",
-        qrDesc: "Générateur QR nouvelle génération avec géolocalisation GPS directe, plus de 200 logos intégrés, synchronisation de cartes de visite VIP en temps réel et encodage UTF-8 pur.",
+        webSubtitle: "Outils web interactifs et expériences de programmation amusantes.",
+        btnBio: "💡 Profil", btnApps: "📱 Apps", btnWorks: "🌐 Projets", btnSocial: "💬 Contact",
+        statApps: "APPS MOD", statWeb: "PROJETS WEB", statClean: "PASSION",
+        qrDesc: "Un projet de générateur QR avec géolocalisation GPS, logos intégrés, et exportations haute qualité.",
         labHeadTitle: "⚡ CHIKOR MOD STORE",
-        labHeadSub: "Cliquez sur une app pour voir les fonctions débloquées"
+        labHeadSub: "Cliquez sur une app pour voir les détails"
     }
 };
 
-let langs = ['en', 'ar', 'fr'];
+let langs = ['ar', 'en', 'fr']; // Default Arabic
 let langIdx = 0;
 
 function updateUI() {
@@ -766,7 +776,10 @@ function updateUI() {
     
     document.getElementById('lang-display').innerText = l.toUpperCase();
     document.getElementById('name').innerText = data.name;
-    document.getElementById('tagline').innerText = data.tagline;
+    
+    // Trigger typing effect for tagline
+    typeWriter(data.tagline, 'tagline', 60);
+
     document.getElementById('bio-title').innerText = data.bioTitle;
     document.getElementById('bio-subtitle').innerText = data.bioSubtitle;
     document.getElementById('bio-text').innerText = data.bioText;
@@ -799,7 +812,7 @@ function cycleLang() {
     updateUI();
 }
 
-// ==================== APPS DATABASE (CLEAR MOD EXPLANATIONS) ====================
+// ==================== APPS DATABASE (KEPT AS REQUESTED) ====================
 const mobileApps = {
     capCut: {
         name: "CapCut Pro Mod",
@@ -807,16 +820,11 @@ const mobileApps = {
         icon: "✂️",
         images: ["capcut1.jpg", "capcut2.jpg", "capcut3.jpg"],
         desc: {
-            en: "Full VIP Mod: Export in crystal 4K 60FPS with zero watermarks. All premium transitions, AI voice effects, and pro filters unlocked.",
-            ar: "نسخة برو مفتوحة بالكامل: تصدير بجودة 4K 60 إطار بدون علامة مائية نهائياً. فتح كافة المؤثرات والانتقالات وأصوات الذكاء الاصطناعي المدفوعة.",
-            fr: "Version VIP Complète : Export 4K 60FPS sans filigrane. Tous les effets, transitions et voix IA débloqués sans frais."
+            en: "Export in crystal 4K 60FPS with zero watermarks. All premium transitions, AI voice effects, and pro filters unlocked.",
+            ar: "تصدير بجودة 4K 60 إطار بدون علامة مائية. فتح المؤثرات والانتقالات المدفوعة.",
+            fr: "Export 4K 60FPS sans filigrane. Tous les effets, transitions et voix IA débloqués."
         },
-        perks: [
-            "No Watermark (بدون علامة مائية)",
-            "4K 60FPS Export",
-            "VIP Transitions & Filters",
-            "Speed Curve Pro Unlocked"
-        ],
+        perks: ["No Watermark", "4K 60FPS Export", "VIP Transitions & Filters", "Speed Curve Pro Unlocked"],
         url: "https://www.mediafire.com/file/oa95vgyft6s5i0u/CapCut_15.5.0.apk.bak/file"
     },
     wifiFixer: {
@@ -825,16 +833,11 @@ const mobileApps = {
         icon: "📶",
         images: ["wifi1.jpg", "wifi2.jpg", "wifi3.jpg", "wifi4.jpg"],
         desc: {
-            en: "Patched Pro: Aggressive WiFi signal stabilizer, dynamic packet prioritization, and background reconnection algorithms enabled.",
-            ar: "اختراق شبكات واي فاي  FH",
-            fr: "Version Pro Débloquée : Stabilisation agressive du signal WiFi, réduction du ping et reconnexion automatique en arrière-plan."
+            en: "WiFi signal stabilizer and network diagnostic tool.",
+            ar: "أداة ذكية لتحسين واستقرار شبكات الواي فاي.",
+            fr: "Stabilisation du signal WiFi et reconnexion automatique."
         },
-        perks: [
-            "Signal Booster Algorithms",
-            "Low Ping for Gaming",
-            "Zero Annoying Ads",
-            "Network Diagnostic VIP"
-        ],
+        perks: ["Signal Booster Algorithms", "Low Ping for Gaming", "Zero Annoying Ads", "Network Diagnostic"],
         url: "https://www.mediafire.com/file/kyixbx3xaazl4h4/WiFi_Fixer_Pro_1.0.apk/file"
     },
     yuchVault: {
@@ -843,34 +846,24 @@ const mobileApps = {
         icon: "🔒",
         images: ["vault1.jpg", "vault2.jpg", "vault3.jpg"],
         desc: {
-            en: "Custom Security Vault: Military-grade AES-256 hidden photo & file storage with stealth camouflage icon and break-in decoy protection.",
-            ar: "خزنة أمان سرية معدلة: تشفير عسكري AES-256 للصور والملفات الحساسة مع إمكانية تمويه الأيقونة ووضع كود مزيف عند التهديد.",
-            fr: "Coffre-Fort Ultra-Sécurisé : Cryptage AES-256 des fichiers avec icône camouflage et code d'urgence anti-intrusion."
+            en: "AES-256 hidden photo & file storage with stealth camouflage icon.",
+            ar: "تشفير عسكري AES-256 للصور والملفات الحساسة مع إمكانية تمويه الأيقونة.",
+            fr: "Cryptage AES-256 des fichiers avec icône camouflage."
         },
-        perks: [
-            "AES-256 Local Encryption",
-            "Stealth Calculator Disguise",
-            "Fake PIN Decoy Mode",
-            "Unlimited Secret Storage"
-        ],
+        perks: ["AES-256 Local Encryption", "Stealth Calculator Disguise", "Fake PIN Decoy Mode", "Unlimited Secret Storage"],
         url: "https://www.mediafire.com/file/edn5t2jxe3h2l4w/Yuch_Vault_1.0.apk/file"
     },
     hiTv: {
         name: "HiTV VIP Mod",
-        badge: "NO ADS • VIP",
+        badge: "NO ADS",
         icon: "📺",
         images: ["hitv1.jpg", "hitv2.jpg"],
         desc: {
-            en: "VIP Drama & Cinema Mod: Instant access to Korean, Asian, and Western dramas in 1080p FHD with zero commercial interruptions.",
-            ar: "نسخة VIP لمشاهدة المسلسلات: فتح كافة مسلسلات الدراما الآسيوية والعالمية بجودة 1080p FHD مع حذف كامل الإعلانات وإتاحة التحميل.",
-            fr: "Mod VIP Cinéma & Séries : Accès illimité aux dramas en 1080p FHD, téléchargement hors-ligne et zéro coupure pub."
+            en: "Instant access to Asian and Western dramas in FHD with zero ads.",
+            ar: "مشاهدة المسلسلات الآسيوية والعالمية بجودة FHD بدون إعلانات.",
+            fr: "Accès aux dramas en 1080p FHD sans coupure pub."
         },
-        perks: [
-            "1080p Ultra Streaming",
-            "All Ads Removed Completely",
-            "Fast Offline Download",
-            "Multi-language Subtitles"
-        ],
+        perks: ["1080p Ultra Streaming", "All Ads Removed Completely", "Fast Offline Download", "Multi-language Subtitles"],
         url: "https://www.mediafire.com/file/ktarrep9980x8of/HiTV_3.13.2.apk/file"
     },
     movie: {
@@ -879,34 +872,24 @@ const mobileApps = {
         icon: "🎬",
         images: ["movie1.jpg", "movie2.jpg"],
         desc: {
-            en: "Cinema Streaming Mod: Thousands of blockbuster movies with multi-source 4K streaming links and completely disabled banner ads.",
-            ar: "مود السينما العالمي: مكتبة أحدث الأفلام والمسلسلات بجودات متعددة وسيرفرات سريعة، تم إلغاء كافة الإعلانات الإجبارية تماماً.",
-            fr: "Mod Streaming Ultime : Nouveaux films et séries en 4K avec serveurs rapides et aucune publicité forcée."
+            en: "Thousands of movies with multi-source streaming and disabled ads.",
+            ar: "مكتبة أفلام بجودات متعددة وسيرفرات سريعة بدون إعلانات.",
+            fr: "Nouveaux films en 4K avec serveurs rapides sans publicité."
         },
-        perks: [
-            "Multi-server 4K Links",
-            "Ad-Free Clean Interface",
-            "Direct TV Casting (Chromecast)",
-            "Auto-Sync Bookmarks"
-        ],
+        perks: ["Multi-server 4K Links", "Ad-Free Clean Interface", "Direct TV Casting", "Auto-Sync Bookmarks"],
         url: "https://www.mediafire.com/file/l5m4o2d8e70ytqr/Movie_V3.0.2.apk/file"
     },
     lightroom: {
         name: "Lightroom Pro Mod",
-        badge: "PREMIUM MOD",
+        badge: "PREMIUM",
         icon: "📸",
         images: [],
         desc: {
-            en: "Premium Photo Studio Mod: All exclusive preset filters, selective mask tools, curve corrections, and RAW camera profiles fully unlocked.",
-            ar: "نسخة لايتروم برو بريميوم: فتح جميع فلاتر وبريسيتات المشاهير، وأداة التحديد الذكي، وتعديل منحنيات الألوان وخام RAW مجاناً.",
-            fr: "Mod Lightroom Pro : Tous les presets payants, retouche sélective par masque, correction des courbes et RAW débloqués."
+            en: "All exclusive preset filters, selective mask tools fully unlocked.",
+            ar: "فتح فلاتر وبريسيتات، التحديد الذكي، وتعديل الألوان مجاناً.",
+            fr: "Tous les presets payants, retouche sélective par masque débloqués."
         },
-        perks: [
-            "Selective Brush & Masking",
-            "Premium Presets Unlocked",
-            "RAW Editing Support",
-            "Geometry Perspective Tools"
-        ],
+        perks: ["Selective Brush & Masking", "Premium Presets Unlocked", "RAW Editing Support", "Geometry Perspective Tools"],
         url: "https://www.mediafire.com/file/udr089s5x9gknid/Lightroom_11.1.2.apk/file"
     }
 };
@@ -929,7 +912,7 @@ function initPhoneHome() {
             <div class="app-badge-mod">${app.badge}</div>
             <div class="app-card-icon">${app.icon}</div>
             <div class="app-card-title">${app.name}</div>
-            <div class="app-card-sub">⚡ ${l === 'ar' ? 'معدل وشغال' : 'Tested & Clean'}</div>
+            <div class="app-card-sub">⚡ ${l === 'ar' ? 'معدل وجاهز' : 'Ready'}</div>
         `;
         grid.appendChild(card);
     });
@@ -948,7 +931,6 @@ function openAppView(key) {
     document.getElementById('app-view-title').innerText = app.name;
     document.getElementById('app-view-desc').innerText = app.desc[l];
     
-    // Perks list
     const perksBox = document.getElementById('app-view-perks');
     perksBox.innerHTML = '';
     app.perks.forEach(p => {
@@ -958,7 +940,6 @@ function openAppView(key) {
         perksBox.appendChild(item);
     });
 
-    // Handle Screenshots / Preview
     const slider = document.getElementById('app-view-slider');
     slider.innerHTML = '';
     clearInterval(sliderInterval);
@@ -983,9 +964,9 @@ function openAppView(key) {
     } else {
         slider.innerHTML = `
             <div class="slider-placeholder">
-                <span style="font-size: 45px;">${app.icon}</span>
-                <span style="font-family:'Orbitron',sans-serif; font-size: 0.85rem; color:#00f3ff;">100% VERIFIED MOD</span>
-                <span style="font-size: 0.75rem; color:#888;">Direct MediaFire link ready below</span>
+                <span style="font-size: 45px; text-shadow: 0 0 10px #fff;">${app.icon}</span>
+                <span style="font-family:'Orbitron',sans-serif; font-size: 0.9rem; color:#00f3ff;">READY TO USE</span>
+                <span style="font-size: 0.75rem; color:#cbd5e1;">Link is ready below</span>
             </div>
         `;
     }
@@ -1038,11 +1019,14 @@ const observer = new IntersectionObserver((entries) => {
 
 document.querySelectorAll('.hidden-element').forEach(el => observer.observe(el));
 
-// ==================== INTERACTIVE PARTICLES BACKGROUND ====================
+// ==================== BEAUTIFUL COLORFUL PARTICLES BACKGROUND ====================
 const canvas = document.getElementById('cyber-canvas');
 const ctx = canvas.getContext('2d');
 let width, height, particles = [];
-let mouse = { x: null, y: null, radius: 140 };
+let mouse = { x: null, y: null, radius: 120 };
+
+// Neon colors palette
+const colors = ['#00f3ff', '#b5179e', '#f72585', '#00f5d4', '#fee440'];
 
 function resize() { 
     width = canvas.width = window.innerWidth; 
@@ -1058,9 +1042,10 @@ class Particle {
     constructor() {
         this.x = Math.random() * width; 
         this.y = Math.random() * height;
-        this.size = Math.random() * 2 + 1;
-        this.vx = (Math.random() - 0.5) * 0.9; 
-        this.vy = (Math.random() - 0.5) * 0.9;
+        this.size = Math.random() * 3 + 1;
+        this.vx = (Math.random() - 0.5) * 1.5; 
+        this.vy = (Math.random() - 0.5) * 1.5;
+        this.color = colors[Math.floor(Math.random() * colors.length)];
     }
     update() {
         this.x += this.vx; this.y += this.vy;
@@ -1072,22 +1057,25 @@ class Particle {
             let dist = Math.sqrt(dx*dx + dy*dy);
             if(dist < mouse.radius) {
                 const force = (mouse.radius - dist) / mouse.radius;
-                this.x -= dx * force * 0.04; 
-                this.y -= dy * force * 0.04;
+                this.x -= dx * force * 0.05; 
+                this.y -= dy * force * 0.05;
             }
         }
     }
     draw() { 
-        ctx.fillStyle = '#00f3ff'; 
+        ctx.fillStyle = this.color;
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = this.color;
         ctx.beginPath(); 
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); 
         ctx.fill(); 
+        ctx.shadowBlur = 0;
     }
 }
 
 function initParticles() {
     particles = [];
-    let count = Math.floor((width * height) / 9500);
+    let count = Math.floor((width * height) / 10000);
     for(let i = 0; i < count; i++) particles.push(new Particle());
 }
 initParticles();
@@ -1101,13 +1089,15 @@ function animateParticles() {
             let dx = particles[i].x - particles[j].x;
             let dy = particles[i].y - particles[j].y;
             let dist = Math.sqrt(dx*dx + dy*dy);
-            if(dist < 115) {
+            if(dist < 100) {
                 ctx.beginPath(); 
-                ctx.strokeStyle = `rgba(0, 243, 255, ${1 - dist/115})`;
+                ctx.strokeStyle = particles[i].color;
+                ctx.globalAlpha = 1 - dist/100;
                 ctx.lineWidth = 0.8; 
                 ctx.moveTo(particles[i].x, particles[i].y); 
                 ctx.lineTo(particles[j].x, particles[j].y); 
                 ctx.stroke();
+                ctx.globalAlpha = 1;
             }
         }
     }
@@ -1115,7 +1105,7 @@ function animateParticles() {
 }
 animateParticles();
 
-// Initialize initial language and UI
+// Initialize UI (Arabic default)
 updateUI();
 </script>
 </body>
