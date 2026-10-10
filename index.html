@@ -1,1112 +1,618 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Youcef Mekki (Chikor) - Portfolio & MOD Lab</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800;900&family=Rajdhani:wght@500;600;700&family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
-    <style>
-        :root { 
-            --neon-blue: #00f3ff; 
-            --neon-purple: #b5179e; 
-            --neon-red: #f72585; 
-            --neon-yellow: #fee440;
-            --neon-green: #00f5d4;
-            --dark-bg: #0b0914;
-            --card-bg: rgba(20, 15, 35, 0.45);
-            --glass-border: rgba(255, 255, 255, 0.15);
-            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-        }
-        
-        * { margin:0; padding:0; box-sizing:border-box; font-family:'Rajdhani', sans-serif; }
-        [dir="rtl"] * { font-family: 'Cairo', sans-serif; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#070707">
+<title>Youcef Mekki — Portfolio</title>
+<meta name="description" content="Youcef Mekki (Chikor) — web & Android developer from Algeria. HTML, CSS, JavaScript, Java and Python.">
+<meta property="og:title" content="Youcef Mekki — Portfolio">
+<meta property="og:description" content="Web & Android developer. Projects, apps and tech stack.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23111'/%3E%3Ctext x='32' y='43' font-family='monospace' font-size='34' font-weight='700' fill='%23fff' text-anchor='middle'%3EC%3C/text%3E%3C/svg%3E">
+<script>
+/* avatar fallback — must exist before the <img onerror> fires (when myphoto.jpg is missing) */
+window.fb=function(img){
+  img.onerror=null;
+  var svg="<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 520'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='#6a6a70'/><stop offset='1' stop-color='#1a1a1d'/></linearGradient></defs><rect width='400' height='520' fill='url(#g)'/><circle cx='200' cy='200' r='78' fill='#d8d8dc'/><path d='M50 520c0-120 70-190 150-190s150 70 150 190z' fill='#d8d8dc'/></svg>";
+  img.src='data:image/svg+xml;utf8,'+encodeURIComponent(svg);
+};
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Cairo:wght@400;600;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#070707;--p1:rgba(255,255,255,.035);--p2:rgba(255,255,255,.07);--line:rgba(255,255,255,.1);--txt:#f4f4f5;--mut:#8f8f98;--dim:#5b5b63;--dir:1}
+html[dir=rtl]{--dir:-1}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--txt);font:400 16px/1.7 'Manrope','Cairo',system-ui,sans-serif;overflow-x:hidden}
+html[lang=ar] body{font-family:'Cairo','Manrope',sans-serif}
+html[lang=ar] *{letter-spacing:0!important}
+body.lock{overflow:hidden}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;cursor:pointer}
+.mono{font-family:'JetBrains Mono',ui-monospace,monospace;letter-spacing:.02em}
 
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: var(--dark-bg); }
-        ::-webkit-scrollbar-thumb { background: linear-gradient(var(--neon-purple), var(--neon-blue)); border-radius: 10px; }
+/* ---------- background ---------- */
+.bg{position:fixed;inset:0;z-index:-2;background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);background-size:60px 60px;-webkit-mask-image:radial-gradient(ellipse at 50% 25%,#000 15%,transparent 78%);mask-image:radial-gradient(ellipse at 50% 25%,#000 15%,transparent 78%)}
+.spot{position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(520px circle at var(--mx,72%) var(--my,22%),rgba(255,255,255,.09),transparent 60%)}
 
-        /* Dynamic Animated Background */
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
+/* ---------- intro ---------- */
+#intro{position:fixed;inset:0;z-index:999;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:34px;transition:opacity .8s,visibility .8s;cursor:pointer;padding:20px}
+#intro.out{opacity:0;visibility:hidden}
+.ichips{display:flex;gap:14px}
+.ich{width:50px;height:50px;border-radius:15px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.04);display:grid;place-items:center;color:#fff;opacity:0;transform:scale(.55);animation:pop .65s cubic-bezier(.2,1.4,.4,1) forwards;font:700 .95rem 'JetBrains Mono',monospace}
+.ich svg{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.ich:nth-child(2){animation-delay:.2s}.ich:nth-child(3){animation-delay:.4s}
+@keyframes pop{to{opacity:1;transform:none}}
+.iw{font:800 clamp(1.9rem,6.4vw,3.6rem)/1.18 'Syne','Cairo',sans-serif;text-align:center}
+html[lang=ar] .iw{font-family:'Cairo',sans-serif;font-weight:900}
+.iw span{display:block;opacity:0;transform:translateY(22px);filter:blur(8px);animation:rise .9s .7s forwards}
+.iw span:nth-child(2){color:#6b6b72;animation-delay:1.05s}
+@keyframes rise{to{opacity:1;transform:none;filter:none}}
+.ld{width:120px;height:2px;background:rgba(255,255,255,.1);border-radius:2px;overflow:hidden}
+.ld i{display:block;height:100%;width:0;background:#fff;animation:ldw 3s linear forwards}
+@keyframes ldw{to{width:100%}}
 
-        body { 
-            background: linear-gradient(-45deg, #0b0914, #2a113a, #0b132b, #10002b);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
-            color: #fff; 
-            overflow-x: hidden; 
-            scroll-behavior: smooth; 
-            min-height: 100vh;
-        }
+/* ---------- nav ---------- */
+.bar{position:fixed;top:16px;left:0;right:0;margin-inline:auto;width:min(1120px,calc(100% - 32px));z-index:60;display:flex;align-items:center;gap:16px;padding-block:10px;padding-inline:26px 12px;border-radius:999px;background:rgba(18,18,18,.62);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid var(--line)}
+.logo{font:500 .9rem 'JetBrains Mono',monospace;letter-spacing:.04em;direction:ltr}
+.logo b{color:var(--dim);font-weight:400}
+.links{display:flex;gap:4px;margin-inline-start:auto}
+.links a{position:relative;padding:6px 15px;font-size:.88rem;color:var(--mut);transition:color .2s}
+.links a::after{content:"";position:absolute;inset-inline:15px;bottom:1px;height:1px;background:#fff;transform:scaleX(0);transition:transform .35s}
+.links a.on,.links a:hover{color:#fff}
+.links a.on::after{transform:scaleX(1)}
+.lg{background:var(--p1);border:1px solid var(--line);border-radius:999px;padding:6px 14px;font:500 .78rem 'JetBrains Mono',monospace;transition:.2s}
+.lg:hover{background:var(--p2);border-color:rgba(255,255,255,.3)}
 
-        #cyber-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+/* ---------- layout ---------- */
+.sec{position:relative;max-width:1120px;margin:0 auto;padding:120px 20px 30px}
+.rv{opacity:0;transform:translateY(26px);transition:opacity .85s,transform .85s;transition-delay:calc(var(--i,0)*.09s)}
+.rv.in{opacity:1;transform:none}
+body:not(.ready) .hero .rv{opacity:0!important;transform:translateY(26px)!important}
+.eyebrow{font-size:.72rem;color:var(--dim);letter-spacing:.2em;margin-bottom:18px;text-transform:uppercase}
+.display{font-family:'Syne','Cairo',sans-serif;font-weight:800;line-height:1.02;letter-spacing:-.02em;font-size:clamp(2.4rem,5.4vw,4.9rem)}
+.display span{display:block}
+.display.md{font-size:clamp(2.2rem,4.6vw,4rem)}
+.display.sm{font-size:clamp(1.9rem,4vw,3.2rem)}
+html[lang=ar] .display{font-family:'Cairo',sans-serif;font-weight:900;line-height:1.3}
+.w2{background:linear-gradient(180deg,#b0b0b5,#4f4f55);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{color:var(--mut);max-width:520px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;border-radius:12px;border:1px solid var(--line);background:var(--p1);font-weight:600;font-size:.9rem;transition:.25s}
+.btn:hover{background:var(--p2);border-color:rgba(255,255,255,.35);transform:translateY(-2px)}
+.btn.pri{background:#f4f4f5;color:#09090b;border-color:#f4f4f5}
+.btn.pri:hover{background:#fff;box-shadow:0 10px 40px rgba(255,255,255,.18)}
+.cta{display:flex;flex-wrap:wrap;gap:10px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font:500 .74rem 'JetBrains Mono',monospace;padding:5px 12px;border-radius:8px;border:1px solid var(--line);background:var(--p1);color:#cfcfd4;direction:ltr}
 
-        /* Top HUD Bar */
-        .hud-bar {
-            position: fixed; top: 20px; left: 20px; right: 20px; z-index: 1000;
-            display: flex; justify-content: space-between; align-items: center;
-            pointer-events: none;
-        }
-        .hud-left, .hud-right { display: flex; gap: 15px; pointer-events: auto; }
+/* ---------- hero ---------- */
+.hero{min-height:100svh;display:grid;grid-template-columns:1.1fr .9fr;align-items:center;gap:20px;padding-top:110px;padding-bottom:70px}
+.type{color:#c9c9cf;font-size:.95rem;min-height:1.7em;margin:22px 0 6px;overflow-wrap:anywhere}
+.type span{unicode-bidi:plaintext}
+.caret{display:inline-block;width:8px;height:1.05em;background:#fff;margin-inline-start:3px;vertical-align:-3px;animation:bl 1s steps(1) infinite}
+@keyframes bl{50%{opacity:0}}
+.hero .lead{margin:8px 0 20px}
+.hero .chips{margin-bottom:20px}
+.bul{list-style:none;color:var(--dim);font-size:.8rem;margin-bottom:28px;line-height:1.95}
+.scroll{position:absolute;bottom:24px;inset-inline-start:20px;font-size:.68rem;letter-spacing:.32em;color:var(--dim);animation:bob 2.2s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(6px)}}
+.hr{align-self:start;display:flex;justify-content:center}
+.lanyard{position:relative;width:min(100%,380px);--cw:230px;--chh:310px;height:calc(var(--chh) + 290px);margin-top:-110px}
+.lanyard canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.card{position:absolute;left:0;top:0;width:var(--cw);height:var(--chh);border-radius:16px;background:#f1f1f1;padding:8px;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none;box-shadow:0 34px 60px rgba(0,0,0,.65),inset 0 0 0 1px rgba(255,255,255,.35);will-change:transform;transform:translate(70px,230px)}
+.card:active{cursor:grabbing}
+.face{position:relative;width:100%;height:100%;border-radius:10px;overflow:hidden;background:#111}
+.face img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.12);pointer-events:none;-webkit-user-drag:none;display:block}
+.cap{position:absolute;left:0;right:0;bottom:0;padding:34px 14px 12px;background:linear-gradient(transparent,rgba(0,0,0,.88));display:flex;flex-direction:column;direction:ltr;text-align:left}
+.cap b{font:800 .86rem 'Syne',sans-serif;letter-spacing:.07em}
+.cap span{font:400 .62rem 'JetBrains Mono',monospace;color:#b5b5bb;letter-spacing:.14em}
+.sheen{position:absolute;inset:0;background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.3) 48%,transparent 66%);background-size:260% 100%;background-position:calc(50% + var(--s,0)*1px) 0;mix-blend-mode:overlay;pointer-events:none}
+.clip{position:absolute;top:-15px;left:50%;width:32px;height:38px;margin-left:-16px;border-radius:8px 8px 11px 11px;background:linear-gradient(90deg,#666,#dcdcdc 40%,#8a8a8a 72%,#555);box-shadow:0 3px 8px rgba(0,0,0,.6);pointer-events:none}
+.clip::after{content:"";position:absolute;left:50%;top:10px;width:14px;height:6px;margin-left:-7px;border-radius:3px;background:#1d1d1f}
 
-        .hud-chip {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--glass-border);
-            padding: 8px 18px;
-            border-radius: 20px;
-            backdrop-filter: blur(16px) saturate(180%);
-            -webkit-backdrop-filter: blur(16px) saturate(180%);
-            font-size: 0.9rem;
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: var(--glass-shadow);
-            color: #fff;
-        }
-        .hud-chip:hover { 
-            border-color: var(--neon-blue); 
-            background: rgba(0, 243, 255, 0.15);
-            transform: translateY(-3px) scale(1.05); 
-        }
+/* ---------- marquee ---------- */
+.mq{overflow:hidden;border-block:1px solid var(--line);padding:14px 0;direction:ltr;-webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
+.mqt{display:flex;width:max-content;animation:mq 28s linear infinite;font:800 clamp(1.6rem,4vw,2.6rem) 'Syne',sans-serif;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.28);white-space:nowrap}
+.mqt span{padding-inline:22px}
+.mqt em{font-style:normal;color:var(--dim);-webkit-text-stroke:0}
+@keyframes mq{to{transform:translateX(-50%)}}
 
-        .section { 
-            min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; 
-            position: relative; padding: 120px 20px 80px; z-index: 1; 
-        }
+/* ---------- about ---------- */
+.about{display:grid;grid-template-columns:1.2fr .8fr;gap:34px;align-items:center}
+.about .lead{margin:16px 0 18px}
+.quote{display:inline-block;border:1px solid var(--line);background:var(--p1);padding:10px 20px;border-radius:12px;font-style:italic;font-size:.88rem;color:#d4d4d8;margin-bottom:22px}
+.avatar{width:min(100%,330px);aspect-ratio:1;border-radius:50%;overflow:hidden;margin-inline:auto;position:relative;border:1px solid var(--line);box-shadow:0 0 0 12px rgba(255,255,255,.03),0 40px 80px rgba(0,0,0,.6)}
+.avatar img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.12);display:block}
+.avatar::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 82% 12%,rgba(255,255,255,.34),transparent 46%);mix-blend-mode:overlay}
+.stats3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:56px}
+.st{position:relative;text-align:start;border:1px solid var(--line);border-radius:18px;background:var(--p1);padding:18px 22px;display:flex;flex-direction:column;transition:.3s}
+.st:hover{transform:translateY(-5px);border-color:rgba(255,255,255,.3);background:var(--p2)}
+.st small{font:500 .66rem 'JetBrains Mono',monospace;letter-spacing:.16em;color:var(--mut)}
+.st b{font:800 2.3rem/1.15 'Syne',sans-serif}
+.st i{position:absolute;top:16px;inset-inline-end:18px;font-style:normal;color:var(--dim);transition:.3s}
+.st:hover i{color:#fff;transform:translate(2px,-2px)}
 
-        /* Beautiful Reveal Animations */
-        .hidden-element { opacity: 0; transform: translateY(40px) scale(0.95); transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1.1); }
-        .show-element { opacity: 1; transform: translateY(0) scale(1); }
+/* ---------- showcase ---------- */
+.center{text-align:center}
+.center .lead{margin:10px auto 0}
+.tabs{position:relative;display:flex;width:max-content;max-width:100%;margin:30px auto 38px;padding:6px;border-radius:999px;background:var(--p1);border:1px solid var(--line)}
+.tabs button{position:relative;z-index:1;background:none;border:none;padding:10px 28px;border-radius:999px;font-size:.88rem;color:var(--mut);transition:color .25s;white-space:nowrap}
+.tabs button.on{color:#fff}
+.thumb{position:absolute;top:6px;bottom:6px;left:6px;width:80px;border-radius:999px;background:var(--p2);border:1px solid var(--line);transition:left .38s cubic-bezier(.4,0,.2,1),width .38s cubic-bezier(.4,0,.2,1)}
+.pane{display:none}
+.pane.on{display:block;animation:in .55s both}
+@keyframes in{from{opacity:0;transform:translateY(14px)}}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+.pc{position:relative;border:1px solid var(--line);border-radius:18px;background:var(--p1);overflow:hidden;cursor:pointer;transition:transform .35s,border-color .3s,background .3s;text-align:start;width:100%;height:100%;display:flex;flex-direction:column;color:inherit}
+.pc .shot{flex:none}
+.pc .bd{flex:1;display:flex;flex-direction:column}
+.pc .bd p{flex:1}
+.pc:hover{transform:translateY(-6px);border-color:rgba(255,255,255,.3);background:var(--p2)}
+.shot{height:150px;border-bottom:1px solid var(--line);background-color:#0a0a0b;background-image:repeating-linear-gradient(var(--pa,45deg),transparent 0 11px,rgba(255,255,255,.035) 11px 12px);position:relative;overflow:hidden}
+.dots{position:absolute;top:9px;left:12px;display:flex;gap:5px;z-index:2}
+.dots i{width:7px;height:7px;border-radius:50%;background:#2d2d31}
+.url{position:absolute;top:5px;left:52px;right:12px;height:18px;border-radius:9px;background:#151517;font:400 .6rem/18px 'JetBrains Mono',monospace;color:var(--dim);padding:0 10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;direction:ltr;text-align:left;z-index:2}
+.no{position:absolute;inset:26px 0 0;display:grid;place-items:center;font:800 4.8rem 'Syne',sans-serif;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.3);transition:.45s;direction:ltr}
+.pc:hover .no{-webkit-text-stroke-color:#fff;transform:scale(1.08)}
+.bd{padding:16px 18px 18px}
+.bd h3{font-size:1.04rem;font-weight:700}
+.bd p{color:var(--mut);font-size:.86rem;line-height:1.55;margin:4px 0 14px}
+.go{font:500 .74rem 'JetBrains Mono',monospace;color:#fff}
+.app{border:1px solid var(--line);border-radius:20px;background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.015));padding:24px;display:flex;flex-direction:column;gap:6px}
+.app .ai{width:54px;height:54px;border-radius:15px;border:1px solid var(--line);background:#0b0b0c;display:grid;place-items:center;font:700 1.1rem 'JetBrains Mono',monospace;margin-bottom:8px}
+.app h3{font-size:1.15rem}
+.app p{color:var(--mut);font-size:.9rem}
+.app ul{list-style:none;margin:8px 0 16px;font-size:.85rem;color:#cfcfd4}
+.app li::before{content:"✓";margin-inline-end:9px;color:#fff}
+.app .btn{margin-top:auto;justify-content:center}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;max-width:900px;margin:0 auto}
+.tile{border:1px solid var(--line);border-radius:18px;background:var(--p1);padding:22px 12px 18px;text-align:center;transition:.35s}
+.tile:hover{transform:translateY(-6px);background:var(--p2);border-color:color-mix(in srgb,var(--c) 55%,transparent);box-shadow:0 18px 40px color-mix(in srgb,var(--c) 14%,transparent)}
+.gl{width:64px;height:64px;margin:0 auto 12px;border-radius:17px;display:grid;place-items:center;font:700 1.4rem 'JetBrains Mono',monospace;color:var(--c);background:color-mix(in srgb,var(--c) 13%,#0b0b0c);border:1px solid color-mix(in srgb,var(--c) 32%,transparent);direction:ltr}
+.tile b{display:block;font-size:.95rem}
+.tile span{color:var(--mut);font-size:.75rem}
+.tools{max-width:900px;margin:34px auto 0;text-align:center}
+.tools .chips{justify-content:center;margin-top:12px}
 
-        /* Buttons & Cards - Bouncy & Fun */
-        .btn { 
-            padding: 14px 28px; border-radius: 100px; border: 1px solid var(--glass-border); 
-            background: var(--card-bg); cursor: pointer; color: white; 
-            font-weight: 800; font-size: 1.05rem; letter-spacing: 1px; 
-            backdrop-filter: blur(16px); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-            position: relative; overflow: hidden;
-            display: inline-flex; align-items: center; justify-content: center; gap: 10px;
-            box-shadow: var(--glass-shadow);
-        }
-        .btn:hover { 
-            background: linear-gradient(45deg, rgba(0, 243, 255, 0.2), rgba(181, 23, 158, 0.2)); 
-            transform: translateY(-5px) scale(1.05); 
-            border-color: var(--neon-blue); 
-            box-shadow: 0 10px 25px rgba(0,243,255,0.4); 
-        }
+/* ---------- modal ---------- */
+.mod{position:fixed;inset:0;z-index:300;display:none;align-items:center;justify-content:center;padding:16px;background:rgba(0,0,0,.8);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.mod.on{display:flex;animation:in .3s both}
+.mbox{width:min(1060px,100%);max-height:94vh;overflow:auto;border-radius:22px;background:#0c0c0d;border:1px solid var(--line);display:grid;grid-template-columns:1.7fr 1fr}
+.brw{display:flex;flex-direction:column;border-inline-end:1px solid var(--line);min-height:440px;background:#0a0a0b}
+.brw .tb{position:relative;height:34px;border-bottom:1px solid var(--line);flex:none}
+.brw .tb .url{top:8px}
+.brw .tb .dots{top:13px}
+.brw iframe{flex:1;border:0;background:#fff;width:100%;min-height:420px}
+.minfo{padding:28px;display:flex;flex-direction:column;gap:12px}
+.minfo h3{font:800 1.5rem/1.2 'Syne','Cairo',sans-serif}
+html[lang=ar] .minfo h3{font-family:'Cairo',sans-serif}
+.minfo p{color:var(--mut)}
+.minfo .cta{margin-top:auto;padding-top:14px}
+.mx{position:absolute}
 
-        /* Profile & Avatar */
-        .profile-wrapper { position: relative; margin-bottom: 25px; }
-        .profile-img { 
-            width: 180px; height: 180px; border-radius: 50%; padding: 4px;
-            background: linear-gradient(45deg, var(--neon-blue), var(--neon-purple), var(--neon-red), var(--neon-yellow));
-            background-size: 300% 300%;
-            animation: gradientBG 4s ease infinite;
-            box-shadow: 0 0 40px rgba(0,243,255,0.4); object-fit: cover; z-index: 2; position: relative; 
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            display: block;
-        }
-        .profile-wrapper:hover .profile-img { transform: scale(1.1) rotate(5deg); box-shadow: 0 0 60px rgba(181, 23, 158, 0.6); }
+/* ---------- contact ---------- */
+.cg{display:grid;grid-template-columns:1fr 1fr;gap:18px;max-width:920px;margin:34px auto 0}
+.glass{border:1px solid var(--line);border-radius:24px;padding:30px;background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.015));backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.glass h3{font:800 1.45rem 'Syne','Cairo',sans-serif}
+html[lang=ar] .glass h3{font-family:'Cairo',sans-serif}
+.glass>p{color:var(--mut);font-size:.88rem;margin:4px 0 18px}
+input,textarea{width:100%;background:rgba(255,255,255,.04);border:1px solid var(--line);color:#fff;border-radius:12px;padding:13px 15px;font:inherit;font-size:.92rem;outline:none;transition:border-color .2s,background .2s;margin-bottom:12px;resize:vertical}
+input::placeholder,textarea::placeholder{color:var(--dim)}
+input:focus,textarea:focus{border-color:rgba(255,255,255,.42);background:rgba(255,255,255,.065)}
+textarea{min-height:130px}
+.glass form .btn{width:100%;justify-content:center;cursor:pointer}
+.soc a{display:flex;align-items:center;gap:13px;padding:11px 14px;border-radius:13px;border:1px solid var(--line);background:var(--p1);transition:.28s;margin-bottom:10px}
+.soc a:hover{background:var(--p2);border-color:rgba(255,255,255,.28);transform:translateX(calc(5px * var(--dir)))}
+.soc .si{width:38px;height:38px;border-radius:10px;border:1px solid var(--line);background:#0b0b0c;display:grid;place-items:center;font:700 .72rem 'JetBrains Mono',monospace;flex:none}
+.soc b{display:block;font-size:.9rem;line-height:1.3}
+.soc small{color:var(--dim);font:400 .72rem 'JetBrains Mono',monospace;direction:ltr;display:block;text-align:start}
+.soc .ar{margin-inline-start:auto;color:var(--dim)}
+footer{max-width:1120px;margin:80px auto 0;padding:28px 20px 40px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:var(--dim);font-size:.82rem}
+footer a:hover{color:#fff}
 
-        .live-badge {
-            position: absolute; bottom: 8px; right: 10px; z-index: 3;
-            background: var(--neon-green); color: #000; font-size: 0.75rem; font-weight: 900;
-            padding: 4px 12px; border-radius: 20px; box-shadow: 0 0 15px var(--neon-green);
-            font-family: 'Orbitron', sans-serif; animation: pulse 2s infinite;
-        }
-        @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.8; transform: scale(1.05); } }
-
-        h1 { 
-            text-shadow: 0 0 30px rgba(0,243,255,0.6); margin-bottom: 5px; 
-            font-family: 'Orbitron', sans-serif; font-size: clamp(2.5rem, 7vw, 4.5rem); 
-            letter-spacing: 2px; font-weight: 900; text-align: center;
-            background: linear-gradient(to right, #fff, var(--neon-blue));
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-        }
-        .tagline { 
-            color: var(--neon-yellow); font-weight: 700; letter-spacing: 2px; 
-            font-size: clamp(1rem, 2.5vw, 1.3rem); margin-bottom: 35px; 
-            text-shadow: 0 0 15px rgba(254, 228, 64, 0.4); text-align: center;
-            min-height: 30px; /* For typing effect */
-        }
-
-        h2 { 
-            margin-bottom: 25px; font-size: clamp(2rem, 5vw, 3rem); font-family: 'Orbitron', sans-serif; 
-            text-shadow: 0 0 20px rgba(181, 23, 158, 0.6); letter-spacing: 1px; text-align: center; 
-            background: linear-gradient(to right, #fff, var(--neon-purple));
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-        }
-        .sec-desc {
-            max-width: 650px; text-align: center; color: #cbd5e1; margin-bottom: 45px; font-size: 1.15rem; line-height: 1.8;
-            font-weight: 500;
-        }
-
-        /* Stats Counter Bar */
-        .stats-strip {
-            display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-bottom: 45px;
-        }
-        .stat-card {
-            background: rgba(255, 255, 255, 0.03); border: 1px solid var(--glass-border);
-            border-radius: 20px; padding: 15px 25px; text-align: center; min-width: 140px;
-            backdrop-filter: blur(10px); transition: transform 0.3s;
-            box-shadow: var(--glass-shadow);
-        }
-        .stat-card:hover { transform: translateY(-5px); background: rgba(255,255,255,0.08); }
-        .stat-card .val { font-family: 'Orbitron', sans-serif; font-size: 2rem; font-weight: 900; color: var(--neon-blue); text-shadow: 0 0 10px rgba(0,243,255,0.5); }
-        .stat-card .lbl { font-size: 0.9rem; color: #e2e8f0; font-weight: 700; margin-top: 5px; }
-
-        /* ==================== INTERACTIVE SMARTPHONE (MOD LAB) ==================== */
-        .phone-mockup-wrapper { display: flex; justify-content: center; width: 100%; perspective: 1000px; }
-        .phone-frame {
-            width: 350px; height: 700px; background: #050505; border: 12px solid #1a1a24; 
-            border-radius: 50px; position: relative; 
-            box-shadow: 0 30px 60px rgba(0,0,0,0.8), 0 0 40px rgba(181, 23, 158, 0.3), inset 0 0 15px rgba(0,243,255,0.2);
-            display: flex; flex-direction: column; overflow: hidden;
-            transition: transform 0.5s ease;
-        }
-        .phone-frame:hover { transform: translateY(-10px) rotateX(2deg) rotateY(2deg); }
-        
-        .phone-notch { 
-            position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 120px; height: 28px; 
-            background: #1a1a24; border-bottom-left-radius: 18px; border-bottom-right-radius: 18px; z-index: 20; 
-        }
-        
-        .phone-status-bar {
-            height: 40px; display: flex; justify-content: space-between; align-items: flex-end;
-            padding: 0 20px 6px; font-size: 0.75rem; font-weight: 800; font-family:'Orbitron',sans-serif;
-            color: #fff; z-index: 15; background: linear-gradient(rgba(0,0,0,0.8), transparent);
-        }
-
-        .phone-screen { 
-            flex: 1; position: relative; 
-            background: linear-gradient(135deg, #10002b 0%, #03040c 100%);
-            display: flex; flex-direction: column; overflow: hidden;
-        }
-
-        #phone-home { flex: 1; padding: 20px 15px; display: flex; flex-direction: column; overflow-y: auto; }
-        
-        .mod-lab-header { text-align: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 2px dashed rgba(255,255,255,0.1); }
-        .mod-lab-header h4 { font-family: 'Orbitron', sans-serif; font-size: 1.1rem; color: var(--neon-green); text-shadow: 0 0 10px rgba(0,245,212,0.5); }
-        .mod-lab-header p { font-size: 0.8rem; color: #cbd5e1; margin-top: 5px; }
-
-        .apps-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
-        .app-card-btn {
-            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 20px; padding: 15px 10px; display: flex; flex-direction: column;
-            align-items: center; text-align: center; cursor: pointer; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative; overflow: hidden; backdrop-filter: blur(5px);
-        }
-        .app-card-btn:hover {
-            transform: translateY(-6px) scale(1.05); border-color: var(--neon-blue); 
-            box-shadow: 0 10px 20px rgba(0,243,255,0.3); background: rgba(0, 243, 255, 0.1);
-        }
-        .app-badge-mod {
-            position: absolute; top: 8px; right: 8px; font-size: 9px; font-weight: 900;
-            padding: 3px 8px; border-radius: 8px; background: linear-gradient(45deg, var(--neon-red), #ff758c); color: #fff;
-            font-family: 'Orbitron', sans-serif; box-shadow: 0 2px 5px rgba(247,37,133,0.5);
-        }
-        .app-card-icon {
-            width: 55px; height: 55px; border-radius: 16px; margin-bottom: 10px;
-            background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.02));
-            display: flex; justify-content: center; align-items: center; font-size: 30px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.2);
-        }
-        .app-card-title { font-size: 0.9rem; font-weight: 800; color: #fff; margin-bottom: 4px; }
-        .app-card-sub { font-size: 0.7rem; color: var(--neon-green); font-weight: 700; }
-
-        /* Screen 2: Deep App View */
-        #phone-app-view {
-            display: none; flex-direction: column; height: 100%; background: #080911; 
-            z-index: 10; position: absolute; top: 0; left: 0; width: 100%;
-        }
-        .app-view-header {
-            display: flex; align-items: center; padding: 15px; 
-            background: rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.1);
-            backdrop-filter: blur(10px);
-        }
-        .back-btn { 
-            cursor: pointer; color: var(--neon-blue); font-weight: 800; font-size: 0.9rem; 
-            display: flex; align-items: center; gap: 5px; font-family:'Orbitron',sans-serif;
-            background: rgba(0,243,255,0.1); padding: 5px 12px; border-radius: 12px; transition: 0.3s;
-        }
-        .back-btn:hover { background: var(--neon-blue); color: #000; }
-        .app-view-title { 
-            font-family: 'Orbitron', sans-serif; font-size: 1rem; font-weight: 800; 
-            flex: 1; text-align: center; margin-right: 50px; color: #fff; 
-        }
-
-        .app-details-scroll { flex: 1; overflow-y: auto; padding: 20px 15px; display: flex; flex-direction: column; gap: 20px; }
-        
-        .slider-box {
-            width: 100%; height: 180px; background: rgba(0,0,0,0.5); border-radius: 20px;
-            position: relative; overflow: hidden; display: flex; justify-content: center; align-items: center;
-            border: 1px solid rgba(255,255,255,0.1); box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
-        }
-        .slider-box img { width: 100%; height: 100%; object-fit: contain; position: absolute; opacity: 0; transition: opacity 0.5s ease-in-out; }
-        .slider-box img.active { opacity: 1; }
-        .slider-placeholder { text-align: center; color: #8892b0; display: flex; flex-direction: column; align-items: center; gap: 10px; }
-
-        .mod-pill-box {
-            background: linear-gradient(135deg, rgba(247, 37, 133, 0.1), rgba(114, 9, 183, 0.1)); 
-            border: 1px solid rgba(247, 37, 133, 0.3); border-radius: 20px; padding: 15px;
-        }
-        .mod-pill-box h5 {
-            color: var(--neon-red); font-size: 0.9rem; font-family:'Orbitron',sans-serif; margin-bottom: 10px;
-            display: flex; align-items: center; gap: 8px; text-shadow: 0 0 10px rgba(247,37,133,0.4);
-        }
-        .mod-desc-text { font-size: 0.85rem; color: #e2e8f0; line-height: 1.6; margin-bottom: 12px; font-weight: 600;}
-        
-        .perks-list { display: flex; flex-direction: column; gap: 8px; background: rgba(0,0,0,0.3); padding: 12px; border-radius: 12px; }
-        .perk-item { font-size: 0.8rem; color: #fff; display: flex; align-items: center; gap: 8px; font-weight: 700; }
-        .perk-item span { color: var(--neon-green); font-size: 1rem; }
-
-        .app-download-footer { padding: 15px; background: rgba(0,0,0,0.6); backdrop-filter: blur(10px); border-top: 1px solid rgba(255,255,255,0.1); }
-        .download-app-btn {
-            background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
-            color: #fff; font-weight: 900; width: 100%; padding: 15px; border-radius: 16px;
-            border: none; font-size: 1rem; cursor: pointer; text-transform: uppercase;
-            box-shadow: 0 5px 20px rgba(0,243,255,0.4); transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-            font-family:'Orbitron',sans-serif; display: flex; justify-content: center; align-items: center; gap: 10px;
-        }
-        .download-app-btn:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 10px 30px rgba(181, 23, 158, 0.6); }
-
-        /* ==================== FLAGSHIP PROJECT CARD (QR STUDIO) ==================== */
-        .flagship-box {
-            width: 100%; max-width: 950px;
-            background: rgba(20, 15, 35, 0.6);
-            border: 2px solid transparent; border-radius: 30px; padding: 40px;
-            background-clip: padding-box;
-            position: relative; overflow: hidden;
-            display: flex; flex-direction: column; gap: 20px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5), inset 0 0 20px rgba(255,255,255,0.05);
-            backdrop-filter: blur(20px);
-        }
-        /* Animated gradient border for flagship */
-        .flagship-box::before {
-            content: ''; position: absolute; top: -2px; left: -2px; right: -2px; bottom: -2px;
-            background: linear-gradient(45deg, var(--neon-blue), var(--neon-purple), var(--neon-red), var(--neon-yellow));
-            z-index: -1; border-radius: 32px; background-size: 400%; animation: gradientBG 5s ease infinite;
-        }
-        .flagship-box::after {
-            content: "FLAGSHIP PROJECT";
-            position: absolute; top: 15px; right: 25px;
-            font-size: 0.8rem; font-weight: 900; color: var(--neon-yellow);
-            letter-spacing: 2px; font-family: 'Orbitron', sans-serif;
-            background: rgba(0,0,0,0.5); padding: 5px 15px; border-radius: 20px;
-        }
-        .flagship-title-row { display: flex; align-items: center; gap: 15px; flex-wrap: wrap; }
-        .flagship-title { font-family: 'Orbitron', sans-serif; font-size: 2.2rem; font-weight: 900; color: #fff; text-shadow: 0 0 20px var(--neon-blue); }
-        .live-dot { width: 12px; height: 12px; border-radius: 50%; background: var(--neon-green); box-shadow: 0 0 15px var(--neon-green); animation: pulse 1.5s infinite; }
-        .flagship-desc { color: #e2e8f0; font-size: 1.15rem; line-height: 1.8; max-width: 800px; font-weight: 500; }
-        
-        .tags-row { display: flex; flex-wrap: wrap; gap: 10px; margin: 10px 0; }
-        .tag-pill {
-            background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2);
-            color: #fff; font-size: 0.85rem; font-weight: 700; padding: 6px 16px;
-            border-radius: 100px; font-family: 'Orbitron', sans-serif; transition: 0.3s;
-        }
-        .tag-pill:hover { background: var(--neon-blue); color: #000; border-color: var(--neon-blue); transform: translateY(-2px); }
-
-        .flagship-btn {
-            background: linear-gradient(45deg, var(--neon-purple), var(--neon-red));
-            color: #fff; font-weight: 900; padding: 16px 35px; border-radius: 100px;
-            border: none; cursor: pointer; text-transform: uppercase; font-family: 'Orbitron', sans-serif;
-            align-self: flex-start; box-shadow: 0 10px 25px rgba(247, 37, 133, 0.4); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            text-decoration: none; display: inline-flex; align-items: center; gap: 10px; font-size: 1.1rem;
-        }
-        .flagship-btn:hover { transform: translateY(-5px) scale(1.05); box-shadow: 0 15px 35px rgba(247, 37, 133, 0.6); }
-
-        /* Web & AI Grid */
-        .works-grid { 
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
-            gap: 25px; width: 100%; max-width: 1000px; 
-        }
-        .work-card {
-            background: rgba(255, 255, 255, 0.03); border: 1px solid var(--glass-border);
-            border-radius: 24px; padding: 25px; display: flex; flex-direction: column;
-            justify-content: space-between; gap: 15px; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            backdrop-filter: blur(10px); box-shadow: var(--glass-shadow);
-        }
-        .work-card:hover { 
-            transform: translateY(-8px) scale(1.02); border-color: var(--neon-purple); 
-            background: rgba(255,255,255,0.06);
-            box-shadow: 0 15px 35px rgba(181, 23, 158, 0.3); 
-        }
-        .work-card h4 { font-family: 'Orbitron', sans-serif; font-size: 1.25rem; color: #fff; text-shadow: 0 0 5px rgba(255,255,255,0.3);}
-        .work-card p { font-size: 1rem; color: #cbd5e1; line-height: 1.6; font-weight: 500;}
-        .work-card .btn-sub {
-            padding: 10px 20px; font-size: 0.9rem; border-radius: 12px; align-self: flex-start;
-            border: 1px solid rgba(0, 243, 255, 0.4); background: rgba(0, 243, 255, 0.1);
-            color: #fff; cursor: pointer; font-weight: 800; text-transform: uppercase;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
-        }
-        .work-card .btn-sub:hover { background: var(--neon-blue); color: #000; box-shadow: 0 5px 15px rgba(0, 243, 255, 0.5); transform: translateX(5px); }
-
-        /* Social Networks Grid */
-        .social-grid { display: flex; flex-wrap: wrap; justify-content: center; max-width: 950px; gap: 20px; }
-        .btn-social {
-            display: flex; align-items: center; gap: 15px; padding: 15px 25px;
-            border-radius: 100px; border: 1px solid var(--glass-border); background: rgba(255,255,255,0.05);
-            cursor: pointer; color: #fff; font-weight: 800; font-size: 1.1rem;
-            backdrop-filter: blur(12px); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); min-width: 210px;
-            box-shadow: var(--glass-shadow);
-        }
-        .btn-social:hover { transform: translateY(-5px) scale(1.05); }
-        .btn-social .s-icon { width: 32px; height: 32px; flex-shrink: 0; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        .btn-social:hover .s-icon { transform: rotate(15deg) scale(1.2); }
-
-        .btn-ig:hover { border-color: #d6249f; background: rgba(214, 36, 159, 0.1); box-shadow: 0 10px 25px rgba(214, 36, 159, 0.4); }
-        .btn-fb:hover { border-color: #1877f2; background: rgba(24, 119, 242, 0.1); box-shadow: 0 10px 25px rgba(24, 119, 242, 0.4); }
-        .btn-tg:hover { border-color: #27a7e7; background: rgba(39, 167, 231, 0.1); box-shadow: 0 10px 25px rgba(39, 167, 231, 0.4); }
-        .btn-wa:hover { border-color: #25d366; background: rgba(37, 211, 102, 0.1); box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4); }
-        .btn-tt:hover { border-color: #ee1d52; background: rgba(238, 29, 82, 0.1); box-shadow: 0 10px 25px rgba(238, 29, 82, 0.4); }
-        .btn-sc:hover { border-color: var(--neon-yellow); background: rgba(255, 252, 0, 0.1); box-shadow: 0 10px 25px rgba(255, 252, 0, 0.4); color: var(--neon-yellow); }
-
-        /* Bio Terminal Box - Modest & Clean */
-        .bio-box { 
-            background: rgba(255, 255, 255, 0.05); border: 1px solid var(--glass-border); 
-            padding: 40px; border-radius: 30px; backdrop-filter: blur(20px); 
-            max-width: 800px; text-align: center; box-shadow: var(--glass-shadow); 
-            position: relative; overflow: hidden;
-        }
-        .bio-box::before {
-            content: "💡"; font-size: 3rem; position: absolute; top: -15px; left: 20px; opacity: 0.1; transform: rotate(-20deg);
-        }
-        #bio-text { line-height: 2; font-size: 1.25rem; color: #f8fafc; font-weight: 600; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
-
-        @media (max-width: 480px) {
-            .phone-frame { width: 320px; height: 640px; border-width: 10px;}
-            .apps-grid { grid-template-columns: repeat(2, 1fr); gap: 10px;}
-            .btn-social { width: 100%; }
-            .flagship-box { padding: 25px; }
-        }
-    </style>
+/* ---------- responsive ---------- */
+@media(max-width:900px){
+  .hero{grid-template-columns:1fr;padding-top:100px;gap:0}
+  .hr{order:2;margin-top:18px}
+  .lanyard{--cw:190px;--chh:258px;height:calc(var(--chh) + 190px);margin-top:0;-webkit-mask-image:linear-gradient(transparent,#000 70px);mask-image:linear-gradient(transparent,#000 70px)}
+  .scroll{display:none}
+  .about{grid-template-columns:1fr}
+  .avatar{order:-1;width:min(70%,260px)}
+  .mbox{grid-template-columns:1fr}
+  .brw{border-inline-end:none;border-bottom:1px solid var(--line);min-height:300px}
+  .brw iframe{min-height:46vh}
+}
+@media(max-width:720px){
+  body{padding-bottom:84px}
+  .bar{top:0;width:100%;border:none;border-radius:0;backdrop-filter:none;-webkit-backdrop-filter:none;padding:14px 18px 30px;justify-content:space-between;background:linear-gradient(180deg,rgba(7,7,7,.96) 55%,rgba(7,7,7,0));pointer-events:none}
+  .bar>*{pointer-events:auto}
+  .links{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);margin:0;gap:2px;padding:6px;border-radius:999px;background:rgba(16,16,16,.86);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid var(--line);z-index:60}
+  .links a{padding:8px 13px;font-size:.78rem;border-radius:999px;white-space:nowrap}
+  .links a::after{display:none}
+  .links a.on{background:rgba(255,255,255,.13)}
+  .stats3{grid-template-columns:1fr}
+  .cg{grid-template-columns:1fr}
+  .tabs button{padding:10px 16px}
+  .sec{padding-top:90px}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  .mqt{animation:none}
+}
+</style>
 </head>
-<body>
+<body class="lock">
+<div class="bg"></div><div class="spot" id="spot"></div>
 
-<canvas id="cyber-canvas"></canvas>
-
-<!-- Top HUD controls -->
-<div class="hud-bar">
-    <div class="hud-left">
-        <div class="hud-chip" onclick="toggleAudio()" id="sound-btn">
-            <span id="sound-icon">🔊</span>
-            <span id="sound-text">ON</span>
-        </div>
-    </div>
-    <div class="hud-right">
-        <div class="hud-chip" onclick="cycleLang()" id="lang-btn">
-            <span>🌍</span>
-            <span id="lang-display">EN</span>
-        </div>
-    </div>
+<!-- intro -->
+<div id="intro" aria-hidden="true">
+  <div class="ichips">
+    <div class="ich">&lt;/&gt;</div>
+    <div class="ich"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg></div>
+    <div class="ich"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"/></svg></div>
+  </div>
+  <h1 class="iw"><span data-i18n="introA">Welcome to my</span><span data-i18n="introB">Portfolio Website</span></h1>
+  <div class="ld"><i></i></div>
 </div>
 
-<!-- ==================== HOME SECTION ==================== -->
-<section id="home" class="section">
-    <div class="hidden-element profile-wrapper">
-        <img src="myphoto.jpg" alt="Youcef Mekki" class="profile-img">
-        <div class="live-badge">ONLINE</div>
-    </div>
-    <h1 id="name" class="hidden-element">Youcef Mekki</h1>
-    <!-- Tagline with typing effect container -->
-    <div class="tagline hidden-element" id="tagline"></div>
+<header class="bar">
+  <a class="logo" href="#home">chikor<b>.</b>dev</a>
+  <nav class="links" aria-label="Main">
+    <a href="#home" class="on" data-i18n="nHome">Home</a>
+    <a href="#about" data-i18n="nAbout">About</a>
+    <a href="#portfolio" data-i18n="nPortfolio">Portfolio</a>
+    <a href="#contact" data-i18n="nContact">Contact</a>
+  </nav>
+  <button class="lg" id="lang" aria-label="Language">EN</button>
+</header>
 
-    <!-- Quick Stats -->
-    <div class="stats-strip hidden-element">
-        <div class="stat-card">
-            <div class="val">6+</div>
-            <div class="lbl" id="stat-apps">APPS MOD</div>
+<main>
+<!-- HOME -->
+<section id="home" class="sec hero">
+  <div class="hl">
+    <div class="eyebrow mono rv" style="--i:0">◂ PORTFOLIO · 2026</div>
+    <h2 class="display rv" style="--i:1"><span data-i18n="h1a">Web & App</span><span class="w2" data-i18n="h1b">Developer</span></h2>
+    <p class="type mono rv" style="--i:2"><span id="typed"></span><i class="caret"></i></p>
+    <p class="lead rv" style="--i:3" data-i18n="lead"></p>
+    <div class="chips rv" style="--i:4"><span class="chip">HTML</span><span class="chip">CSS</span><span class="chip">JavaScript</span><span class="chip">Java</span><span class="chip">Python</span></div>
+    <ul class="bul mono rv" style="--i:5"><li data-i18n="b1"></li><li data-i18n="b2"></li></ul>
+    <div class="cta rv" style="--i:6"><a class="btn pri" href="#portfolio" data-i18n="ctaProj">View projects</a><a class="btn" href="#contact" data-i18n="ctaContact">Contact me</a></div>
+  </div>
+  <div class="hr rv" style="--i:3">
+    <div class="lanyard" id="lanyard">
+      <canvas></canvas>
+      <div class="card" id="card" aria-label="Draggable ID card">
+        <div class="clip"></div>
+        <div class="face">
+          <img src="myphoto.jpg" alt="Youcef Mekki" draggable="false" onerror="fb(this)">
+          <div class="cap"><b>YOUCEF MEKKI</b><span>CHIKOR · DEVELOPER</span></div>
+          <div class="sheen"></div>
         </div>
-        <div class="stat-card">
-            <div class="val">7+</div>
-            <div class="lbl" id="stat-web">WEB PROJECTS</div>
-        </div>
-        <div class="stat-card">
-            <div class="val">100%</div>
-            <div class="lbl" id="stat-clean">PASSION</div>
-        </div>
+      </div>
     </div>
-
-    <div style="display: flex; flex-wrap: wrap; gap: 15px; justify-content: center;" class="hidden-element">
-        <button class="btn" onclick="scrollToSec('bio')" id="btn-bio">💡 About Me</button>
-        <button class="btn" onclick="scrollToSec('apps')" id="btn-apps">📱 MOD Lab</button>
-        <button class="btn" onclick="scrollToSec('works')" id="btn-works">🌐 Web & AI</button>
-        <button class="btn" onclick="scrollToSec('social')" id="btn-social">💬 Contact</button>
-    </div>
+  </div>
+  <a class="scroll mono" href="#about">SCROLL ↓</a>
 </section>
 
-<!-- ==================== BIO SECTION ==================== -->
-<section id="bio" class="section">
-    <h2 id="bio-title" class="hidden-element">About Me</h2>
-    <p class="sec-desc hidden-element" id="bio-subtitle">Just a learner on a journey.</p>
-    <div class="bio-box hidden-element">
-        <p id="bio-text"></p>
+<div class="mq" aria-hidden="true"><div class="mqt" id="mq"></div></div>
+
+<!-- ABOUT -->
+<section id="about" class="sec">
+  <div class="about">
+    <div class="rv">
+      <div class="eyebrow mono" data-i18n="aboutEy">ABOUT ME</div>
+      <h2 class="display md"><span>Youcef</span><span class="w2">Mekki</span></h2>
+      <p class="lead" data-i18n="aboutP"></p>
+      <div class="quote" data-i18n="quote"></div>
+      <div class="cta"><a class="btn pri" href="#contact" data-i18n="ctaContact">Contact me</a><a class="btn" href="#portfolio" data-i18n="ctaProj">View projects</a></div>
     </div>
+    <div class="rv" style="--i:2"><div class="avatar"><img src="myphoto.jpg" alt="Youcef Mekki" onerror="fb(this)"></div></div>
+  </div>
+  <div class="stats3">
+    <button class="st rv" style="--i:1" data-go="projects"><small data-i18n="st1">WEB PROJECTS</small><b data-n="7">0</b><i>↗</i></button>
+    <button class="st rv" style="--i:2" data-go="apps"><small data-i18n="st2">ANDROID APPS</small><b data-n="7">0</b><i>↗</i></button>
+    <button class="st rv" style="--i:3" data-go="stack"><small data-i18n="st3">LANGUAGES</small><b data-n="5">0</b><i>↗</i></button>
+  </div>
 </section>
 
-<!-- ==================== APPS (MOD LAB) SECTION ==================== -->
-<section id="apps" class="section">
-    <h2 id="apps-title" class="hidden-element">📱 Mobile Apps MOD Lab</h2>
-    <p class="sec-desc hidden-element" id="apps-subtitle">All apps are 100% real, patched, and modified to unlock features for free.</p>
-    
-    <div class="phone-mockup-wrapper hidden-element">
-        <div class="phone-frame">
-            <div class="phone-notch"></div>
-            
-            <div class="phone-status-bar">
-                <span id="phone-clock">12:00</span>
-                <span>5G 📶 98% 🔋</span>
-            </div>
-
-            <div class="phone-screen">
-                <!-- View 1: Smartphone Home Screen -->
-                <div id="phone-home">
-                    <div class="mod-lab-header">
-                        <h4 id="lab-head-title">⚡ CHIKOR MOD STORE</h4>
-                        <p id="lab-head-sub">Click on any app to see unlocked features & download</p>
-                    </div>
-                    <div class="apps-grid" id="phone-apps-grid"></div>
-                </div>
-
-                <!-- View 2: App Deep Details & MOD Breakdown -->
-                <div id="phone-app-view">
-                    <div class="app-view-header">
-                        <div class="back-btn" onclick="closeAppView()">◀ BACK</div>
-                        <div class="app-view-title" id="app-view-title">App Name</div>
-                    </div>
-                    
-                    <div class="app-details-scroll">
-                        <div class="slider-box" id="app-view-slider"></div>
-
-                        <div class="mod-pill-box">
-                            <h5><span style="color:var(--neon-yellow);">⚡</span> <span id="mod-badge-title">FEATURES UNLOCKED</span></h5>
-                            <p class="mod-desc-text" id="app-view-desc"></p>
-                            
-                            <div class="perks-list" id="app-view-perks"></div>
-                        </div>
-                    </div>
-
-                    <div class="app-download-footer">
-                        <button class="download-app-btn" onclick="downloadActiveApp()">
-                            <span>⚡ DOWNLOAD APK MOD</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+<!-- PORTFOLIO -->
+<section id="portfolio" class="sec">
+  <div class="center rv">
+    <h2 class="display sm" data-i18n="showT">Portfolio Showcase</h2>
+    <p class="lead" data-i18n="showS"></p>
+  </div>
+  <div class="tabs rv" role="tablist" id="tabs">
+    <span class="thumb" id="thumb"></span>
+    <button class="on" role="tab" data-tab="projects" data-i18n="tabP">Projects</button>
+    <button role="tab" data-tab="apps" data-i18n="tabA">Apps</button>
+    <button role="tab" data-tab="stack" data-i18n="tabS">Tech Stack</button>
+  </div>
+  <div class="pane on" id="p-projects"><div class="grid" id="g-projects"></div></div>
+  <div class="pane" id="p-apps"><div class="grid" id="g-apps"></div></div>
+  <div class="pane" id="p-stack">
+    <div class="tiles" id="g-stack"></div>
+    <div class="tools"><span class="eyebrow mono" data-i18n="toolsT">TOOLS</span><div class="chips" id="g-tools"></div></div>
+  </div>
 </section>
 
-<!-- ==================== WEB & AI PROJECTS ==================== -->
-<section id="works" class="section">
-    <h2 id="web-title" class="hidden-element">🌐 Web & AI Projects</h2>
-    <p class="sec-desc hidden-element" id="web-subtitle">Interactive web tools and fun programming experiments.</p>
-
-    <!-- FLAGSHIP: Chikor QR Studio -->
-    <div class="flagship-box hidden-element">
-        <div class="flagship-title-row">
-            <div class="live-dot"></div>
-            <h3 class="flagship-title">Chikor QR Studio</h3>
-        </div>
-        <p class="flagship-desc" id="qr-desc">
-            The next-generation QR Generator with live interactive GPS geolocation, 200+ curated logos, live VIP business card mockup synchronization, raw UTF-8 Arabic text encoding, and 1200px ultra-HD vector exports.
-        </p>
-        <div class="tags-row">
-            <span class="tag-pill">Canvas Engine</span>
-            <span class="tag-pill">Leaflet GPS</span>
-            <span class="tag-pill">200+ Logos</span>
-            <span class="tag-pill">vCard Mockup</span>
-            <span class="tag-pill">UTF-8 Raw</span>
-        </div>
-        <a href="https://youcefchikor31-ctrl.github.io/COD_QR/" target="_blank" class="flagship-btn" onclick="playSound('click')">
-            <span>🚀 LAUNCH QR STUDIO</span>
-        </a>
+<!-- CONTACT -->
+<section id="contact" class="sec">
+  <div class="center rv">
+    <h2 class="display sm" data-i18n="cLead">Let's talk</h2>
+    <p class="lead" data-i18n="cSub"></p>
+  </div>
+  <div class="cg">
+    <form class="glass rv" id="cf" style="--i:1">
+      <h3 data-i18n="cTitle">Contact me</h3>
+      <p data-i18n="cHint"></p>
+      <input id="cn" name="name" required autocomplete="name" data-ph="phName" maxlength="60">
+      <textarea id="cm" name="message" required data-ph="phMsg" maxlength="800"></textarea>
+      <button class="btn pri" type="submit" data-i18n="send">Send via WhatsApp</button>
+    </form>
+    <div class="glass soc rv" style="--i:2">
+      <h3 data-i18n="connect">Connect with me</h3>
+      <p data-i18n="connectS"></p>
+      <a href="https://www.instagram.com/chikor_youcef_31" target="_blank" rel="noopener"><span class="si">IG</span><span><b>Instagram</b><small>@chikor_youcef_31</small></span><span class="ar">↗</span></a>
+      <a href="https://www.tiktok.com/@chikor_freestyel" target="_blank" rel="noopener"><span class="si">TT</span><span><b>TikTok</b><small>@chikor_freestyel</small></span><span class="ar">↗</span></a>
+      <a href="https://www.facebook.com/youcef.chikor.2025" target="_blank" rel="noopener"><span class="si">FB</span><span><b>Facebook</b><small>youcef.chikor.2025</small></span><span class="ar">↗</span></a>
+      <a href="https://www.snapchat.com/add/youcef_chikor31?share_id=52JKImm11rQ&locale=ar-EG" target="_blank" rel="noopener"><span class="si">SC</span><span><b>Snapchat</b><small>youcef_chikor31</small></span><span class="ar">↗</span></a>
+      <a href="https://t.me/213796514353" target="_blank" rel="noopener"><span class="si">TG</span><span><b>Telegram</b><small>t.me</small></span><span class="ar">↗</span></a>
+      <a href="https://wa.me/213796514353" target="_blank" rel="noopener"><span class="si">WA</span><span><b>WhatsApp</b><small>wa.me</small></span><span class="ar">↗</span></a>
     </div>
-
-    <!-- Other Web Projects Grid -->
-    <div class="works-grid hidden-element">
-        <div class="work-card">
-            <div>
-                <h4>🦴 Skeleton Pose Tracking</h4>
-                <p id="desc-pose">Real-time AI skeletal detection via computer vision and webcam integration.</p>
-            </div>
-            <a href="https://youcefchikor31-ctrl.github.io/pose-tracking/" target="_blank" class="btn-sub" onclick="playSound('click')">Run Demo ↗</a>
-        </div>
-        <div class="work-card">
-            <div>
-                <h4>🖐️ Hand Tracker Shapes</h4>
-                <p id="desc-hand">Gesture-controlled geometric visualizer powered by real-time hand-landmark analysis.</p>
-            </div>
-            <a href="https://youcefchikor31-ctrl.github.io/youcef-site/" target="_blank" class="btn-sub" onclick="playSound('click')">Run Demo ↗</a>
-        </div>
-        <div class="work-card">
-            <div>
-                <h4>🔥 Sky of Fire</h4>
-                <p id="desc-sky">Dynamic audio-reactive celestial particles engine and visual effects lab.</p>
-            </div>
-            <a href="https://youcefchikor31-ctrl.github.io/-_-/" target="_blank" class="btn-sub" onclick="playSound('click')">Run Demo ↗</a>
-        </div>
-        <div class="work-card">
-            <div>
-                <h4>🎮 Free Fire Lite</h4>
-                <p id="desc-ff">Lightweight interactive web game demo with responsive tactical mechanics.</p>
-            </div>
-            <a href="https://youcefchikor31-ctrl.github.io/freefirelite/" target="_blank" class="btn-sub" onclick="playSound('click')">Play Now ↗</a>
-        </div>
-        <div class="work-card">
-            <div>
-                <h4>🕸️ Spiderman Web</h4>
-                <p id="desc-spider">Physics-based swinging simulation with reactive tension strings and web mechanics.</p>
-            </div>
-            <a href="https://youcefchikor31-ctrl.github.io/spiderman-/" target="_blank" class="btn-sub" onclick="playSound('click')">Run Demo ↗</a>
-        </div>
-        <div class="work-card">
-            <div>
-                <h4>🚀 Fadaa (Space)</h4>
-                <p id="desc-space">Deep-space simulation exploring planetary motion and cosmic gravity fields.</p>
-            </div>
-            <a href="https://youcefchikor31-ctrl.github.io/Fadaa/" target="_blank" class="btn-sub" onclick="playSound('click')">Explore ↗</a>
-        </div>
-    </div>
+  </div>
 </section>
+</main>
 
-<!-- ==================== SOCIAL NETWORKS ==================== -->
-<section id="social" class="section">
-    <h2 id="social-title" class="hidden-element">Digital Presence</h2>
-    <p class="sec-desc hidden-element" id="social-subtitle">Connect with me across all social channels.</p>
-    
-    <div class="social-grid hidden-element">
-        <button class="btn-social btn-sc" onclick="openLink('https://www.snapchat.com/add/you_cef80831?share_id=1R-1LwGlPos&locale=en-AU')">
-            <span class="s-icon"><svg viewBox="0 0 24 24" fill="#FFFC00"><path d="M12.012 2c-3.774 0-6.147 2.656-6.147 5.485 0 1.25.438 2.502.94 3.44.156.29.176.438.033.674-.213.354-.74.965-1.42 1.346-.438.245-.733.486-.71 1.002.02.434.337.66.726.792 1.218.414 2.19.167 2.766-.45.313-.336.5-.42.748-.344.49.15 1.58.557 3.064.557 1.484 0 2.574-.407 3.064-.557.248-.076.435.008.748.344.576.617 1.548.864 2.766.45.389-.132.706-.358.726-.792.023-.516-.272-.757-.71-1.002-.68-.38-1.207-.992-1.42-1.346-.143-.236-.123-.384.033-.674.502-.938.94-2.19.94-3.44C18.159 4.656 15.786 2 12.012 2z"/></svg></span>
-            <span>Snapchat</span>
-        </button>
+<footer><span>© 2026 Youcef Mekki · Chikor</span><span data-i18n="foot">Hand-coded with HTML, CSS & JavaScript.</span><a href="#home" data-i18n="top">Back to top ↑</a></footer>
 
-        <button class="btn-social btn-ig" onclick="openLink('https://www.instagram.com/chikor_youcef_31')">
-            <span class="s-icon">
-                <svg viewBox="0 0 24 24">
-                    <defs><radialGradient id="ig" cx="30%" cy="107%" r="150%"><stop offset="0%" stop-color="#fdf497"/><stop offset="45%" stop-color="#fd5949"/><stop offset="60%" stop-color="#d6249f"/><stop offset="90%" stop-color="#285AEB"/></radialGradient></defs>
-                    <rect width="24" height="24" rx="6" fill="url(#ig)"/><rect x="6" y="6" width="12" height="12" rx="4" fill="none" stroke="#fff" stroke-width="1.5"/><circle cx="12" cy="12" r="3.2" fill="none" stroke="#fff" stroke-width="1.5"/><circle cx="16.3" cy="7.7" r="1" fill="#fff"/>
-                </svg>
-            </span>
-            <span>Instagram</span>
-        </button>
-
-        <button class="btn-social btn-fb" onclick="openLink('https://www.facebook.com/youcef.chikor.2025')">
-            <span class="s-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#1877F2"/><path d="M15.1 12.7l.4-2.6h-2.5V8.4c0-.72.35-1.4 1.5-1.4h1.15V4.78S14.6 4.5 13.6 4.5c-2.07 0-3.43 1.26-3.43 3.53v2.07H7.9v2.6h2.27V19h2.8v-6.3h2.13z" fill="#fff"/></svg></span>
-            <span>Facebook</span>
-        </button>
-
-        <button class="btn-social btn-tg" onclick="openLink('https://t.me/213796514353')">
-            <span class="s-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#27A7E7"/><path d="M5 12.2l13-5c.6-.25 1.1.15.9.95l-2.2 10.4c-.15.7-.6.85-1.2.55l-3.3-2.45-1.6 1.55c-.18.18-.33.33-.65.33l.25-3.3 6-5.4c.26-.23-.06-.36-.4-.13l-7.4 4.65-3.2-1c-.7-.22-.7-.7.15-1.05z" fill="#fff"/></svg></span>
-            <span>Telegram</span>
-        </button>
-
-        <button class="btn-social btn-wa" onclick="openLink('https://wa.me/213796514353')">
-            <span class="s-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#25D366"/><path d="M16.7 14.2c-.3-.15-1.7-.85-2-.95-.27-.1-.46-.15-.66.15-.2.3-.76.95-.93 1.14-.17.2-.34.22-.64.07-.3-.15-1.26-.46-2.4-1.47-.9-.8-1.5-1.78-1.67-2.08-.17-.3-.02-.46.13-.61.13-.13.3-.34.45-.51.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.66-1.58-.9-2.16-.24-.58-.48-.5-.66-.5h-.56c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.22 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.7.62.71.23 1.36.2 1.87.12.57-.09 1.7-.7 1.94-1.37.24-.67.24-1.25.17-1.37-.07-.12-.27-.2-.57-.35z" fill="#fff"/></svg></span>
-            <span>WhatsApp</span>
-        </button>
-
-        <button class="btn-social btn-tt" onclick="openLink('https://www.tiktok.com/@chikor_freestyel?_r=1&_t=ZS-97PK8TLfnOP')">
-            <span class="s-icon">
-                <svg viewBox="0 0 24 24" fill="none">
-                    <rect width="24" height="24" rx="6" fill="#010101"/>
-                    <path d="M10.5 9.5a5 5 0 1 0 4 4.9V7.8a6.5 6.5 0 0 0 3.8 1.2V6.5a3.8 3.8 0 0 1-2.7-1.8A3.8 3.8 0 0 1 15 3h-2.8v11.4a2.2 2.2 0 1 1-1.7-2.15V9.5z" fill="#69C9D0"/>
-                    <path d="M10.9 9.5a5 5 0 1 0 4 4.9V7.8a6.5 6.5 0 0 0 3.8 1.2V6.5a3.8 3.8 0 0 1-2.7-1.8A3.8 3.8 0 0 1 15.4 3h-2.8v11.4a2.2 2.2 0 1 1-1.7-2.15V9.5z" fill="#EE1D52" opacity="0.6"/>
-                    <path d="M10.7 9.3a5 5 0 1 0 4 4.9V7.6a6.5 6.5 0 0 0 3.8 1.2V6.3a3.8 3.8 0 0 1-2.6-1.8A3.8 3.8 0 0 1 15.2 2.8h-2.8v11.4a2.2 2.2 0 1 1-1.7-2.15V9.3z" fill="#fff"/>
-                </svg>
-            </span>
-            <span>TikTok</span>
-        </button>
+<!-- project modal -->
+<div class="mod" id="mod" role="dialog" aria-modal="true">
+  <div class="mbox" id="mbox">
+    <div class="brw">
+      <div class="tb"><div class="dots"><i></i><i></i><i></i></div><div class="url" id="murl"></div></div>
+      <iframe id="mfr" title="Project preview" allow="camera;microphone;fullscreen;accelerometer;gyroscope;autoplay" referrerpolicy="no-referrer" loading="lazy"></iframe>
     </div>
-</section>
+    <div class="minfo">
+      <div class="eyebrow mono" id="mno"></div>
+      <h3 id="mt"></h3>
+      <p id="md"></p>
+      <div class="chips"><span class="chip">HTML</span><span class="chip">CSS</span><span class="chip">JavaScript</span></div>
+      <div class="cta"><a class="btn pri" id="mlink" target="_blank" rel="noopener" data-i18n="openLive">Open live ↗</a><button class="btn" id="mclose" data-i18n="close">Close</button></div>
+    </div>
+  </div>
+</div>
 
 <script>
-// ==================== SYNTH AUDIO ENGINE ====================
-let audioCtx = null;
-let soundEnabled = true;
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
 
-function initAudio() {
-    if (!audioCtx) {
-        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    }
-}
-
-function playSound(type = 'click') {
-    if (!soundEnabled) return;
-    try {
-        initAudio();
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
-        
-        const now = audioCtx.currentTime;
-        if (type === 'click') {
-            osc.type = 'sine';
-            osc.frequency.setValueAtTime(500, now);
-            osc.frequency.exponentialRampToValueAtTime(150, now + 0.08);
-            gain.gain.setValueAtTime(0.1, now);
-            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
-            osc.start(now);
-            osc.stop(now + 0.08);
-        } else if (type === 'open') {
-            osc.type = 'triangle';
-            osc.frequency.setValueAtTime(300, now);
-            osc.frequency.exponentialRampToValueAtTime(800, now + 0.15);
-            gain.gain.setValueAtTime(0.1, now);
-            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
-            osc.start(now);
-            osc.stop(now + 0.15);
-        } else if (type === 'back') {
-            osc.type = 'sine';
-            osc.frequency.setValueAtTime(600, now);
-            osc.frequency.exponentialRampToValueAtTime(200, now + 0.1);
-            gain.gain.setValueAtTime(0.1, now);
-            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
-            osc.start(now);
-            osc.stop(now + 0.1);
-        }
-    } catch(e) {}
-}
-
-function toggleAudio() {
-    soundEnabled = !soundEnabled;
-    const icon = document.getElementById('sound-icon');
-    const text = document.getElementById('sound-text');
-    if (soundEnabled) {
-        icon.innerText = '🔊';
-        text.innerText = 'ON';
-        playSound('open');
-    } else {
-        icon.innerText = '🔇';
-        text.innerText = 'OFF';
-    }
-}
-
-// ==================== TYPING EFFECT ENGINE ====================
-let typingTimer = null;
-function typeWriter(text, elementId, speed = 50) {
-    const el = document.getElementById(elementId);
-    el.innerHTML = '';
-    let i = 0;
-    if(typingTimer) clearInterval(typingTimer);
-    typingTimer = setInterval(() => {
-        if (i < text.length) {
-            el.innerHTML += text.charAt(i);
-            i++;
-        } else {
-            clearInterval(typingTimer);
-        }
-    }, speed);
-}
-
-// ==================== TRILINGUAL ENGINE (MODEST BIO) ====================
-const uiData = {
-    en: {
-        name: "Youcef Mekki",
-        tagline: "Student, Developer, and Tech Enthusiast",
-        bioTitle: "About Me",
-        bioSubtitle: "Just a learner on a journey.",
-        bioText: "I am Youcef Mekki (Chikor), an ambitious Algerian youth striving to acquire knowledge in programming and cybersecurity. I focus on learning, improving my skills step by step, and building fun and useful projects.",
-        socialTitle: "Digital Presence",
-        socialSubtitle: "Connect with me across all channels.",
-        appsTitle: "📱 Mobile Apps MOD Lab",
-        appsSubtitle: "A collection of apps modified for testing and learning purposes.",
-        webTitle: "🌐 Web & AI Projects",
-        webSubtitle: "Interactive web tools and fun programming experiments.",
-        btnBio: "💡 About Me", btnApps: "📱 MOD Lab", btnWorks: "🌐 Web & AI", btnSocial: "💬 Contact",
-        statApps: "APPS MOD", statWeb: "WEB PROJECTS", statClean: "PASSION",
-        qrDesc: "A fun QR Generator project with GPS geolocation, multiple logos, vCard integration, and high-quality exports.",
-        labHeadTitle: "⚡ CHIKOR MOD STORE",
-        labHeadSub: "Click on any app to see details & download"
-    },
-    ar: {
-        name: "يوسف مكي (Chikor)",
-        tagline: "طالب علم، شغوف بالتقنية ومطور",
-        bioTitle: "من أنا",
-        bioSubtitle: "رحلتي في التعلم والاكتشاف.",
-        bioText: "أنا يوسف مكي (Chikor)، شاب جزائري طموح يجتهد في اكتساب العلم فقط، وتطوير مهاراته في مجالات البرمجة والأمن السيبراني. أسعى دائماً للتعلم المستمر، تحسين قدراتي خطوة بخطوة، وصناعة مشاريع مفيدة وممتعة.",
-        socialTitle: "التواجد الرقمي",
-        socialSubtitle: "تواصل معي عبر حساباتي للتعارف ومشاركة الأفكار.",
-        appsTitle: "📱 مختبر التطبيقات المعدلة",
-        appsSubtitle: "مجموعة تطبيقات قمت بتعديلها في إطار التعلم والتجربة.",
-        webTitle: "🌐 مشاريع الويب والذكاء الاصطناعي",
-        webSubtitle: "تجارب برمجية وأدوات ويب تفاعلية ممتعة.",
-        btnBio: "💡 من أنا", btnApps: "📱 التطبيقات", btnWorks: "🌐 مشاريع الويب", btnSocial: "💬 التواصل",
-        statApps: "تطبيقات معدلة", statWeb: "مشاريع ويب", statClean: "شغف وطموح",
-        qrDesc: "مشروع ممتع لتوليد الباركود مع تحديد الموقع، مكتبة شعارات، دمج بطاقات الأعمال، وتحميل عالي الدقة.",
-        labHeadTitle: "⚡ متجر شيكور للتطبيقات",
-        labHeadSub: "اضغط على أي تطبيق لمشاهدة التفاصيل والتحميل"
-    },
-    fr: {
-        name: "Youcef Mekki",
-        tagline: "Étudiant, Développeur & Passionné de Tech",
-        bioTitle: "À Propos",
-        bioSubtitle: "Un apprenant en quête de savoir.",
-        bioText: "Je suis Youcef Mekki (Chikor), un jeune Algérien ambitieux qui s'efforce d'acquérir des connaissances en programmation et en cybersécurité. Je me concentre sur l'apprentissage, l'amélioration de mes compétences pas à pas et la création de projets utiles.",
-        socialTitle: "Présence Numérique",
-        socialSubtitle: "Connectez-vous avec moi sur tous les réseaux.",
-        appsTitle: "📱 Laboratoire Apps",
-        appsSubtitle: "Une collection d'applications modifiées dans un but d'apprentissage.",
-        webTitle: "🌐 Projets Web & IA",
-        webSubtitle: "Outils web interactifs et expériences de programmation amusantes.",
-        btnBio: "💡 Profil", btnApps: "📱 Apps", btnWorks: "🌐 Projets", btnSocial: "💬 Contact",
-        statApps: "APPS MOD", statWeb: "PROJETS WEB", statClean: "PASSION",
-        qrDesc: "Un projet de générateur QR avec géolocalisation GPS, logos intégrés, et exportations haute qualité.",
-        labHeadTitle: "⚡ CHIKOR MOD STORE",
-        labHeadSub: "Cliquez sur une app pour voir les détails"
-    }
+/* ---------- i18n ---------- */
+const I={
+en:{introA:"Welcome to my",introB:"Portfolio Website",nHome:"Home",nAbout:"About",nPortfolio:"Portfolio",nContact:"Contact",
+ h1a:"Web & App",h1b:"Developer",lead:"I build interactive websites and Android apps — from small experiments to full projects — and I'm learning programming and cybersecurity step by step.",
+ b1:"/ explore my work below",b2:"/ let's build something together",ctaProj:"View projects",ctaContact:"Contact me",
+ typed:["Happy coding!","const stack = ['HTML','CSS','JS','Java','Python'];","Building for web & Android."],
+ aboutEy:"ABOUT ME",aboutP:"An ambitious developer from Algeria. I focus on learning, improving my skills step by step, and building fun and useful projects — websites, games and Android apps.",
+ quote:"“Learn. Build. Repeat.”",st1:"WEB PROJECTS",st2:"ANDROID APPS",st3:"LANGUAGES",
+ showT:"Portfolio Showcase",showS:"Explore my projects, apps and the technologies I work with.",tabP:"Projects",tabA:"Apps",tabS:"Tech Stack",
+ toolsT:"TOOLS I USE",openLive:"Open live ↗",close:"Close",open:"Open project →",dl:"Download APK ↓",
+ cLead:"Let's talk",cSub:"Have something in mind? Send me a message and let's connect.",cTitle:"Contact me",cHint:"Write your message — it opens in WhatsApp, ready to send.",
+ phName:"Your name",phMsg:"Your message",send:"Send via WhatsApp",connect:"Connect with me",connectS:"Find me on social media.",
+ foot:"Hand-coded with HTML, CSS & JavaScript.",top:"Back to top ↑",wa:"Hi Youcef, I'm"},
+ar:{introA:"أهلاً بك في",introB:"موقع أعمالي",nHome:"الرئيسية",nAbout:"عنّي",nPortfolio:"أعمالي",nContact:"تواصل",
+ h1a:"مطوّر",h1b:"ويب وتطبيقات",lead:"أبني مواقع تفاعلية وتطبيقات أندرويد — من التجارب الصغيرة إلى المشاريع الكاملة — وأتعلّم البرمجة والأمن السيبراني خطوة بخطوة.",
+ b1:"/ استكشف أعمالي بالأسفل",b2:"/ لنبنِ شيئاً معاً",ctaProj:"شاهد المشاريع",ctaContact:"تواصل معي",
+ typed:["برمجة سعيدة!","const stack = ['HTML','CSS','JS','Java','Python'];","أبني للويب والأندرويد."],
+ aboutEy:"عنّي",aboutP:"مطوّر جزائري طموح. أركّز على التعلّم وتطوير مهاراتي خطوة بخطوة وصناعة مشاريع ممتعة ومفيدة — مواقع وألعاب وتطبيقات أندرويد.",
+ quote:"«تعلّم. ابنِ. كرّر.»",st1:"مشاريع ويب",st2:"تطبيقات أندرويد",st3:"لغات برمجة",
+ showT:"معرض الأعمال",showS:"استكشف مشاريعي وتطبيقاتي والتقنيات التي أعمل بها.",tabP:"المشاريع",tabA:"التطبيقات",tabS:"التقنيات",
+ toolsT:"الأدوات التي أستخدمها",openLive:"افتح المشروع ↗",close:"إغلاق",open:"افتح المشروع ←",dl:"تحميل التطبيق ↓",
+ cLead:"لنتحدث",cSub:"عندك فكرة؟ أرسل لي رسالة ولنتواصل.",cTitle:"تواصل معي",cHint:"اكتب رسالتك — تفتح في واتساب جاهزة للإرسال.",
+ phName:"اسمك",phMsg:"رسالتك",send:"أرسل عبر واتساب",connect:"تابعني",connectS:"تجدني على مواقع التواصل.",
+ foot:"مبرمج يدوياً بـ HTML وCSS وJavaScript.",top:"العودة للأعلى ↑",wa:"مرحباً يوسف، أنا"},
+fr:{introA:"Bienvenue sur mon",introB:"Site Portfolio",nHome:"Accueil",nAbout:"À propos",nPortfolio:"Portfolio",nContact:"Contact",
+ h1a:"Développeur",h1b:"Web & Mobile",lead:"Je crée des sites interactifs et des applications Android — des petites expériences aux projets complets — et j'apprends la programmation et la cybersécurité pas à pas.",
+ b1:"/ découvrez mes projets ci-dessous",b2:"/ créons quelque chose ensemble",ctaProj:"Voir les projets",ctaContact:"Me contacter",
+ typed:["Happy coding !","const stack = ['HTML','CSS','JS','Java','Python'];","Je crée pour le web & Android."],
+ aboutEy:"À PROPOS",aboutP:"Un développeur algérien ambitieux. Je me concentre sur l'apprentissage, sur l'amélioration pas à pas de mes compétences et sur la création de projets utiles et amusants — sites, jeux et applications Android.",
+ quote:"« Apprendre. Créer. Recommencer. »",st1:"PROJETS WEB",st2:"APPS ANDROID",st3:"LANGAGES",
+ showT:"Vitrine des projets",showS:"Découvrez mes projets, mes applications et les technologies que j'utilise.",tabP:"Projets",tabA:"Apps",tabS:"Stack",
+ toolsT:"OUTILS UTILISÉS",openLive:"Ouvrir ↗",close:"Fermer",open:"Ouvrir le projet →",dl:"Télécharger l'APK ↓",
+ cLead:"Parlons-en",cSub:"Une idée en tête ? Envoyez-moi un message et restons en contact.",cTitle:"Me contacter",cHint:"Écrivez votre message — il s'ouvre dans WhatsApp, prêt à envoyer.",
+ phName:"Votre nom",phMsg:"Votre message",send:"Envoyer via WhatsApp",connect:"Retrouvez-moi",connectS:"Sur les réseaux sociaux.",
+ foot:"Codé à la main en HTML, CSS & JavaScript.",top:"Haut de page ↑",wa:"Bonjour Youcef, je suis"}
 };
 
-let langs = ['ar', 'en', 'fr']; // Default Arabic
-let langIdx = 0;
+const GH="https://youcefchikor31-ctrl.github.io/";
+const WEB=[
+{n:"Chikor QR Studio",u:GH+"COD_QR/",d:{en:"GPS geolocation & HD vector QR code generator.",ar:"مولّد رموز QR عالي الدقة مع تحديد الموقع عبر GPS.",fr:"Générateur de QR vectoriel HD avec géolocalisation GPS."}},
+{n:"Skeleton Pose Tracking",u:GH+"pose-tracking/",d:{en:"Real-time skeleton detection with computer vision.",ar:"كشف هيكل الجسم في الوقت الفعلي بالرؤية الحاسوبية.",fr:"Détection du squelette en temps réel par vision par ordinateur."}},
+{n:"Hand Tracker Shapes",u:GH+"youcef-site/",d:{en:"Gesture-controlled geometric shapes.",ar:"أشكال هندسية تتحكم بها بحركة يدك.",fr:"Formes géométriques pilotées par les gestes."}},
+{n:"Sky of Fire",u:GH+"-_-",d:{en:"An audio-reactive particle sky.",ar:"سماء جسيمات تتفاعل مع الصوت.",fr:"Un ciel de particules réactif au son."}},
+{n:"Free Fire Lite",u:GH+"freefirelite/",d:{en:"A lightweight interactive web game demo.",ar:"عرض تجريبي خفيف للعبة ويب تفاعلية.",fr:"Une démo légère de jeu web interactif."}},
+{n:"Spiderman Web",u:GH+"spiderman-/",d:{en:"A physics-based web-swinging simulation.",ar:"محاكاة تأرجح بالفيزياء.",fr:"Une simulation d'élan basée sur la physique."}},
+{n:"Fadaa (Space)",u:GH+"Fadaa/",d:{en:"A deep-space planetary simulation.",ar:"محاكاة للكواكب في الفضاء العميق.",fr:"Une simulation planétaire dans l'espace profond."}}
+];
 
-function updateUI() {
-    const l = langs[langIdx];
-    const data = uiData[l];
-    
-    document.getElementById('lang-display').innerText = l.toUpperCase();
-    document.getElementById('name').innerText = data.name;
-    
-    // Trigger typing effect for tagline
-    typeWriter(data.tagline, 'tagline', 60);
+const APPS=[
+{n:"YouTube+ Pro",g:"YT",u:"https://www.mediafire.com/file/pqo6v0sozfkz3bw/YouTube%252B_20.37.21.apk/file", u2:"https://www.mediafire.com/file/dns6xjxvs68aolc/MicroG.apk/file",
+ d:{en:"Ad-free YouTube. Download BOTH files.",ar:"يوتيوب بدون إعلانات. حمّل الملفين معاً.",fr:"YouTube sans pub. Téléchargez les 2 fichiers."},
+ p:{en:["No Ads","Background Play"],ar:["بدون إعلانات","تشغيل في الخلفية"],fr:["Sans pub","Lecture en arrière-plan"]}},
+{n:"CapCut Pro",g:"CC",u:"https://www.mediafire.com/file/oa95vgyft6s5i0u/CapCut_15.5.0.apk.bak/file",
+ d:{en:"Export in 4K 60FPS. Premium features unlocked.",ar:"تصدير 4K 60 إطار. جميع الميزات المدفوعة مفتوحة.",fr:"Export 4K. Fonctionnalités pro débloquées."},
+ p:{en:["No Watermark","Premium Effects"],ar:["بدون علامة مائية","مؤثرات مدفوعة"],fr:["Sans filigrane","Effets Premium"]}},
+{n:"WiFi Fixer Pro",g:"WF",u:"https://www.mediafire.com/file/kyixbx3xaazl4h4/WiFi_Fix.er_Pro_1.0.apk/file",
+ d:{en:"WiFi signal analyzer and connection stabilizer.",ar:"أداة لتحليل إشارة الواي فاي وتثبيت الاتصال.",fr:"Analyse du signal WiFi et stabilisation de la connexion."},
+ p:{en:["Signal diagnostics","Network tools"],ar:["تحليل قوة الإشارة","أدوات الشبكة"],fr:["Diagnostic du signal","Outils réseau"]}},
+{n:"Yuch Vault",g:"YV",u:"https://www.mediafire.com/file/edn5t2jxe3h2l4w/Yuch_Vault_1.0.apk/file",
+ d:{en:"Encrypted photo & file storage hidden behind a calculator.",ar:"تخزين مشفّر للصور والملفات مخفي خلف واجهة حاسبة.",fr:"Stockage chiffré de photos et fichiers caché derrière une calculatrice."},
+ p:{en:["Local encryption","Calculator disguise"],ar:["تشفير محلي","واجهة حاسبة تمويهية"],fr:["Chiffrement local","Camouflage en calculatrice"]}},
+{n:"HiTV VIP",g:"TV",u:"https://www.mediafire.com/file/ktarrep9980x8of/HiTV_3.13.2.apk/file",
+ d:{en:"Watch FHD dramas with zero ads.",ar:"مشاهدة المسلسلات بجودة عالية وبدون إعلانات.",fr:"Dramas en FHD sans publicité."},
+ p:{en:["1080p Streaming","Offline Download"],ar:["جودة 1080p","تحميل للمشاهدة بدون نت"],fr:["Streaming 1080p","Téléchargement hors-ligne"]}},
+{n:"Movie V3",g:"MV",u:"https://www.mediafire.com/file/l5m4o2d8e70ytqr/Movie_V3.0.2.apk/file",
+ d:{en:"Thousands of ad-free movies.",ar:"آلاف الأفلام بدون إعلانات وسيرفرات سريعة.",fr:"Des milliers de films sans pub."},
+ p:{en:["4K Links","TV Casting"],ar:["جودات متعددة","بث للتلفاز"],fr:["Liens 4K","Casting TV"]}},
+{n:"Lightroom Pro",g:"LR",u:"https://www.mediafire.com/file/udr089s5x9gknid/Lightroom_11.1.2.apk/file",
+ d:{en:"All preset filters and mask tools unlocked.",ar:"جميع الفلاتر وأدوات التحديد مفتوحة.",fr:"Filtres et outils de masque débloqués."},
+ p:{en:["Premium Presets","Selective Masking"],ar:["فلاتر مدفوعة","تحديد ذكي"],fr:["Presets Premium","Masquage sélectif"]}}
+];
 
-    document.getElementById('bio-title').innerText = data.bioTitle;
-    document.getElementById('bio-subtitle').innerText = data.bioSubtitle;
-    document.getElementById('bio-text').innerText = data.bioText;
-    document.getElementById('social-title').innerText = data.socialTitle;
-    document.getElementById('social-subtitle').innerText = data.socialSubtitle;
-    document.getElementById('apps-title').innerText = data.appsTitle;
-    document.getElementById('apps-subtitle').innerText = data.appsSubtitle;
-    document.getElementById('web-title').innerText = data.webTitle;
-    document.getElementById('web-subtitle').innerText = data.webSubtitle;
-    
-    document.getElementById('btn-bio').innerText = data.btnBio;
-    document.getElementById('btn-apps').innerText = data.btnApps;
-    document.getElementById('btn-works').innerText = data.btnWorks;
-    document.getElementById('btn-social').innerText = data.btnSocial;
-    
-    document.getElementById('stat-apps').innerText = data.statApps;
-    document.getElementById('stat-web').innerText = data.statWeb;
-    document.getElementById('stat-clean').innerText = data.statClean;
-    document.getElementById('qr-desc').innerText = data.qrDesc;
-    document.getElementById('lab-head-title').innerText = data.labHeadTitle;
-    document.getElementById('lab-head-sub').innerText = data.labHeadSub;
+const STACK=[
+{n:"HTML5",g:"</>",c:"#e44d26",t:{en:"Structure",ar:"هيكل الصفحات",fr:"Structure"}},
+{n:"CSS3",g:"{ }",c:"#3b82f6",t:{en:"Style & motion",ar:"التصميم والحركة",fr:"Style & animation"}},
+{n:"JavaScript",g:"JS",c:"#f7df1e",t:{en:"Logic & interaction",ar:"المنطق والتفاعل",fr:"Logique & interaction"}},
+{n:"Java",g:"Jv",c:"#f08a24",t:{en:"Android apps",ar:"تطبيقات أندرويد",fr:"Apps Android"}},
+{n:"Python",g:"Py",c:"#4b8bbe",t:{en:"Scripting",ar:"السكربتات",fr:"Scripts"}}
+];
+const TOOLS=["Firebase","AndroidIDE","AIDE","GitHub Pages"];
 
-    document.documentElement.dir = (l === 'ar') ? 'rtl' : 'ltr';
-    initPhoneHome();
+let lang='en';
+const pick=()=>{const s=store.get('lang');if(I[s])return s;const n=(navigator.language||'en').slice(0,2);return I[n]?n:'en'};
+
+function renderAll(){
+  const D=I[lang];
+  $('#g-projects').innerHTML=WEB.map((p,i)=>`<button class="pc rv in" data-i="${i}" style="--pa:${(i*37)%180}deg">
+    <div class="shot"><div class="dots"><i></i><i></i><i></i></div><div class="url">${p.u.replace('https://','')}</div><div class="no">0${i+1}</div></div>
+    <div class="bd"><h3>${p.n}</h3><p>${p.d[lang]}</p><span class="go">${D.open}</span></div></button>`).join('');
+  
+  $('#g-apps').innerHTML=APPS.map(a=>`<div class="app"><div class="ai">${a.g}</div><h3>${a.n}</h3><p>${a.d[lang]}</p>
+    <ul>${a.p[lang].map(x=>`<li>${x}</li>`).join('')}</ul>
+    ${a.u2 ? `<div style="display:flex;gap:8px"><a class="btn pri" style="flex:1;justify-content:center" href="${a.u}" target="_blank" rel="noopener">YouTube</a><a class="btn pri" style="flex:1;justify-content:center" href="${a.u2}" target="_blank" rel="noopener">MicroG</a></div>` : `<a class="btn pri" href="${a.u}" target="_blank" rel="noopener">${D.dl}</a>`}</div>`).join('');
+  
+  $('#g-stack').innerHTML=STACK.map(s=>`<div class="tile" style="--c:${s.c}"><div class="gl">${s.g.replace('<','&lt;').replace('>','&gt;')}</div><b>${s.n}</b><span>${s.t[lang]}</span></div>`).join('');
+  $('#g-tools').innerHTML=TOOLS.map(t=>`<span class="chip">${t}</span>`).join('');
+  $$('.pc').forEach(c=>c.addEventListener('click',()=>openMod(+c.dataset.i))); }  function applyLang(l){   lang=l;const D=I[l];   document.documentElement.lang=l;document.documentElement.dir=l==='ar'?'rtl':'ltr';   $$('[data-i18n]').forEach(e=>{if(D[e.dataset.i18n]!=null)e.textContent=D[e.dataset.i18n]});$$('[data-ph]').forEach(e=>e.placeholder=D[e.dataset.ph]);$('#lang').textContent=l.toUpperCase();
+  renderAll();startType();requestAnimationFrame(placeThumb);store.set('lang',l);
+}
+$('#lang').addEventListener('click',()=>{const k=Object.keys(I);applyLang(k[(k.indexOf(lang)+1)%k.length])});
+
+/* ---------- typed line ---------- */
+let tT;
+function startType(){
+  clearTimeout(tT);const el=$('#typed'),L=I[lang].typed;let li=0,ci=0,del=false;
+  if(RM){el.textContent=L[0];return}
+  (function tick(){
+    const s=L[li];
+    if(!del){ci++;el.textContent=s.slice(0,ci);if(ci>=s.length){del=true;tT=setTimeout(tick,1900);return}}
+    else{ci--;el.textContent=s.slice(0,ci);if(ci<=0){del=false;li=(li+1)%L.length}}
+    tT=setTimeout(tick,del?20:52);
+  })();
 }
 
-function cycleLang() {
-    playSound('click');
-    langIdx = (langIdx + 1) % langs.length;
-    updateUI();
+/* ---------- marquee ---------- */
+(function(){const w=['HTML','CSS','JAVASCRIPT','JAVA','PYTHON'];let h='';for(let k=0;k<2;k++)for(let r=0;r<2;r++)w.forEach(x=>h+=`<span>${x}</span><span><em>✦</em></span>`);$('#mq').innerHTML=h})();
+
+/* ---------- tabs ---------- */
+function placeThumb(){const b=$('#tabs button.on'),t=$('#thumb');if(!b)return;t.style.left=b.offsetLeft+'px';t.style.width=b.offsetWidth+'px'} function goTab(name){   $$('#tabs button').forEach(b=>b.classList.toggle('on',b.dataset.tab===name));   $$('.pane').forEach(p=>p.classList.toggle('on',p.id==='p-'+name));   placeThumb(); } $$('#tabs button').forEach(b=>b.addEventListener('click',()=>goTab(b.dataset.tab))); $$('.st').forEach(s=>s.addEventListener('click',()=>{goTab(s.dataset.go);$('#portfolio').scrollIntoView({behavior:RM?'auto':'smooth'})}));
+addEventListener('resize',placeThumb);
+
+/* ---------- modal ---------- */
+const mod=$('#mod');
+function openMod(i){
+  const p=WEB[i];
+  $('#mno').textContent='0'+(i+1)+' / 0'+WEB.length;$('#mt').textContent=p.n;$('#md').textContent=p.d[lang];
+  $('#murl').textContent=p.u.replace('https://','');$('#mlink').href=p.u;$('#mfr').src=p.u;
+  mod.classList.add('on');document.body.classList.add('lock');
 }
+function closeMod(){mod.classList.remove('on');$('#mfr').src='about:blank';document.body.classList.remove('lock')}
+$('#mclose').addEventListener('click',closeMod);
+mod.addEventListener('click',e=>{if(e.target===mod)closeMod()});
+addEventListener('keydown',e=>{if(e.key==='Escape'&&mod.classList.contains('on'))closeMod()});
 
-// ==================== APPS DATABASE (KEPT AS REQUESTED) ====================
-const mobileApps = {
-    capCut: {
-        name: "CapCut Pro Mod",
-        badge: "VIP UNLOCKED",
-        icon: "✂️",
-        images: ["capcut1.jpg", "capcut2.jpg", "capcut3.jpg"],
-        desc: {
-            en: "Export in crystal 4K 60FPS with zero watermarks. All premium transitions, AI voice effects, and pro filters unlocked.",
-            ar: "تصدير بجودة 4K 60 إطار بدون علامة مائية. فتح المؤثرات والانتقالات المدفوعة.",
-            fr: "Export 4K 60FPS sans filigrane. Tous les effets, transitions et voix IA débloqués."
-        },
-        perks: ["No Watermark", "4K 60FPS Export", "VIP Transitions & Filters", "Speed Curve Pro Unlocked"],
-        url: "https://www.mediafire.com/file/oa95vgyft6s5i0u/CapCut_15.5.0.apk.bak/file"
-    },
-    wifiFixer: {
-        name: "WiFi Fixer Pro",
-        badge: "PRO PATCHED",
-        icon: "📶",
-        images: ["wifi1.jpg", "wifi2.jpg", "wifi3.jpg", "wifi4.jpg"],
-        desc: {
-            en: "WiFi signal stabilizer and network diagnostic tool.",
-            ar: "أداة ذكية لتحسين واستقرار شبكات الواي فاي.",
-            fr: "Stabilisation du signal WiFi et reconnexion automatique."
-        },
-        perks: ["Signal Booster Algorithms", "Low Ping for Gaming", "Zero Annoying Ads", "Network Diagnostic"],
-        url: "https://www.mediafire.com/file/kyixbx3xaazl4h4/WiFi_Fixer_Pro_1.0.apk/file"
-    },
-    yuchVault: {
-        name: "Yuch Vault",
-        badge: "ENCRYPTED MOD",
-        icon: "🔒",
-        images: ["vault1.jpg", "vault2.jpg", "vault3.jpg"],
-        desc: {
-            en: "AES-256 hidden photo & file storage with stealth camouflage icon.",
-            ar: "تشفير عسكري AES-256 للصور والملفات الحساسة مع إمكانية تمويه الأيقونة.",
-            fr: "Cryptage AES-256 des fichiers avec icône camouflage."
-        },
-        perks: ["AES-256 Local Encryption", "Stealth Calculator Disguise", "Fake PIN Decoy Mode", "Unlimited Secret Storage"],
-        url: "https://www.mediafire.com/file/edn5t2jxe3h2l4w/Yuch_Vault_1.0.apk/file"
-    },
-    hiTv: {
-        name: "HiTV VIP Mod",
-        badge: "NO ADS",
-        icon: "📺",
-        images: ["hitv1.jpg", "hitv2.jpg"],
-        desc: {
-            en: "Instant access to Asian and Western dramas in FHD with zero ads.",
-            ar: "مشاهدة المسلسلات الآسيوية والعالمية بجودة FHD بدون إعلانات.",
-            fr: "Accès aux dramas en 1080p FHD sans coupure pub."
-        },
-        perks: ["1080p Ultra Streaming", "All Ads Removed Completely", "Fast Offline Download", "Multi-language Subtitles"],
-        url: "https://www.mediafire.com/file/ktarrep9980x8of/HiTV_3.13.2.apk/file"
-    },
-    movie: {
-        name: "Movie V3 Ad-Free",
-        badge: "CINEMA MOD",
-        icon: "🎬",
-        images: ["movie1.jpg", "movie2.jpg"],
-        desc: {
-            en: "Thousands of movies with multi-source streaming and disabled ads.",
-            ar: "مكتبة أفلام بجودات متعددة وسيرفرات سريعة بدون إعلانات.",
-            fr: "Nouveaux films en 4K avec serveurs rapides sans publicité."
-        },
-        perks: ["Multi-server 4K Links", "Ad-Free Clean Interface", "Direct TV Casting", "Auto-Sync Bookmarks"],
-        url: "https://www.mediafire.com/file/l5m4o2d8e70ytqr/Movie_V3.0.2.apk/file"
-    },
-    lightroom: {
-        name: "Lightroom Pro Mod",
-        badge: "PREMIUM",
-        icon: "📸",
-        images: [],
-        desc: {
-            en: "All exclusive preset filters, selective mask tools fully unlocked.",
-            ar: "فتح فلاتر وبريسيتات، التحديد الذكي، وتعديل الألوان مجاناً.",
-            fr: "Tous les presets payants, retouche sélective par masque débloqués."
-        },
-        perks: ["Selective Brush & Masking", "Premium Presets Unlocked", "RAW Editing Support", "Geometry Perspective Tools"],
-        url: "https://www.mediafire.com/file/udr089s5x9gknid/Lightroom_11.1.2.apk/file"
-    }
-};
+/* ---------- contact form -> WhatsApp ---------- */
+$('#cf').addEventListener('submit',e=>{
+  e.preventDefault();
+  const n=$('#cn').value.trim(),m=$('#cm').value.trim();if(!n||!m)return;
+  const t=`${I[lang].wa} ${n}.\n\n${m}`;
+  window.open('https://wa.me/213796514353?text='+encodeURIComponent(t),'_blank','noopener');
+});
 
-let currentAppKey = "";
-let currentImageIndex = 0;
-let sliderInterval = null;
+/* ---------- reveal, counters, scroll-spy, spotlight ---------- */
+const io=new IntersectionObserver(es=>es.forEach(e=>{
+  if(!e.isIntersecting)return;e.target.classList.add('in');io.unobserve(e.target);
+  const n=e.target.querySelector&&e.target.querySelector('[data-n]');
+  if(n&&!n.dataset.done){n.dataset.done=1;const to=+n.dataset.n;let v=0;const iv=setInterval(()=>{n.textContent=++v;if(v>=to)clearInterval(iv)},RM?1:170)}
+}),{threshold:.12});
+$$('.rv').forEach(el=>io.observe(el));  const links=$$
+('.links a');
+const so=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)links.forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+e.target.id))}),{rootMargin:'-45% 0px -50% 0px'});
+['home','about','portfolio','contact'].forEach(id=>so.observe(document.getElementById(id)));
 
-function initPhoneHome() {
-    const grid = document.getElementById('phone-apps-grid');
-    grid.innerHTML = '';
-    const l = langs[langIdx];
+addEventListener('pointermove',e=>{if(e.pointerType==='touch')return;const s=$('#spot').style;s.setProperty('--mx',e.clientX+'px');s.setProperty('--my',e.clientY+'px')},{passive:true});
 
-    Object.keys(mobileApps).forEach(key => {
-        const app = mobileApps[key];
-        const card = document.createElement('div');
-        card.className = 'app-card-btn';
-        card.onclick = () => openAppView(key);
-        card.innerHTML = `
-            <div class="app-badge-mod">${app.badge}</div>
-            <div class="app-card-icon">${app.icon}</div>
-            <div class="app-card-title">${app.name}</div>
-            <div class="app-card-sub">⚡ ${l === 'ar' ? 'معدل وجاهز' : 'Ready'}</div>
-        `;
-        grid.appendChild(card);
-    });
+/* ---------- lanyard (verlet rope + draggable card) ---------- */
+(function(){
+  const box=$('#lanyard'),cv=box.querySelector('canvas'),cx=cv.getContext('2d'),card=$('#card');
+  const N=9;let W=0,H=0,dpr=1,cw=0,ch=0,seg=0,d=0,P=[],C=null,drag=false,mx=0,my=0,ox=0,oy=0,vis=true,last=0,acc=0;
+  function init(){
+    const r=box.getBoundingClientRect();W=r.width;H=r.height;dpr=Math.min(devicePixelRatio||1,2);
+    cv.width=W*dpr;cv.height=H*dpr;cx.setTransform(dpr,0,0,dpr,0,0);
+    cw=card.offsetWidth;ch=card.offsetHeight;
+    const R=Math.max(80,H-ch-26);seg=R/N;d=ch/2-8;
+    P=[];for(let i=0;i<=N;i++)P.push({x:W/2,y:i*seg,px:W/2,py:i*seg,pin:i===0});
+    const k=RM?0:50;
+    C={x:W/2+k,y:N*seg+d,px:W/2+k,py:N*seg+d,pin:false};P.push(C);
+  }
+  function solve(a,b,len){
+    const dx=b.x-a.x,dy=b.y-a.y,dist=Math.hypot(dx,dy)||1e-4,df=(dist-len)/dist;
+    const wa=a.pin?0:1,wb=b.pin?0:1,t=wa+wb;if(!t)return;
+    a.x+=dx*df*wa/t;a.y+=dy*df*wa/t;b.x-=dx*df*wb/t;b.y-=dy*df*wb/t;
+  }
+  function step(){
+    const g=.6,damp=.994;
+    if(drag){
+      let tx=mx-ox,ty=my-oy;const ax=P[0].x,ay=P[0].y,mxl=seg*N+d,vx=tx-ax,vy=ty-ay,l=Math.hypot(vx,vy);
+      if(l>mxl){tx=ax+vx/l*mxl;ty=ay+vy/l*mxl}
+      C.px=C.x;C.py=C.y;C.x=tx;C.y=ty;C.pin=true;
+    }else C.pin=false;
+    for(let i=1;i<P.length;i++){const p=P[i];if(p.pin)continue;const vx=(p.x-p.px)*damp,vy=(p.y-p.py)*damp;p.px=p.x;p.py=p.y;p.x+=vx;p.y+=vy+g}
+    for(let k=0;k<16;k++){for(let i=0;i<N;i++)solve(P[i],P[i+1],seg);solve(P[N],C,d)}
+  }
+  function draw(){
+    cx.clearRect(0,0,W,H);
+    const path=()=>{cx.beginPath();cx.moveTo(P[0].x,P[0].y);for(let i=1;i<N;i++)cx.quadraticCurveTo(P[i].x,P[i].y,(P[i].x+P[i+1].x)/2,(P[i].y+P[i+1].y)/2);cx.lineTo(P[N].x,P[N].y)};
+    cx.lineJoin='round';cx.lineCap='butt';
+    cx.strokeStyle='#323236';cx.lineWidth=22;path();cx.stroke();
+    cx.strokeStyle='#0a0a0b';cx.lineWidth=18;path();cx.stroke();
+    cx.fillStyle='rgba(255,255,255,.72)';cx.font='700 8px "JetBrains Mono",monospace';cx.textAlign='center';cx.textBaseline='middle';
+    if('letterSpacing' in cx)cx.letterSpacing='2px';
+    [2,6].forEach(i=>{const a=Math.atan2(P[i+1].y-P[i-1].y,P[i+1].x-P[i-1].x);cx.save();cx.translate(P[i].x,P[i].y);cx.rotate(a);cx.fillText('CHIKOR',0,0);cx.restore()});
+    const ang=Math.atan2(-(C.x-P[N].x),C.y-P[N].y);
+    card.style.transform=`translate(${C.x-cw/2}px,${C.y-ch/2}px) rotate(${ang}rad)`;
+    card.style.setProperty('--s',(ang*220).toFixed(1));
+  }
+  function loop(t){
+    requestAnimationFrame(loop);if(!vis)return;
+    const dt=Math.min((t-last)/1000||0,.05);last=t;acc+=dt;let n=0;
+    while(acc>=1/60&&n<4){step();acc-=1/60;n++}if(n===4)acc=0;
+    draw();
+  }
+  const rel=e=>{const r=box.getBoundingClientRect();mx=e.clientX-r.left;my=e.clientY-r.top};
+  card.addEventListener('pointerdown',e=>{card.setPointerCapture(e.pointerId);rel(e);ox=mx-C.x;oy=my-C.y;drag=true;e.preventDefault()});
+  card.addEventListener('pointermove',e=>{if(drag)rel(e)});
+  const up=()=>{drag=false};
+  card.addEventListener('pointerup',up);card.addEventListener('pointercancel',up);card.addEventListener('lostpointercapture',up);
+  new IntersectionObserver(es=>{vis=es[0].isIntersecting}).observe(box);
+  let rt;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(init,150)});
+  init();requestAnimationFrame(loop);
+})();
+
+/* ---------- boot ---------- */
+applyLang(pick());
+const intro=$('#intro');
+function endIntro(){
+  if(!intro||intro.dataset.done)return;intro.dataset.done=1;
+  intro.classList.add('out');document.body.classList.remove('lock');document.body.classList.add('ready');
+  setTimeout(()=>intro.remove(),900);
 }
-
-function openAppView(key) {
-    playSound('open');
-    document.getElementById('phone-home').style.display = 'none';
-    document.getElementById('phone-app-view').style.display = 'flex';
-    
-    currentAppKey = key;
-    currentImageIndex = 0;
-    const app = mobileApps[key];
-    const l = langs[langIdx];
-    
-    document.getElementById('app-view-title').innerText = app.name;
-    document.getElementById('app-view-desc').innerText = app.desc[l];
-    
-    const perksBox = document.getElementById('app-view-perks');
-    perksBox.innerHTML = '';
-    app.perks.forEach(p => {
-        const item = document.createElement('div');
-        item.className = 'perk-item';
-        item.innerHTML = `<span>✔</span> ${p}`;
-        perksBox.appendChild(item);
-    });
-
-    const slider = document.getElementById('app-view-slider');
-    slider.innerHTML = '';
-    clearInterval(sliderInterval);
-
-    if (app.images && app.images.length > 0) {
-        app.images.forEach((src, idx) => {
-            const img = document.createElement('img');
-            img.src = src;
-            if (idx === 0) img.classList.add('active');
-            img.id = `phone-img-${idx}`;
-            img.onerror = () => { img.style.display = 'none'; };
-            slider.appendChild(img);
-        });
-
-        sliderInterval = setInterval(() => {
-            const currentImg = document.getElementById(`phone-img-${currentImageIndex}`);
-            if (currentImg) currentImg.classList.remove('active');
-            currentImageIndex = (currentImageIndex + 1) % app.images.length;
-            const nextImg = document.getElementById(`phone-img-${currentImageIndex}`);
-            if (nextImg) nextImg.classList.add('active');
-        }, 2200);
-    } else {
-        slider.innerHTML = `
-            <div class="slider-placeholder">
-                <span style="font-size: 45px; text-shadow: 0 0 10px #fff;">${app.icon}</span>
-                <span style="font-family:'Orbitron',sans-serif; font-size: 0.9rem; color:#00f3ff;">READY TO USE</span>
-                <span style="font-size: 0.75rem; color:#cbd5e1;">Link is ready below</span>
-            </div>
-        `;
-    }
-}
-
-function closeAppView() {
-    playSound('back');
-    document.getElementById('phone-home').style.display = 'flex';
-    document.getElementById('phone-app-view').style.display = 'none';
-    clearInterval(sliderInterval);
-}
-
-function downloadActiveApp() {
-    playSound('click');
-    if (currentAppKey && mobileApps[currentAppKey]) {
-        window.open(mobileApps[currentAppKey].url, '_blank');
-    }
-}
-
-function openLink(url) {
-    playSound('click');
-    window.open(url, '_blank');
-}
-
-function scrollToSec(id) {
-    playSound('click');
-    document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
-}
-
-// Live Phone Clock
-function updatePhoneClock() {
-    const now = new Date();
-    const hrs = String(now.getHours()).padStart(2, '0');
-    const mins = String(now.getMinutes()).padStart(2, '0');
-    const el = document.getElementById('phone-clock');
-    if (el) el.innerText = `${hrs}:${mins}`;
-}
-setInterval(updatePhoneClock, 1000);
-updatePhoneClock();
-
-// ==================== OBSERVER FOR SMOOTH REVEAL ====================
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('show-element');
-            observer.unobserve(entry.target);
-        }
-    });
-}, { threshold: 0.1 });
-
-document.querySelectorAll('.hidden-element').forEach(el => observer.observe(el));
-
-// ==================== BEAUTIFUL COLORFUL PARTICLES BACKGROUND ====================
-const canvas = document.getElementById('cyber-canvas');
-const ctx = canvas.getContext('2d');
-let width, height, particles = [];
-let mouse = { x: null, y: null, radius: 120 };
-
-// Neon colors palette
-const colors = ['#00f3ff', '#b5179e', '#f72585', '#00f5d4', '#fee440'];
-
-function resize() { 
-    width = canvas.width = window.innerWidth; 
-    height = canvas.height = window.innerHeight; 
-}
-window.addEventListener('resize', resize); 
-resize();
-
-window.addEventListener('mousemove', e => { mouse.x = e.x; mouse.y = e.y; });
-window.addEventListener('mouseout', () => { mouse.x = null; mouse.y = null; });
-
-class Particle {
-    constructor() {
-        this.x = Math.random() * width; 
-        this.y = Math.random() * height;
-        this.size = Math.random() * 3 + 1;
-        this.vx = (Math.random() - 0.5) * 1.5; 
-        this.vy = (Math.random() - 0.5) * 1.5;
-        this.color = colors[Math.floor(Math.random() * colors.length)];
-    }
-    update() {
-        this.x += this.vx; this.y += this.vy;
-        if(this.x > width || this.x < 0) this.vx = -this.vx;
-        if(this.y > height || this.y < 0) this.vy = -this.vy;
-        
-        if(mouse.x != null) {
-            let dx = mouse.x - this.x, dy = mouse.y - this.y;
-            let dist = Math.sqrt(dx*dx + dy*dy);
-            if(dist < mouse.radius) {
-                const force = (mouse.radius - dist) / mouse.radius;
-                this.x -= dx * force * 0.05; 
-                this.y -= dy * force * 0.05;
-            }
-        }
-    }
-    draw() { 
-        ctx.fillStyle = this.color;
-        ctx.shadowBlur = 10;
-        ctx.shadowColor = this.color;
-        ctx.beginPath(); 
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); 
-        ctx.fill(); 
-        ctx.shadowBlur = 0;
-    }
-}
-
-function initParticles() {
-    particles = [];
-    let count = Math.floor((width * height) / 10000);
-    for(let i = 0; i < count; i++) particles.push(new Particle());
-}
-initParticles();
-
-function animateParticles() {
-    ctx.clearRect(0, 0, width, height);
-    for(let i = 0; i < particles.length; i++) {
-        particles[i].update(); 
-        particles[i].draw();
-        for(let j = i; j < particles.length; j++) {
-            let dx = particles[i].x - particles[j].x;
-            let dy = particles[i].y - particles[j].y;
-            let dist = Math.sqrt(dx*dx + dy*dy);
-            if(dist < 100) {
-                ctx.beginPath(); 
-                ctx.strokeStyle = particles[i].color;
-                ctx.globalAlpha = 1 - dist/100;
-                ctx.lineWidth = 0.8; 
-                ctx.moveTo(particles[i].x, particles[i].y); 
-                ctx.lineTo(particles[j].x, particles[j].y); 
-                ctx.stroke();
-                ctx.globalAlpha = 1;
-            }
-        }
-    }
-    requestAnimationFrame(animateParticles);
-}
-animateParticles();
-
-// Initialize UI (Arabic default)
-updateUI();
+if(RM){intro.remove();document.body.classList.remove('lock');document.body.classList.add('ready')}
+else{intro.addEventListener('click',endIntro);setTimeout(endIntro,3300)}
+(document.fonts&&document.fonts.ready||Promise.resolve()).then(()=>setTimeout(placeThumb,50));
 </script>
 </body>
 </html>
